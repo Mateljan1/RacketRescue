@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { Shield, Sparkles, Zap, Info, Crown, Check, ArrowRight } from 'lucide-react'
 import { useState } from 'react'
+import StringWizard from '@/components/StringWizard'
 
 const services = [
   {
@@ -43,8 +44,22 @@ interface Props {
 export default function ServiceSelection({ orderData, setOrderData, onNext }: Props) {
   const [showStringWizard, setShowStringWizard] = useState(false)
 
+  const handleStringSelect = (stringId: string, stringName: string, stringPrice: number) => {
+    setOrderData({
+      ...orderData,
+      string_name: stringName,
+      string_price: stringPrice,
+    })
+    setShowStringWizard(false)
+  }
+
   return (
     <div className="space-y-8">
+      <StringWizard
+        isOpen={showStringWizard}
+        onClose={() => setShowStringWizard(false)}
+        onSelectString={handleStringSelect}
+      />
       {/* Service Package Selection */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
