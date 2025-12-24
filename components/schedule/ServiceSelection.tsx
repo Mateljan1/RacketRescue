@@ -1,39 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Shield, Sparkles, Zap, Info, Crown, Check, ArrowRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { useState } from 'react'
 import StringWizard from '@/components/StringWizard'
-
-const services = [
-  {
-    id: 'match_ready',
-    name: 'Match-Ready',
-    price: 35,
-    turnaround: '2-3 Days',
-    description: 'Professional stringing within 2-3 days',
-    subtitle: 'Perfect for casual and club players',
-    icon: Shield,
-  },
-  {
-    id: 'pro_performance',
-    name: 'Pro-Performance',
-    price: 50,
-    turnaround: '2 Days',
-    description: 'Premium stringing within 2 days',
-    subtitle: 'For competitors seeking maximum performance',
-    icon: Sparkles,
-    popular: true,
-  },
-]
-
-const stringOptions = [
-  { id: 'velocity', name: 'Wilson Velocity MLT', price: 18, type: 'Multifilament', desc: 'Great all-around string' },
-  { id: 'rpm_blast', name: 'Babolat RPM Blast', price: 22, type: 'Polyester', desc: 'Maximum spin & control' },
-  { id: 'luxilon_alu', name: 'Luxilon ALU Power', price: 25, type: 'Polyester', desc: 'Tour pro favorite' },
-  { id: 'nxt', name: 'Wilson NXT', price: 20, type: 'Multifilament', desc: 'Arm-friendly comfort' },
-  { id: 'hyper_g', name: 'Solinco Hyper-G', price: 18, type: 'Polyester', desc: 'Spin and durability' },
-]
 
 interface Props {
   orderData: any
@@ -41,8 +11,17 @@ interface Props {
   onNext: () => void
 }
 
+const stringOptions = [
+  { id: 'velocity', name: 'Wilson Velocity MLT', price: 18, type: 'Multifilament', desc: 'Great all-around string', recommended: true },
+  { id: 'rpm_blast', name: 'Babolat RPM Blast', price: 22, type: 'Polyester', desc: 'Maximum spin & control' },
+  { id: 'luxilon_alu', name: 'Luxilon ALU Power', price: 25, type: 'Polyester', desc: 'Tour pro favorite' },
+  { id: 'nxt', name: 'Wilson NXT', price: 20, type: 'Multifilament', desc: 'Arm-friendly comfort' },
+  { id: 'hyper_g', name: 'Solinco Hyper-G', price: 18, type: 'Polyester', desc: 'Spin and durability' },
+]
+
 export default function ServiceSelection({ orderData, setOrderData, onNext }: Props) {
   const [showStringWizard, setShowStringWizard] = useState(false)
+  const [hoveredService, setHoveredService] = useState<string | null>(null)
 
   const handleStringSelect = (stringId: string, stringName: string, stringPrice: number) => {
     setOrderData({
@@ -54,213 +33,385 @@ export default function ServiceSelection({ orderData, setOrderData, onNext }: Pr
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-12">
       <StringWizard
         isOpen={showStringWizard}
         onClose={() => setShowStringWizard(false)}
         onSelectString={handleStringSelect}
       />
-      {/* Service Package Selection */}
+      
+      {/* Service Package - PREMIUM DESIGN */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white rounded-3xl shadow-2xl p-10"
       >
-        <h2 className="text-3xl font-bold text-racket-black mb-3">Select Service Package</h2>
-        <p className="text-racket-gray text-lg mb-10">Choose your stringing service level</p>
-
-        <div className="grid md:grid-cols-2 gap-6">
-          {services.map((service) => {
-            const Icon = service.icon
-            const isSelected = orderData.service_package === service.id
-
-            return (
-              <motion.div
-                key={service.id}
-                whileHover={{ y: -6, boxShadow: "0 25px 60px rgba(0,0,0,0.15)" }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => setOrderData({ ...orderData, service_package: service.id })}
-                className={`relative cursor-pointer bg-white rounded-2xl p-8 border-4 transition-all ${
-                  isSelected
-                    ? 'border-racket-red shadow-xl shadow-racket-red/20'
-                    : 'border-gray-200 hover:border-gray-300'
-                }`}
-              >
-                {service.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                    <span className="inline-flex items-center gap-2 bg-racket-red text-white px-5 py-2 rounded-full text-sm font-bold shadow-lg">
-                      <Crown className="w-4 h-4" />
-                      MOST POPULAR
-                    </span>
-                  </div>
-                )}
-
-                <div className="text-center space-y-4">
-                  <div className={`inline-flex p-5 rounded-2xl ${isSelected ? 'bg-racket-red/10' : 'bg-gray-50'}`}>
-                    <Icon className={`w-10 h-10 ${isSelected ? 'text-racket-red' : 'text-gray-600'}`} />
-                  </div>
-
-                  <h3 className="text-2xl font-bold text-racket-black">{service.name}</h3>
-                  
-                  <div>
-                    <div className="text-5xl font-bold text-racket-red mb-1">${service.price}</div>
-                    <div className="text-racket-gray">Turnaround: {service.turnaround}</div>
-                  </div>
-
-                  <p className="text-lg text-racket-gray">{service.subtitle}</p>
-
-                  {isSelected && (
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      className="pt-4"
-                    >
-                      <div className="inline-flex items-center gap-2 bg-racket-green/20 text-racket-green px-4 py-2 rounded-full font-semibold">
-                        <Check className="w-5 h-5" />
-                        Selected
-                      </div>
-                    </motion.div>
-                  )}
-                </div>
-              </motion.div>
-            )
-          })}
+        <div className="mb-10">
+          <h2 className="text-5xl font-bold text-racket-black mb-3">Select Service</h2>
+          <p className="text-xl text-racket-gray">Choose your stringing level</p>
         </div>
 
-        {/* Express Add-on */}
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* Match-Ready */}
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.99 }}
+            onHoverStart={() => setHoveredService('match_ready')}
+            onHoverEnd={() => setHoveredService(null)}
+            onClick={() => setOrderData({ ...orderData, service_package: 'match_ready' })}
+            className={`relative cursor-pointer rounded-3xl p-10 transition-all duration-500 ${
+              orderData.service_package === 'match_ready'
+                ? 'bg-gradient-to-br from-racket-red via-red-500 to-red-600 text-white shadow-2xl'
+                : 'bg-white border-4 border-gray-200 hover:border-gray-300 text-racket-black'
+            }`}
+          >
+            {/* Custom SVG Illustration - Not an icon! */}
+            <div className="mb-8">
+              <svg width="120" height="120" viewBox="0 0 120 120" className="mx-auto">
+                <defs>
+                  <linearGradient id="matchGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor={orderData.service_package === 'match_ready' ? "#ffffff" : "#ec1f27"} stopOpacity="0.2" />
+                    <stop offset="100%" stopColor={orderData.service_package === 'match_ready' ? "#ffffff" : "#ec1f27"} stopOpacity="0.05" />
+                  </linearGradient>
+                </defs>
+                <circle cx="60" cy="60" r="55" fill="url(#matchGrad)" />
+                <circle cx="60" cy="60" r="40" fill="none" stroke={orderData.service_package === 'match_ready' ? "#ffffff" : "#ec1f27"} strokeWidth="3" strokeDasharray="4 4" />
+                <text x="60" y="70" textAnchor="middle" fontSize="32" fontWeight="bold" fill={orderData.service_package === 'match_ready' ? "#ffffff" : "#ec1f27"}>35</text>
+              </svg>
+            </div>
+
+            <div className="text-center space-y-4">
+              <h3 className="text-3xl font-bold">Match-Ready</h3>
+              <div className="text-6xl font-black tracking-tight">
+                $35
+              </div>
+              <div className={`text-lg font-medium ${orderData.service_package === 'match_ready' ? 'text-white/90' : 'text-racket-gray'}`}>
+                Turnaround: 2-3 Days
+              </div>
+              <p className={`text-lg leading-relaxed ${orderData.service_package === 'match_ready' ? 'text-white/80' : 'text-racket-gray'}`}>
+                Professional stringing for casual and club players
+              </p>
+
+              {orderData.service_package === 'match_ready' && (
+                <motion.div
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full font-bold text-lg mt-6"
+                >
+                  ✓ Selected
+                </motion.div>
+              )}
+            </div>
+
+            {/* Subtle hover effect overlay */}
+            <motion.div
+              initial={false}
+              animate={{
+                opacity: hoveredService === 'match_ready' && orderData.service_package !== 'match_ready' ? 0.05 : 0
+              }}
+              className="absolute inset-0 bg-racket-red rounded-3xl pointer-events-none"
+            />
+          </motion.div>
+
+          {/* Pro-Performance */}
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.99 }}
+            onHoverStart={() => setHoveredService('pro_performance')}
+            onHoverEnd={() => setHoveredService(null)}
+            onClick={() => setOrderData({ ...orderData, service_package: 'pro_performance' })}
+            className={`relative cursor-pointer rounded-3xl p-10 transition-all duration-500 ${
+              orderData.service_package === 'pro_performance'
+                ? 'bg-gradient-to-br from-racket-black via-racket-charcoal to-black text-white shadow-2xl'
+                : 'bg-white border-4 border-gray-200 hover:border-gray-300 text-racket-black'
+            }`}
+          >
+            {/* Most Popular Badge */}
+            {orderData.service_package !== 'pro_performance' && (
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
+                <div className="bg-racket-red text-white px-6 py-2 rounded-full font-bold text-sm tracking-wider shadow-xl">
+                  ★ MOST POPULAR
+                </div>
+              </div>
+            )}
+
+            {/* Custom SVG Illustration - Not an icon! */}
+            <div className="mb-8">
+              <svg width="120" height="120" viewBox="0 0 120 120" className="mx-auto">
+                <defs>
+                  <linearGradient id="proGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor={orderData.service_package === 'pro_performance' ? "#ffffff" : "#030707"} stopOpacity="0.2" />
+                    <stop offset="100%" stopColor={orderData.service_package === 'pro_performance' ? "#ffffff" : "#030707"} stopOpacity="0.05" />
+                  </linearGradient>
+                </defs>
+                <path d="M 60 10 L 80 50 L 60 90 L 40 50 Z" fill="url(#proGrad)" stroke={orderData.service_package === 'pro_performance' ? "#ffffff" : "#ec1f27"} strokeWidth="3" />
+                <circle cx="60" cy="60" r="25" fill="none" stroke={orderData.service_package === 'pro_performance' ? "#ffffff" : "#ec1f27"} strokeWidth="2" />
+                <text x="60" y="70" textAnchor="middle" fontSize="28" fontWeight="bold" fill={orderData.service_package === 'pro_performance' ? "#ffffff" : "#ec1f27"}>50</text>
+              </svg>
+            </div>
+
+            <div className="text-center space-y-4">
+              <h3 className="text-3xl font-bold">Pro-Performance</h3>
+              <div className="text-6xl font-black tracking-tight">
+                $50
+              </div>
+              <div className={`text-lg font-medium ${orderData.service_package === 'pro_performance' ? 'text-white/90' : 'text-racket-gray'}`}>
+                Turnaround: 2 Days
+              </div>
+              <p className={`text-lg leading-relaxed ${orderData.service_package === 'pro_performance' ? 'text-white/80' : 'text-racket-gray'}`}>
+                Premium stringing for competitors
+              </p>
+
+              {orderData.service_package === 'pro_performance' && (
+                <motion.div
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full font-bold text-lg mt-6"
+                >
+                  ✓ Selected
+                </motion.div>
+              )}
+            </div>
+
+            <motion.div
+              initial={false}
+              animate={{
+                opacity: hoveredService === 'pro_performance' && orderData.service_package !== 'pro_performance' ? 0.05 : 0
+              }}
+              className="absolute inset-0 bg-racket-black rounded-3xl pointer-events-none"
+            />
+          </motion.div>
+        </div>
+
+        {/* Express Add-on - PREMIUM DESIGN */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="mt-8 p-6 bg-racket-orange/10 border-2 border-racket-orange/30 rounded-2xl"
+          className="mt-8"
         >
-          <label className="flex items-start gap-4 cursor-pointer group">
+          <label className="relative block cursor-pointer group">
             <input
               type="checkbox"
               checked={orderData.is_express}
               onChange={(e) => setOrderData({ ...orderData, is_express: e.target.checked })}
-              className="mt-1 w-6 h-6 accent-racket-orange"
+              className="sr-only peer"
             />
-            <div className="flex-1">
-              <div className="flex items-center gap-3 mb-2">
-                <Zap className="w-6 h-6 text-racket-orange" />
-                <span className="text-xl font-bold text-racket-black">Add Express Service</span>
-                <span className="text-2xl font-bold text-racket-orange">+$15</span>
+            <div className="p-8 bg-gradient-to-r from-orange-50 to-yellow-50 border-4 border-orange-200 rounded-3xl peer-checked:border-racket-orange peer-checked:shadow-2xl transition-all duration-300">
+              <div className="flex items-start gap-6">
+                {/* Custom lightning bolt SVG */}
+                <svg width="60" height="60" viewBox="0 0 60 60" className="flex-shrink-0">
+                  <path d="M35 5 L20 30 L30 30 L25 55 L45 25 L35 25 Z" fill="#f97316" className="drop-shadow-lg" />
+                </svg>
+
+                <div className="flex-1">
+                  <div className="flex items-baseline gap-4 mb-3">
+                    <span className="text-3xl font-black text-racket-black">Express Service</span>
+                    <span className="text-4xl font-black text-racket-orange">+$15</span>
+                  </div>
+                  <p className="text-lg text-racket-gray leading-relaxed">
+                    Next-day turnaround for urgent needs. Get your racket back even faster for tournaments and matches.
+                  </p>
+                  
+                  {orderData.is_express && (
+                    <motion.div
+                      initial={{ scale: 0, x: -20 }}
+                      animate={{ scale: 1, x: 0 }}
+                      transition={{ type: "spring", stiffness: 200 }}
+                      className="inline-flex items-center gap-2 bg-racket-orange text-white px-5 py-2 rounded-full font-bold mt-4"
+                    >
+                      ✓ Added to Order
+                    </motion.div>
+                  )}
+                </div>
               </div>
-              <p className="text-racket-gray">
-                Next-day turnaround for urgent needs. Get your racket back even faster!
-              </p>
             </div>
           </label>
         </motion.div>
       </motion.div>
 
-      {/* String Selection */}
+      {/* String Selection - ULTRA PREMIUM */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="bg-white rounded-3xl shadow-2xl p-10"
       >
-        <h2 className="text-3xl font-bold text-racket-black mb-3">Select String</h2>
-        <p className="text-racket-gray text-lg mb-8">Choose from our curated selection or provide your own</p>
-
-        {/* Customer Provides String */}
-        <div className="mb-8 p-6 bg-racket-blue/10 border-2 border-racket-blue/30 rounded-2xl">
-          <label className="flex items-start gap-4 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={orderData.customer_provides_string}
-              onChange={(e) => setOrderData({ ...orderData, customer_provides_string: e.target.checked })}
-              className="mt-1 w-6 h-6 accent-racket-blue"
-            />
-            <div className="flex-1">
-              <div className="flex items-center gap-3 mb-2">
-                <Info className="w-5 h-5 text-racket-blue" />
-                <span className="text-lg font-bold text-racket-black">I&apos;ll provide my own string</span>
-              </div>
-              <p className="text-racket-gray">
-                Don&apos;t forget to include your string in the racket cover.
-              </p>
-            </div>
-          </label>
+        <div className="mb-10">
+          <h2 className="text-5xl font-bold text-racket-black mb-3">Choose Your String</h2>
+          <p className="text-xl text-racket-gray">Select from expert recommendations or bring your own</p>
         </div>
 
-        {/* String Selection Grid */}
+        {/* Provide Own String - CLEAN DESIGN */}
+        <motion.label
+          whileHover={{ scale: 1.01 }}
+          className="relative block cursor-pointer mb-8 group"
+        >
+          <input
+            type="checkbox"
+            checked={orderData.customer_provides_string}
+            onChange={(e) => setOrderData({ ...orderData, customer_provides_string: e.target.checked })}
+            className="sr-only peer"
+          />
+          <div className="p-8 bg-gradient-to-br from-blue-50 to-indigo-50 border-4 border-blue-200 rounded-3xl peer-checked:border-racket-blue peer-checked:shadow-2xl transition-all duration-300">
+            <div className="flex items-center gap-6">
+              {/* Custom package SVG */}
+              <svg width="60" height="60" viewBox="0 0 60 60" className="flex-shrink-0">
+                <rect x="15" y="20" width="30" height="25" rx="3" fill="#3b82f6" opacity="0.2" />
+                <rect x="17" y="22" width="26" height="4" fill="#3b82f6" />
+                <path d="M 30 15 L 30 25" stroke="#3b82f6" strokeWidth="3" strokeLinecap="round" />
+                <path d="M 25 20 L 30 15 L 35 20" stroke="#3b82f6" strokeWidth="3" strokeLinecap="round" fill="none" />
+              </svg>
+
+              <div className="flex-1">
+                <span className="text-2xl font-black text-racket-black block mb-2">
+                  I&apos;ll Bring My Own String
+                </span>
+                <p className="text-racket-gray text-lg">
+                  Already have your favorite string? Include it in your racket cover at pickup.
+                </p>
+                
+                {orderData.customer_provides_string && (
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: "spring", stiffness: 200 }}
+                    className="inline-flex items-center gap-2 bg-racket-blue text-white px-5 py-2 rounded-full font-bold mt-4"
+                  >
+                    ✓ Will Provide String
+                  </motion.div>
+                )}
+              </div>
+            </div>
+          </div>
+        </motion.label>
+
+        {/* String Wizard CTA - PROMINENT */}
         {!orderData.customer_provides_string && (
-          <div className="space-y-6">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.4 }}
+          >
             <button
               onClick={() => setShowStringWizard(true)}
-              className="w-full p-6 bg-gradient-to-r from-racket-orange to-orange-500 text-white rounded-2xl font-semibold text-lg hover:shadow-xl transition-all flex items-center justify-center gap-3"
+              className="relative w-full p-10 mb-8 rounded-3xl overflow-hidden group"
+              style={{
+                background: 'linear-gradient(135deg, #f97316 0%, #fb923c 50%, #fbbf24 100%)',
+              }}
             >
-              <Sparkles className="w-6 h-6" />
-              Help Me Choose - String Recommendation Wizard
+              <div className="relative z-10 flex items-center justify-between text-white">
+                <div className="text-left">
+                  <div className="text-3xl font-black mb-2">✨ Not Sure Which String?</div>
+                  <div className="text-xl opacity-90">Take our 60-second quiz for personalized recommendations</div>
+                </div>
+                <motion.div
+                  animate={{ x: [0, 10, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  <ArrowRight className="w-12 h-12" />
+                </motion.div>
+              </div>
+
+              {/* Animated background effect */}
+              <motion.div
+                animate={{
+                  scale: [1, 1.2, 1],
+                  opacity: [0.3, 0.1, 0.3],
+                }}
+                transition={{ duration: 3, repeat: Infinity }}
+                className="absolute inset-0 bg-gradient-radial from-white/30 to-transparent"
+                style={{ transformOrigin: 'center' }}
+              />
             </button>
 
-            <div className="grid md:grid-cols-2 gap-4">
-              {stringOptions.map((string) => {
+            {/* String Grid - VISUAL, NOT CARDS */}
+            <div className="space-y-3">
+              {stringOptions.map((string, i) => {
                 const isSelected = orderData.string_name === string.name
 
                 return (
                   <motion.div
                     key={string.id}
-                    whileHover={{ y: -4, boxShadow: "0 15px 40px rgba(0,0,0,0.1)" }}
-                    whileTap={{ scale: 0.98 }}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.5 + i * 0.05 }}
+                    whileHover={{ x: 8 }}
                     onClick={() => setOrderData({
                       ...orderData,
                       string_type: string.type,
                       string_name: string.name,
                       string_price: string.price,
                     })}
-                    className={`cursor-pointer p-6 rounded-2xl border-2 transition-all ${
+                    className={`relative cursor-pointer p-6 rounded-2xl transition-all duration-300 ${
                       isSelected
-                        ? 'bg-racket-red/5 border-racket-red shadow-lg'
-                        : 'bg-white border-gray-200 hover:border-gray-300'
+                        ? 'bg-racket-red text-white shadow-xl'
+                        : 'bg-white border-2 border-gray-200 hover:border-racket-red/50 hover:shadow-lg'
                     }`}
                   >
-                    <div className="flex justify-between items-start mb-3">
+                    <div className="flex items-center justify-between">
                       <div className="flex-1">
-                        <h3 className="font-bold text-lg text-racket-black">{string.name}</h3>
-                        <p className="text-sm text-racket-gray">{string.type}</p>
+                        <div className="flex items-center gap-3 mb-2">
+                          {string.recommended && !isSelected && (
+                            <span className="bg-racket-green text-white text-xs px-3 py-1 rounded-full font-bold">
+                              ★ RECOMMENDED
+                            </span>
+                          )}
+                          <h3 className="text-xl font-bold">{string.name}</h3>
+                        </div>
+                        <div className="flex items-center gap-4">
+                          <span className={`text-sm font-semibold ${isSelected ? 'text-white/80' : 'text-racket-gray'}`}>
+                            {string.type}
+                          </span>
+                          <span className={`text-sm ${isSelected ? 'text-white/70' : 'text-racket-gray'}`}>
+                            {string.desc}
+                          </span>
+                        </div>
                       </div>
-                      <div className="text-2xl font-bold text-racket-red">
-                        ${string.price}
+
+                      <div className="flex items-center gap-6">
+                        <div className={`text-4xl font-black ${isSelected ? 'text-white' : 'text-racket-red'}`}>
+                          ${string.price}
+                        </div>
+                        
+                        {isSelected && (
+                          <motion.div
+                            initial={{ scale: 0, rotate: -180 }}
+                            animate={{ scale: 1, rotate: 0 }}
+                            transition={{ type: "spring", stiffness: 200 }}
+                            className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center"
+                          >
+                            <span className="text-2xl">✓</span>
+                          </motion.div>
+                        )}
                       </div>
                     </div>
-                    <p className="text-racket-gray text-sm">{string.desc}</p>
-
-                    {isSelected && (
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        className="mt-4 inline-flex items-center gap-2 bg-racket-green/20 text-racket-green px-3 py-1.5 rounded-full text-sm font-semibold"
-                      >
-                        <Check className="w-4 h-4" />
-                        Selected
-                      </motion.div>
-                    )}
                   </motion.div>
                 )
               })}
             </div>
-          </div>
+          </motion.div>
         )}
       </motion.div>
 
-      {/* Navigation */}
-      <div className="flex justify-end pt-6">
+      {/* Navigation - BOLD */}
+      <div className="flex justify-end pt-8">
         <motion.button
-          whileHover={{ scale: 1.05 }}
+          whileHover={{ scale: 1.05, boxShadow: "0 20px 60px rgba(236,31,39,0.3)" }}
           whileTap={{ scale: 0.98 }}
           onClick={onNext}
           disabled={!orderData.customer_provides_string && !orderData.string_name}
-          className="inline-flex items-center gap-3 bg-racket-red text-white px-10 py-5 rounded-full text-lg font-bold shadow-xl hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+          className="inline-flex items-center gap-4 bg-racket-black text-white px-12 py-6 rounded-full text-2xl font-black shadow-2xl disabled:opacity-30 disabled:cursor-not-allowed transition-all"
         >
-          Continue
-          <ArrowRight className="w-6 h-6" />
+          Continue to Racket Details
+          <motion.div
+            animate={{ x: [0, 5, 0] }}
+            transition={{ duration: 1, repeat: Infinity }}
+          >
+            <ArrowRight className="w-8 h-8" />
+          </motion.div>
         </motion.button>
       </div>
     </div>
   )
 }
-
