@@ -1,8 +1,9 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, ArrowRight, ArrowLeft, Sparkles, Check, Info } from 'lucide-react'
+import { X, ArrowRight, ArrowLeft, Sparkles, Check, Info, Star } from 'lucide-react'
 import { useState } from 'react'
+import { recommendStrings, STRINGS_CATALOG } from '@/lib/strings-catalog'
 
 interface Props {
   isOpen: boolean
@@ -22,16 +23,6 @@ const questions = [
     ],
   },
   {
-    id: 'style',
-    question: 'What\'s your playing style?',
-    options: [
-      { value: 'baseline', label: 'Baseline Grinder', subtitle: 'Heavy topspin, long rallies' },
-      { value: 'aggressive', label: 'Aggressive Baseliner', subtitle: 'Big groundstrokes, flat shots' },
-      { value: 'all_court', label: 'All-Court', subtitle: 'Mix it up, come to net' },
-      { value: 'serve_volley', label: 'Serve & Volley', subtitle: 'Classic net player' },
-    ],
-  },
-  {
     id: 'priority',
     question: 'What\'s most important to you?',
     options: [
@@ -39,16 +30,14 @@ const questions = [
       { value: 'power', label: 'Power', subtitle: 'Effortless depth and pace' },
       { value: 'control', label: 'Control', subtitle: 'Precision and feel' },
       { value: 'comfort', label: 'Comfort', subtitle: 'Arm-friendly, reduces shock' },
-      { value: 'durability', label: 'Durability', subtitle: 'Long-lasting strings' },
     ],
   },
   {
-    id: 'arm',
+    id: 'arm_issues',
     question: 'Any arm or shoulder issues?',
     options: [
-      { value: 'none', label: 'No Issues', subtitle: 'Feeling great' },
-      { value: 'minor', label: 'Minor Discomfort', subtitle: 'Occasional soreness' },
-      { value: 'chronic', label: 'Chronic Pain', subtitle: 'Need arm-friendly options' },
+      { value: 'false', label: 'No Issues', subtitle: 'Feeling great' },
+      { value: 'true', label: 'Yes, Need Comfort', subtitle: 'Arm-friendly strings please' },
     ],
   },
   {
@@ -57,96 +46,50 @@ const questions = [
     options: [
       { value: 'value', label: 'Value', subtitle: '$15-20 per string' },
       { value: 'mid', label: 'Mid-Range', subtitle: '$20-28 per string' },
-      { value: 'premium', label: 'Premium', subtitle: '$28-35 per string' },
-      { value: 'no_limit', label: 'Best Available', subtitle: 'Performance over price' },
+      { value: 'premium', label: 'Premium', subtitle: '$28+ per string' },
     ],
   },
 ]
 
-const stringRecommendations = {
-  spin_advanced: {
-    id: 'rpm_blast',
-    name: 'Babolat RPM Blast',
-    price: 22,
-    type: 'Polyester',
-    why: 'Maximum spin potential for aggressive baseliners. Tour-level control and bite on the ball.',
-    tags: ['Spin', 'Control', 'Durability'],
-  },
-  power_intermediate: {
-    id: 'velocity',
-    name: 'Wilson Velocity MLT',
-    price: 18,
-    type: 'Multifilament',
-    why: 'Perfect balance of power and comfort for intermediate players. Great feel and easy depth.',
-    tags: ['Power', 'Comfort', 'Value'],
-  },
-  comfort_all: {
-    id: 'nxt',
-    name: 'Wilson NXT',
-    price: 20,
-    type: 'Multifilament',
-    why: 'The most arm-friendly string available. Soft feel without sacrificing performance.',
-    tags: ['Comfort', 'Power', 'Feel'],
-  },
-  control_advanced: {
-    id: 'luxilon_alu',
-    name: 'Luxilon ALU Power',
-    price: 25,
-    type: 'Polyester',
-    why: 'Tour pro favorite. Ultimate control and precision for advanced players.',
-    tags: ['Control', 'Spin', 'Pro'],
-  },
-  value_all: {
-    id: 'hyper_g',
-    name: 'Solinco Hyper-G',
-    price: 18,
-    type: 'Polyester',
-    why: 'Best value poly string. Great spin and durability at an affordable price.',
-    tags: ['Spin', 'Durability', 'Value'],
-  },
-}
-
 export default function StringWizard({ isOpen, onClose, onSelectString }: Props) {
   const [currentQuestion, setCurrentQuestion] = useState(0)
-  const [answers, setAnswers] = useState<Record<string, string>>({})
+  const [answers, setAnswers] = useState<Record<string, any>>({})
   const [showResults, setShowResults] = useState(false)
+  const [recommendations, setRecommendations] = useState<any[]>([])
 
   const handleAnswer = (questionId: string, value: string) => {
-    setAnswers({ ...answers, [questionId]: value })
+    const newAnswers = { ...answers, [questionId]: value }
+    setAnswers(newAnswers)
     
     if (currentQuestion < questions.length - 1) {
       setTimeout(() => setCurrentQuestion(currentQuestion + 1), 300)
     } else {
+      // Get recommendations from catalog
+      const profile = {
+        level: newAnswers.level,
+        priority: newAnswers.priority,
+        arm_issues: newAnswers.arm_issues === 'true',
+        budget: newAnswers.budget,
+      }
+      const recommended = recommendStrings(profile)
+      setRecommendations(recommended)
       setTimeout(() => setShowResults(true), 300)
     }
-  }
-
-  const getRecommendation = () => {
-    // Simple recommendation logic based on answers
-    if (answers.arm === 'chronic' || answers.arm === 'minor') {
-      return stringRecommendations.comfort_all
-    }
-    if (answers.priority === 'spin' && (answers.level === 'advanced' || answers.level === 'pro')) {
-      return stringRecommendations.spin_advanced
-    }
-    if (answers.priority === 'control' && answers.level === 'advanced') {
-      return stringRecommendations.control_advanced
-    }
-    if (answers.budget === 'value') {
-      return stringRecommendations.value_all
-    }
-    return stringRecommendations.power_intermediate
   }
 
   const resetWizard = () => {
     setCurrentQuestion(0)
     setAnswers({})
     setShowResults(false)
+    setRecommendations([])
+  }
+
+  const handleClose = () => {
+    resetWizard()
+    onClose()
   }
 
   if (!isOpen) return null
-
-  const recommendation = getRecommendation()
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -252,7 +195,6 @@ export default function StringWizard({ isOpen, onClose, onSelectString }: Props)
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="text-center"
               >
                 <motion.div
                   initial={{ scale: 0 }}
@@ -264,78 +206,123 @@ export default function StringWizard({ isOpen, onClose, onSelectString }: Props)
                 </motion.div>
 
                 <h3 className="text-4xl font-bold text-racket-black mb-4">
-                  Perfect Match Found!
+                  Your Perfect Matches!
                 </h3>
-                <p className="text-xl text-racket-gray mb-12">
-                  Based on your answers, we recommend:
+                <p className="text-xl text-racket-gray mb-8">
+                  Based on your answers, we recommend these strings:
                 </p>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 }}
-                  className="bg-gradient-to-br from-racket-red/10 to-racket-orange/10 border-4 border-racket-red rounded-3xl p-10 mb-8"
-                >
-                  <div className="text-center mb-6">
-                    <h4 className="text-3xl font-bold text-racket-black mb-2">
-                      {recommendation.name}
-                    </h4>
-                    <div className="text-5xl font-bold text-racket-red mb-3">
-                      ${recommendation.price}
-                    </div>
-                    <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full">
-                      <span className="text-sm font-bold text-racket-gray">{recommendation.type}</span>
-                    </div>
-                  </div>
+                {/* Show Top 3 Recommendations */}
+                <div className="space-y-4 mb-8">
+                  {recommendations.map((string, i) => (
+                    <motion.div
+                      key={string.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 + i * 0.1 }}
+                      className="bg-white border-4 border-gray-200 hover:border-racket-red rounded-2xl p-6 text-left cursor-pointer transition-all"
+                      onClick={() => {
+                        if (onSelectString) {
+                          onSelectString(string.id, `${string.brand} ${string.name}`, string.price)
+                        }
+                        handleClose()
+                      }}
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3 mb-2">
+                            {i === 0 && (
+                              <span className="bg-racket-green text-white text-xs px-3 py-1 rounded-full font-bold">
+                                ★ TOP PICK
+                              </span>
+                            )}
+                            <span className="text-xs font-bold text-racket-gray uppercase">
+                              {string.brand}
+                            </span>
+                          </div>
+                          <h4 className="text-2xl font-black text-racket-black mb-2">
+                            {string.name}
+                          </h4>
+                          <p className="text-sm text-racket-gray mb-3">
+                            {string.description}
+                          </p>
+                          
+                          {/* Characteristics Bar */}
+                          <div className="flex gap-2 text-xs mb-3">
+                            <div className="flex items-center gap-1">
+                              <span className="text-racket-gray">Power:</span>
+                              <div className="flex gap-0.5">
+                                {[...Array(5)].map((_, j) => (
+                                  <div
+                                    key={j}
+                                    className={`w-2 h-2 rounded-full ${
+                                      j < string.characteristics.power ? 'bg-racket-red' : 'bg-gray-200'
+                                    }`}
+                                  />
+                                ))}
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <span className="text-racket-gray">Control:</span>
+                              <div className="flex gap-0.5">
+                                {[...Array(5)].map((_, j) => (
+                                  <div
+                                    key={j}
+                                    className={`w-2 h-2 rounded-full ${
+                                      j < string.characteristics.control ? 'bg-racket-blue' : 'bg-gray-200'
+                                    }`}
+                                  />
+                                ))}
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <span className="text-racket-gray">Comfort:</span>
+                              <div className="flex gap-0.5">
+                                {[...Array(5)].map((_, j) => (
+                                  <div
+                                    key={j}
+                                    className={`w-2 h-2 rounded-full ${
+                                      j < string.characteristics.comfort ? 'bg-racket-green' : 'bg-gray-200'
+                                    }`}
+                                  />
+                                ))}
+                              </div>
+                            </div>
+                          </div>
 
-                  <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 mb-6">
-                    <div className="flex items-start gap-3">
-                      <Info className="w-5 h-5 text-racket-blue flex-shrink-0 mt-1" />
-                      <div className="text-left">
-                        <h5 className="font-bold text-racket-black mb-2">Why this string?</h5>
-                        <p className="text-racket-gray leading-relaxed">
-                          {recommendation.why}
-                        </p>
+                          {/* Reviews */}
+                          <div className="flex items-center gap-2 text-sm">
+                            <Star className="w-4 h-4 text-racket-orange fill-current" />
+                            <span className="font-bold text-racket-black">{string.rating}</span>
+                            <span className="text-racket-gray">({string.reviews}+ reviews)</span>
+                          </div>
+                        </div>
+
+                        <div className="text-right flex-shrink-0">
+                          <div className="text-4xl font-black text-racket-red mb-2">
+                            ${string.price}
+                          </div>
+                          <motion.button
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            className="bg-racket-red text-white px-6 py-3 rounded-full font-bold text-sm hover:bg-red-600 transition-colors"
+                          >
+                            Select
+                          </motion.button>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-wrap gap-3 justify-center">
-                    {recommendation.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="inline-flex items-center gap-1 bg-racket-red/10 text-racket-red px-4 py-2 rounded-full font-bold"
-                      >
-                        <Check className="w-4 h-4" />
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </motion.div>
-
-                <div className="flex gap-4">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={() => {
-                      if (onSelectString) {
-                        onSelectString(recommendation.id, recommendation.name, recommendation.price)
-                      }
-                      onClose()
-                    }}
-                    className="flex-1 bg-racket-red text-white py-5 rounded-full text-lg font-bold shadow-xl hover:shadow-2xl transition-all"
-                  >
-                    Select This String
-                  </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={resetWizard}
-                    className="flex-1 bg-gray-200 text-racket-black py-5 rounded-full text-lg font-bold hover:bg-gray-300 transition-colors"
-                  >
-                    Start Over
-                  </motion.button>
+                    </motion.div>
+                  ))}
                 </div>
+
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={resetWizard}
+                  className="w-full bg-gray-200 text-racket-black py-4 rounded-full text-lg font-bold hover:bg-gray-300 transition-colors"
+                >
+                  Start Over
+                </motion.button>
               </motion.div>
             )}
           </AnimatePresence>
