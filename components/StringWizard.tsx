@@ -108,7 +108,7 @@ export default function StringWizard({ isOpen, onClose, onSelectString }: Props)
         className="relative bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden"
       >
         {/* Header */}
-        <div className="bg-gradient-to-r from-racket-orange to-orange-500 text-white p-8">
+        <div className="bg-gradient-to-r from-racket-red to-red-600 text-white p-8">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
               <Sparkles className="w-8 h-8" />

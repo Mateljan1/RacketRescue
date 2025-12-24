@@ -292,10 +292,7 @@ export default function ServiceSelection({ orderData, setOrderData, onNext }: Pr
           >
             <button
               onClick={() => setShowStringWizard(true)}
-              className="relative w-full p-10 mb-8 rounded-3xl overflow-hidden group"
-              style={{
-                background: 'linear-gradient(135deg, #f97316 0%, #fb923c 50%, #fbbf24 100%)',
-              }}
+              className="relative w-full p-10 mb-8 rounded-3xl overflow-hidden group bg-gradient-to-r from-racket-red via-red-500 to-red-600 shadow-2xl hover:shadow-3xl transition-all"
             >
               <div className="relative z-10 flex items-center justify-between text-white">
                 <div className="text-left">
