@@ -59,8 +59,8 @@ export default function AboutPage() {
                 expertise to every racquet we string.
               </p>
               <p>
-                Whether you're a competitive junior preparing for a tournament, a weekend warrior looking to improve 
-                your game, or a teaching professional who needs reliable service for your clients, we've got you covered.
+                Whether you&apos;re a competitive junior preparing for a tournament, a weekend warrior looking to improve 
+                your game, or a teaching professional who needs reliable service for your clients, we&apos;ve got you covered.
               </p>
               <p className="text-racket-orange font-semibold">
                 Your racquet is your most important piece of equipment. Let us help you get the most out of it.

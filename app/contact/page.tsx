@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Metadata } from 'next'
-import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react'
+import { MapPin, Phone, Mail, Clock, Send, Check, ArrowRight } from 'lucide-react'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -45,7 +45,7 @@ export default function ContactPage() {
             Book Your Service
           </h1>
           <p className="text-xl text-white/90 max-w-2xl mx-auto">
-            Fill out the form below or give us a call. We'll confirm your appointment within 24 hours.
+            Fill out the form below or give us a call. We&apos;ll confirm your appointment within 24 hours.
           </p>
         </div>
       </section>
@@ -68,7 +68,7 @@ export default function ContactPage() {
                     Request Received!
                   </h3>
                   <p className="text-racket-gray mb-8">
-                    We'll confirm your appointment within 24 hours. Check your email for details.
+                    We&apos;ll confirm your appointment within 24 hours. Check your email for details.
                   </p>
                   <button
                     onClick={() => setSubmitted(false)}
@@ -201,7 +201,7 @@ export default function ContactPage() {
                   </button>
 
                   <p className="text-center text-sm text-racket-gray">
-                    We'll confirm your appointment within 24 hours
+                    We&apos;ll confirm your appointment within 24 hours
                   </p>
                 </form>
               )}
@@ -277,7 +277,7 @@ export default function ContactPage() {
                   (949) 464-6645
                 </a>
                 <p className="text-white/80">
-                  Prefer to call? We're happy to answer your questions and book your service over the phone.
+                  Prefer to call? We&apos;re happy to answer your questions and book your service over the phone.
                 </p>
               </div>
             </div>

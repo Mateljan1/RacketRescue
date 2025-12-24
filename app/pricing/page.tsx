@@ -214,7 +214,7 @@ export default function PricingPage() {
             Questions About Pricing?
           </h2>
           <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
-            We're happy to discuss your specific needs and recommend the best service for your playing style.
+            We&apos;re happy to discuss your specific needs and recommend the best service for your playing style.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

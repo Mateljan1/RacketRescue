@@ -190,7 +190,7 @@ export default function ServicesPage() {
               String Selection
             </h2>
             <p className="text-body-lg text-racket-gray">
-              We stock premium strings from the world's leading manufacturers. Not sure what to choose? We'll help you find the perfect string for your game.
+              We stock premium strings from the world&apos;s leading manufacturers. Not sure what to choose? We&apos;ll help you find the perfect string for your game.
             </p>
           </div>
 
