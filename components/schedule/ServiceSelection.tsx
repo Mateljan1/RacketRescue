@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Shield, Sparkles, Zap, Info, Crown } from 'lucide-react'
+import { Shield, Sparkles, Zap, Info, Crown, Check, ArrowRight } from 'lucide-react'
 import { useState } from 'react'
 
 const services = [

@@ -232,7 +232,7 @@ export default function HomePage() {
             </h2>
             <p className="text-2xl text-racket-gray leading-relaxed">
               No need to drop off your racket. We pick it up, string it professionally, and deliver it back to your door.
-              <span className="block mt-4 text-racket-red font-semibold">It's that simple.</span>
+              <span className="block mt-4 text-racket-red font-semibold">It&apos;s that simple.</span>
             </p>
           </motion.div>
 
