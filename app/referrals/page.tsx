@@ -172,7 +172,7 @@ export default function ReferralsPage() {
             >
               <div className="flex items-center gap-3 mb-4">
                 <TrendingUp className="w-6 h-6 text-racket-red" />
-                <h3 className="text-xl font-bold">This Month's Leaders</h3>
+                <h3 className="text-xl font-bold">This Month&apos;s Leaders</h3>
               </div>
               <div className="space-y-3">
                 {[

@@ -1,8 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { RotateCw, ZoomIn, ZoomOut, Info } from 'lucide-react'
+import { RotateCw, ZoomIn, ZoomOut, Info, Sparkles } from 'lucide-react'
 import { useState } from 'react'
+import Link from 'next/link'
 
 export default function RacketVisualizer3D() {
   const [rotation, setRotation] = useState(0)

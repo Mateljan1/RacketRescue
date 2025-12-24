@@ -201,7 +201,7 @@ export default function RacketsPage() {
             Save Time with Racket Profiles
           </h3>
           <p className="text-lg text-racket-gray leading-relaxed mb-6">
-            Create a profile for each of your rackets and reorder in just 2 clicks. We'll remember all your preferences: brand, model, string type, tension, and any special instructions.
+            Create a profile for each of your rackets and reorder in just 2 clicks. We&apos;ll remember all your preferences: brand, model, string type, tension, and any special instructions.
           </p>
           <div className="grid md:grid-cols-3 gap-6 text-center">
             <div>

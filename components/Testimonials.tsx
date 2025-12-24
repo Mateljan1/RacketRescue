@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Star, Quote } from 'lucide-react'
+import { Star, Quote, CheckCircle } from 'lucide-react'
 import Image from 'next/image'
 
 const testimonials = [
@@ -103,7 +103,7 @@ export default function Testimonials() {
               <div className="relative">
                 <Quote className="absolute -top-2 -left-2 w-10 h-10 text-racket-red/10" />
                 <p className="text-lg text-racket-gray leading-relaxed pl-6">
-                  "{testimonial.quote}"
+                  &ldquo;{testimonial.quote}&rdquo;
                 </p>
               </div>
 
