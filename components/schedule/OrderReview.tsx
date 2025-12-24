@@ -99,7 +99,7 @@ export default function OrderReview({ orderData, pricing, onPrev }: Props) {
               <div className="space-y-3">
                 <div className="flex justify-between">
                   <span className="text-racket-gray">Service Package:</span>
-                  <span className="font-bold text-racket-black">{serviceLabels[orderData.service_package]}</span>
+                  <span className="font-bold text-racket-black">{serviceLabels[orderData.service_package as keyof typeof serviceLabels]}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-racket-gray">String:</span>
@@ -176,7 +176,7 @@ export default function OrderReview({ orderData, pricing, onPrev }: Props) {
             
             <div className="space-y-3 text-lg">
               <div className="flex justify-between">
-                <span className="text-racket-gray">Labor ({serviceLabels[orderData.service_package]})</span>
+                <span className="text-racket-gray">Labor ({serviceLabels[orderData.service_package as keyof typeof serviceLabels]})</span>
                 <span className="font-bold text-racket-black">${pricing.serviceLabor.toFixed(2)}</span>
               </div>
               
