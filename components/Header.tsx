@@ -3,13 +3,15 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Menu, X, Phone } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
+import { motion } from 'framer-motion'
+
+const LOGO_URL = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68b77f9f4a7eae9e097474c2/e406f4500_RacketRescueLogoFinal_Horizontal.png"
 
 const navigation = [
-  { name: 'Services', href: '/services' },
-  { name: 'Pricing', href: '/pricing' },
-  { name: 'About', href: '/about' },
-  { name: 'Contact', href: '/contact' },
+  { name: 'How It Works', href: '/how-it-works' },
+  { name: 'Membership', href: '/membership' },
+  { name: 'Dashboard', href: '/dashboard' },
 ]
 
 export default function Header() {
@@ -35,23 +37,24 @@ export default function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? 'bg-white/95 backdrop-blur-lg shadow-lg py-4'
-            : 'bg-white/90 backdrop-blur-md py-6'
+            ? 'bg-white/98 backdrop-blur-xl shadow-xl py-4'
+            : 'bg-white/90 backdrop-blur-lg py-6'
         }`}
       >
         <nav className="container-racket">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 group">
-              <div className="relative w-12 h-12 bg-racket-orange rounded-full flex items-center justify-center group-hover:scale-105 transition-transform">
-                <span className="text-white font-headline font-bold text-xl">RR</span>
-              </div>
-              <div className="hidden sm:block">
-                <div className="font-headline font-bold text-xl text-racket-navy">Racket Rescue</div>
-                <div className="text-xs text-racket-gray -mt-1">Professional Stringing</div>
-              </div>
+            <Link href="/" className="group">
+              <Image
+                src={LOGO_URL}
+                alt="Racket Rescue - We Save Your Game"
+                width={180}
+                height={50}
+                className="h-10 md:h-12 w-auto group-hover:opacity-80 transition-opacity"
+                priority
+              />
             </Link>
 
             {/* Desktop Navigation */}
@@ -60,24 +63,25 @@ export default function Header() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-sm font-medium text-racket-slate hover:text-racket-orange transition-colors"
+                  className="text-base font-medium text-racket-gray hover:text-racket-red transition-colors"
                 >
                   {item.name}
                 </Link>
               ))}
-              <a
-                href="tel:+19494646645"
-                className="flex items-center gap-2 bg-racket-orange text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-racket-red transition-all hover:scale-105"
-              >
-                <Phone className="w-4 h-4" />
-                (949) 464-6645
-              </a>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
+                <Link
+                  href="/schedule"
+                  className="inline-flex items-center gap-2 bg-racket-red text-white px-6 py-3 rounded-full font-bold hover:bg-red-600 transition-all shadow-lg hover:shadow-xl"
+                >
+                  Schedule Service
+                </Link>
+              </motion.div>
             </div>
 
             {/* Mobile Menu Button */}
             <button
               type="button"
-              className="md:hidden p-2 text-racket-navy"
+              className="md:hidden p-3 text-racket-black bg-white rounded-xl shadow-lg"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle menu"
             >
@@ -89,33 +93,46 @@ export default function Header() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-40 md:hidden">
-          <div
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-40 md:hidden"
+        >
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setMobileMenuOpen(false)}
           />
-          <div className="absolute right-0 top-0 bottom-0 w-[280px] bg-white shadow-2xl overflow-y-auto">
+          <motion.div
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="absolute right-0 top-0 bottom-0 w-[85%] max-w-sm bg-white shadow-2xl overflow-y-auto"
+          >
             <div className="p-8 pt-24">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="block text-lg font-medium text-racket-slate hover:text-racket-orange py-4 border-b border-gray-100"
+                  className="block text-xl font-medium text-racket-gray hover:text-racket-red py-5 border-b border-gray-100 transition-colors"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {item.name}
                 </Link>
               ))}
-              <a
-                href="tel:+19494646645"
-                className="block w-full mt-8 text-center bg-racket-orange text-white px-6 py-4 rounded-full font-semibold hover:bg-racket-red"
+              <Link
+                href="/schedule"
+                className="block w-full mt-8 text-center bg-racket-red text-white px-8 py-5 rounded-full font-bold hover:bg-red-600 shadow-xl"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Call (949) 464-6645
-              </a>
+                Schedule Service
+              </Link>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       )}
     </>
   )

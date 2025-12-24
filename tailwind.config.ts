@@ -10,21 +10,21 @@ const config: Config = {
     extend: {
       colors: {
         racket: {
-          // Primary brand colors
-          orange: '#FF6B35',      // Vibrant energy orange
-          navy: '#1A2F3A',        // Deep professional navy
-          slate: '#364958',       // Medium slate blue
-          cream: '#FFF8F0',       // Warm cream background
-          gray: '#8B9FA8',        // Soft gray for text
+          // Primary brand colors (CORRECT from Base44)
+          red: '#ec1f27',         // Primary brand - buttons, CTAs, accents
+          black: '#030707',       // Headlines, primary text
+          charcoal: '#1a1a1a',    // Dark backgrounds
+          gray: '#6b7280',        // Secondary text
+          lightgray: '#f3f4f6',   // Subtle backgrounds
+          white: '#ffffff',       // Pure white
           // Accent colors
-          green: '#52B788',       // Success/check green
-          red: '#E63946',         // Urgency/CTA red
-          white: '#FFFFFF',       // Pure white
-          black: '#0D1B2A',       // Rich black
+          green: '#10b981',       // Member benefits, success states
+          orange: '#f97316',      // Alerts, wizard features
+          blue: '#3b82f6',        // Information, tooltips
         },
       },
       fontFamily: {
-        headline: ['Montserrat', 'sans-serif'],
+        headline: ['Inter', 'system-ui', 'sans-serif'],
         body: ['Inter', 'system-ui', 'sans-serif'],
       },
       fontSize: {

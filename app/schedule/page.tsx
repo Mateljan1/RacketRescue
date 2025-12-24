@@ -1,0 +1,202 @@
+'use client'
+
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { ArrowLeft, ArrowRight, Check } from 'lucide-react'
+import Link from 'next/link'
+import ServiceSelection from '@/components/schedule/ServiceSelection'
+import RacketDetails from '@/components/schedule/RacketDetails'
+import PickupSchedule from '@/components/schedule/PickupSchedule'
+import OrderReview from '@/components/schedule/OrderReview'
+
+const steps = [
+  { number: 1, title: 'Service', desc: 'Choose your package' },
+  { number: 2, title: 'Racket', desc: 'Tell us about your racket' },
+  { number: 3, title: 'Pickup', desc: 'Schedule pickup & delivery' },
+  { number: 4, title: 'Review', desc: 'Confirm your order' },
+]
+
+export default function SchedulePage() {
+  const [currentStep, setCurrentStep] = useState(1)
+  const [orderData, setOrderData] = useState({
+    service_package: 'match_ready',
+    racket_brand: '',
+    racket_model: '',
+    string_type: '',
+    string_name: '',
+    string_price: 0,
+    customer_provides_string: false,
+    main_tension: 55,
+    cross_tension: 55,
+    is_express: false,
+    add_regrip: false,
+    add_overgrip: false,
+    add_dampener: false,
+    dampener_bundle: false,
+    add_second_racket: false,
+    pickup_address: '',
+    delivery_address: '',
+    pickup_time: '',
+    special_instructions: '',
+  })
+
+  const nextStep = () => {
+    if (currentStep < 4) {
+      setCurrentStep(prev => prev + 1)
+    }
+  }
+
+  const prevStep = () => {
+    if (currentStep > 1) {
+      setCurrentStep(prev => prev - 1)
+    }
+  }
+
+  const calculatePricing = () => {
+    const serviceLabor = orderData.service_package === 'match_ready' ? 35 : 50
+    const stringPrice = orderData.customer_provides_string ? 0 : orderData.string_price
+    const expressFee = orderData.is_express ? 15 : 0
+    const regripFee = orderData.add_regrip ? 10 : 0
+    
+    let overGripFee = 0
+    let dampenerFee = 0
+    if (orderData.dampener_bundle) {
+      dampenerFee = 7
+    } else {
+      overGripFee = orderData.add_overgrip ? 3 : 0
+      dampenerFee = orderData.add_dampener ? 5 : 0
+    }
+    
+    const secondRacketFee = orderData.add_second_racket ? serviceLabor : 0
+    const pickupFee = 15 // Will be waived for members
+
+    const subtotal = serviceLabor + stringPrice + expressFee + regripFee + overGripFee + dampenerFee + secondRacketFee
+    const total = subtotal + pickupFee
+
+    return {
+      serviceLabor,
+      stringPrice,
+      expressFee,
+      regripFee,
+      overGripFee,
+      dampenerFee,
+      secondRacketFee,
+      subtotal,
+      pickupFee,
+      total,
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-white pt-24">
+      {/* Header */}
+      <div className="bg-gradient-to-br from-racket-black to-racket-charcoal text-white py-16">
+        <div className="container-racket">
+          <div className="flex items-center gap-4 mb-8">
+            <Link
+              href="/"
+              className="p-3 bg-white/10 rounded-full hover:bg-white/20 transition-colors"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </Link>
+            <div>
+              <h1 className="text-4xl md:text-5xl font-bold">Schedule Service</h1>
+              <p className="text-white/80 text-lg mt-2">Professional racket stringing with pickup & delivery</p>
+            </div>
+          </div>
+
+          {/* Progress Steps */}
+          <div className="flex justify-center mt-12">
+            <div className="flex items-center gap-3">
+              {steps.map((step, i) => (
+                <div key={step.number} className="flex items-center">
+                  <motion.div
+                    className="relative"
+                    whileHover={{ scale: 1.1 }}
+                  >
+                    <div
+                      className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg transition-all ${
+                        step.number < currentStep
+                          ? 'bg-racket-green text-white shadow-lg'
+                          : step.number === currentStep
+                          ? 'bg-racket-red text-white shadow-2xl ring-4 ring-racket-red/30'
+                          : 'bg-white/10 text-white/50'
+                      }`}
+                    >
+                      {step.number < currentStep ? <Check className="w-6 h-6" /> : step.number}
+                    </div>
+                    <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap hidden md:block">
+                      <div className={`text-sm font-medium ${step.number === currentStep ? 'text-white' : 'text-white/50'}`}>
+                        {step.title}
+                      </div>
+                    </div>
+                  </motion.div>
+                  {i < steps.length - 1 && (
+                    <div className="relative w-16 h-1 mx-2">
+                      <div className="absolute inset-0 bg-white/10 rounded-full" />
+                      <motion.div
+                        className="absolute inset-0 bg-racket-red rounded-full"
+                        initial={{ scaleX: 0 }}
+                        animate={{
+                          scaleX: step.number < currentStep ? 1 : 0,
+                        }}
+                        transition={{ duration: 0.4 }}
+                        style={{ transformOrigin: 'left' }}
+                      />
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Step Content */}
+      <div className="container-racket py-16">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentStep}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.4, ease: [0.22, 0.61, 0.36, 1] }}
+            className="max-w-4xl mx-auto"
+          >
+            {currentStep === 1 && (
+              <ServiceSelection
+                orderData={orderData}
+                setOrderData={setOrderData}
+                onNext={nextStep}
+              />
+            )}
+            {currentStep === 2 && (
+              <RacketDetails
+                orderData={orderData}
+                setOrderData={setOrderData}
+                onNext={nextStep}
+                onPrev={prevStep}
+              />
+            )}
+            {currentStep === 3 && (
+              <PickupSchedule
+                orderData={orderData}
+                setOrderData={setOrderData}
+                onNext={nextStep}
+                onPrev={prevStep}
+              />
+            )}
+            {currentStep === 4 && (
+              <OrderReview
+                orderData={orderData}
+                pricing={calculatePricing()}
+                onPrev={prevStep}
+              />
+            )}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </div>
+  )
+}
+

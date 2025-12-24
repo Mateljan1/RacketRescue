@@ -1,50 +1,53 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Mail, Phone, MapPin } from 'lucide-react'
+
+const LOGO_URL = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68b77f9f4a7eae9e097474c2/e406f4500_RacketRescueLogoFinal_Horizontal.png"
 
 export default function Footer() {
   return (
-    <footer className="bg-racket-navy text-white">
-      <div className="container-racket py-16">
+    <footer className="bg-racket-black text-white">
+      <div className="container-racket py-20">
         <div className="grid md:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="md:col-span-2">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 bg-racket-orange rounded-full flex items-center justify-center">
-                <span className="text-white font-headline font-bold text-xl">RR</span>
-              </div>
-              <div>
-                <div className="font-headline font-bold text-xl">Racket Rescue</div>
-                <div className="text-sm text-racket-gray">Professional Stringing Services</div>
-              </div>
-            </div>
-            <p className="text-racket-gray leading-relaxed max-w-md">
-              Expert racquet stringing and customization services in Laguna Beach. 
-              Trusted by competitive players and recreational enthusiasts alike.
+            <Image
+              src={LOGO_URL}
+              alt="Racket Rescue"
+              width={200}
+              height={60}
+              className="h-12 w-auto mb-6 brightness-0 invert"
+            />
+            <p className="text-white/70 leading-relaxed max-w-md text-lg mb-6">
+              Professional racket stringing with pickup & delivery in Laguna Beach.
             </p>
+            <div className="inline-flex items-center gap-2 bg-racket-red/20 text-racket-red px-4 py-2 rounded-full font-bold">
+              We Save Your Game!
+            </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-headline font-semibold text-lg mb-4">Quick Links</h3>
-            <ul className="space-y-3">
+            <h3 className="font-bold text-lg mb-6">Quick Links</h3>
+            <ul className="space-y-4">
               <li>
-                <Link href="/services" className="text-racket-gray hover:text-racket-orange transition-colors">
-                  Services
+                <Link href="/schedule" className="text-white/70 hover:text-racket-red transition-colors text-lg">
+                  Schedule Service
                 </Link>
               </li>
               <li>
-                <Link href="/pricing" className="text-racket-gray hover:text-racket-orange transition-colors">
-                  Pricing
+                <Link href="/membership" className="text-white/70 hover:text-racket-red transition-colors text-lg">
+                  Membership
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="text-racket-gray hover:text-racket-orange transition-colors">
-                  About
+                <Link href="/dashboard" className="text-white/70 hover:text-racket-red transition-colors text-lg">
+                  Dashboard
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-racket-gray hover:text-racket-orange transition-colors">
-                  Contact
+                <Link href="/how-it-works" className="text-white/70 hover:text-racket-red transition-colors text-lg">
+                  How It Works
                 </Link>
               </li>
             </ul>
@@ -52,29 +55,29 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="font-headline font-semibold text-lg mb-4">Contact</h3>
-            <ul className="space-y-3">
+            <h3 className="font-bold text-lg mb-6">Contact</h3>
+            <ul className="space-y-4">
               <li>
                 <a
                   href="tel:+19494646645"
-                  className="flex items-center gap-2 text-racket-gray hover:text-racket-orange transition-colors"
+                  className="flex items-center gap-3 text-white/70 hover:text-racket-red transition-colors text-lg group"
                 >
-                  <Phone className="w-4 h-4" />
+                  <Phone className="w-5 h-5 group-hover:scale-110 transition-transform" />
                   (949) 464-6645
                 </a>
               </li>
               <li>
                 <a
                   href="mailto:support@lagunabeachtennisacademy.com"
-                  className="flex items-center gap-2 text-racket-gray hover:text-racket-orange transition-colors"
+                  className="flex items-center gap-3 text-white/70 hover:text-racket-red transition-colors text-lg group"
                 >
-                  <Mail className="w-4 h-4" />
+                  <Mail className="w-5 h-5 group-hover:scale-110 transition-transform" />
                   Email Us
                 </a>
               </li>
-              <li className="flex items-start gap-2 text-racket-gray">
-                <MapPin className="w-4 h-4 mt-1 flex-shrink-0" />
-                <span>
+              <li className="flex items-start gap-3 text-white/70">
+                <MapPin className="w-5 h-5 mt-1 flex-shrink-0" />
+                <span className="text-lg">
                   1098 Balboa Ave<br />
                   Laguna Beach, CA 92651
                 </span>
@@ -84,23 +87,29 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-racket-gray">
+        <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-white/50">
             © {new Date().getFullYear()} Racket Rescue. All rights reserved.
           </p>
-          <div className="flex gap-6 text-sm">
-            <Link href="/privacy" className="text-racket-gray hover:text-racket-orange transition-colors">
+          <div className="flex gap-8 text-sm">
+            <Link href="/privacy" className="text-white/50 hover:text-racket-red transition-colors">
               Privacy Policy
             </Link>
-            <Link href="/terms" className="text-racket-gray hover:text-racket-orange transition-colors">
+            <Link href="/terms" className="text-white/50 hover:text-racket-red transition-colors">
               Terms of Service
             </Link>
           </div>
         </div>
 
         {/* Attribution */}
-        <div className="mt-6 text-center text-xs text-racket-gray/60">
-          Part of <Link href="https://lagunabeachtennisacademy.com" className="hover:text-racket-orange transition-colors">Laguna Beach Tennis Academy</Link>
+        <div className="mt-8 text-center text-sm text-white/30">
+          Part of{' '}
+          <Link
+            href="https://lagunabeachtennisacademy.com"
+            className="hover:text-racket-red transition-colors font-semibold"
+          >
+            Laguna Beach Tennis Academy
+          </Link>
         </div>
       </div>
     </footer>
