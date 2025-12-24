@@ -7,7 +7,7 @@ import { useState } from 'react'
 const faqs = [
   {
     q: 'How does pickup and delivery work?',
-    a: 'After you place your order, we'll come to your address to pick up your racket at your preferred time. Once strung, we'll deliver it right back to your door. Free for Standard, Elite, and Family members!',
+    a: 'After you place your order, we&apos;ll come to your address to pick up your racket at your preferred time. Once strung, we&apos;ll deliver it right back to your door. Free for Standard, Elite, and Family members!',
   },
   {
     q: 'What if I need my racket back quickly?',
@@ -15,7 +15,7 @@ const faqs = [
   },
   {
     q: 'Can I provide my own strings?',
-    a: 'Absolutely! Just select "I\'ll provide my own string" during ordering and include the string in your racket cover when we pick it up.',
+    a: 'Absolutely! Just select "I&apos;ll provide my own string" during ordering and include the string in your racket cover when we pick it up.',
   },
   {
     q: 'What tension should I use?',
