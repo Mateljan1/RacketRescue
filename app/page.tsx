@@ -6,6 +6,9 @@ import Image from 'next/image'
 import { ArrowRight, Truck, Zap, Shield, Crown } from 'lucide-react'
 import SocialProof from '@/components/SocialProof'
 import Testimonials from '@/components/Testimonials'
+import TrustBadges from '@/components/TrustBadges'
+import FAQ from '@/components/FAQ'
+import FloatingCTA from '@/components/FloatingCTA'
 
 const LOGO_URL = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68b77f9f4a7eae9e097474c2/e406f4500_RacketRescueLogoFinal_Horizontal.png"
 
@@ -55,6 +58,7 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-white">
       <SocialProof />
+      <FloatingCTA />
       {/* Cinematic Hero */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-racket-black via-racket-charcoal to-racket-black">
         {/* Animated gradient mesh background */}
@@ -498,8 +502,14 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Trust Badges */}
+      <TrustBadges />
+
       {/* Testimonials */}
       <Testimonials />
+
+      {/* FAQ */}
+      <FAQ />
 
       {/* Final CTA */}
       <section className="py-32 bg-gradient-to-br from-racket-red to-red-600 text-white relative overflow-hidden">
