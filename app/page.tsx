@@ -306,7 +306,7 @@ export default function HomePage() {
                 Premium String Selection
               </h2>
               <p className="text-body-lg text-racket-gray">
-                We stock professional-grade strings from the world's leading brands.
+                We stock professional-grade strings from the world&apos;s leading brands.
               </p>
             </motion.div>
 
@@ -332,7 +332,7 @@ export default function HomePage() {
 
             <motion.div variants={fadeInUp} className="text-center">
               <p className="text-racket-gray mb-8">
-                String prices vary by model. We'll help you choose the perfect string for your game.
+                String prices vary by model. We&apos;ll help you choose the perfect string for your game.
               </p>
               <Link
                 href="/services"
