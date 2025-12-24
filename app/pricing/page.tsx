@@ -59,6 +59,33 @@ const addOns = [
   { service: 'Rush Service (2-4 hours)', price: '+$20', description: 'Emergency same-day priority' },
 ]
 
+const stringTypes = [
+  {
+    category: 'Polyester',
+    description: 'Maximum spin and control for aggressive players',
+    brands: ['Luxilon', 'Solinco', 'Babolat RPM'],
+    priceRange: '$15-35',
+  },
+  {
+    category: 'Multifilament',
+    description: 'Comfortable, arm-friendly with excellent feel',
+    brands: ['Babolat Touch', 'Wilson NXT', 'Tecnifibre X-One'],
+    priceRange: '$18-30',
+  },
+  {
+    category: 'Natural Gut',
+    description: 'Ultimate feel and power, premium choice',
+    brands: ['Babolat VS', 'Wilson Natural Gut', 'Luxilon Natural Gut'],
+    priceRange: '$35-45',
+  },
+  {
+    category: 'Hybrid',
+    description: 'Best of both worlds - spin + comfort',
+    brands: ['Custom combinations available'],
+    priceRange: '$25-40',
+  },
+]
+
 export default function PricingPage() {
   return (
     <main className="min-h-screen bg-white pt-24">
