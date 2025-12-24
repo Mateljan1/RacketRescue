@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { useState, useEffect } from 'react'
-import { RACKET_PRESETS } from '@/lib/strings-catalog'
+import { RACKET_PRESETS, GRIP_OPTIONS, SERVICE_ADDONS } from '@/lib/strings-catalog'
 
 interface Props {
   orderData: any
@@ -239,17 +239,48 @@ export default function RacketDetails({ orderData, setOrderData, onNext, onPrev 
         />
       </motion.div>
 
-      {/* Add-ons - PREMIUM TOGGLES */}
+      {/* Grip Selection */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
+      >
+        <h3 className="text-3xl font-bold text-racket-black mb-6">Overgrip Choice</h3>
+        <p className="text-racket-gray mb-6">Select your preferred overgrip (included with Dampener Bundle or +$3)</p>
+        
+        <div className="grid md:grid-cols-3 gap-4">
+          {GRIP_OPTIONS.map((grip) => (
+            <motion.button
+              key={grip.id}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => setOrderData({ ...orderData, overgrip_choice: grip.name })}
+              className={`p-5 rounded-2xl font-bold transition-all ${
+                orderData.overgrip_choice === grip.name
+                  ? 'bg-racket-red text-white shadow-xl'
+                  : 'bg-white border-3 border-gray-200 text-racket-black hover:border-racket-red/30'
+              }`}
+            >
+              <div className="text-lg mb-1">{grip.name}</div>
+              <div className={`text-sm ${orderData.overgrip_choice === grip.name ? 'text-white/80' : 'text-racket-gray'}`}>
+                ${grip.price} retail
+              </div>
+            </motion.button>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Add-ons - SERVICE-BASED */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5 }}
         className="space-y-4"
       >
-        <h3 className="text-3xl font-bold text-racket-black mb-6">Add-Ons</h3>
+        <h3 className="text-3xl font-bold text-racket-black mb-6">Service Add-Ons</h3>
         
-        {/* Re-grip */}
-        <label className="relative block cursor-pointer group">
+        {/* Main Add-ons */}
+        <label className="relative block cursor-pointer">
           <input
             type="checkbox"
             checked={orderData.add_regrip}
@@ -259,8 +290,8 @@ export default function RacketDetails({ orderData, setOrderData, onNext, onPrev 
           <div className="p-6 bg-white border-4 border-gray-200 rounded-2xl peer-checked:border-racket-red peer-checked:bg-racket-red peer-checked:text-white transition-all duration-300 peer-checked:shadow-2xl">
             <div className="flex items-center justify-between">
               <div>
-                <span className="text-2xl font-bold block mb-1">Add Re-grip</span>
-                <span className="text-base opacity-80">Premium replacement grip</span>
+                <span className="text-2xl font-bold block mb-1">Replacement Grip</span>
+                <span className="text-base opacity-80">Premium base grip replacement</span>
               </div>
               <span className="text-4xl font-black">+$10</span>
             </div>
@@ -268,7 +299,7 @@ export default function RacketDetails({ orderData, setOrderData, onNext, onPrev 
         </label>
 
         {/* Dampener Bundle */}
-        <label className="relative block cursor-pointer group">
+        <label className="relative block cursor-pointer">
           <input
             type="checkbox"
             checked={orderData.dampener_bundle}
@@ -291,43 +322,28 @@ export default function RacketDetails({ orderData, setOrderData, onNext, onPrev 
           </div>
         </label>
 
-        {/* Individual add-ons if not bundle */}
-        <AnimatePresence>
-          {!orderData.dampener_bundle && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="grid md:grid-cols-2 gap-4 pl-6"
-            >
-              <label className="relative block cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={orderData.add_overgrip}
-                  onChange={(e) => setOrderData({ ...orderData, add_overgrip: e.target.checked })}
-                  className="sr-only peer"
-                />
-                <div className="p-4 bg-gray-100 border-3 border-gray-300 rounded-xl peer-checked:border-racket-red peer-checked:bg-racket-red/10 transition-all">
-                  <span className="font-semibold text-racket-black">Overgrip</span>
-                  <span className="ml-2 text-racket-red font-bold">+$3</span>
+        {/* Extra Service Add-ons */}
+        <div className="grid md:grid-cols-2 gap-4">
+          {SERVICE_ADDONS.slice(0, 4).map((addon) => (
+            <label key={addon.id} className="relative block cursor-pointer">
+              <input
+                type="checkbox"
+                checked={orderData[addon.id] || false}
+                onChange={(e) => setOrderData({ ...orderData, [addon.id]: e.target.checked })}
+                className="sr-only peer"
+              />
+              <div className="p-5 bg-gray-50 border-3 border-gray-200 rounded-xl peer-checked:border-racket-black peer-checked:bg-racket-black/5 transition-all hover:border-gray-300">
+                <div className="flex justify-between items-start mb-2">
+                  <span className="font-bold text-racket-black">{addon.name}</span>
+                  <span className="text-2xl font-black text-racket-red">
+                    {addon.price === 0 ? 'FREE' : `+$${addon.price}`}
+                  </span>
                 </div>
-              </label>
-
-              <label className="relative block cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={orderData.add_dampener}
-                  onChange={(e) => setOrderData({ ...orderData, add_dampener: e.target.checked })}
-                  className="sr-only peer"
-                />
-                <div className="p-4 bg-gray-100 border-3 border-gray-300 rounded-xl peer-checked:border-racket-red peer-checked:bg-racket-red/10 transition-all">
-                  <span className="font-semibold text-racket-black">Dampener</span>
-                  <span className="ml-2 text-racket-red font-bold">+$5</span>
-                </div>
-              </label>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                <p className="text-sm text-racket-gray">{addon.description}</p>
+              </div>
+            </label>
+          ))}
+        </div>
 
         {/* Second Racket */}
         <label className="relative block cursor-pointer">
@@ -341,7 +357,7 @@ export default function RacketDetails({ orderData, setOrderData, onNext, onPrev 
             <div className="flex items-center justify-between">
               <div>
                 <span className="text-2xl font-bold text-racket-black block mb-1">Add Second Racket</span>
-                <span className="text-base text-racket-gray">Same service for additional racket</span>
+                <span className="text-base text-racket-gray">Same service + string for additional racket</span>
               </div>
               <span className="text-4xl font-black text-racket-blue">
                 +${orderData.service_package === 'match_ready' ? 35 : 50}
