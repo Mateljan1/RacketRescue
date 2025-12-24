@@ -10,8 +10,9 @@ const LOGO_URL = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/pub
 
 const navigation = [
   { name: 'Membership', href: '/membership' },
+  { name: 'String Education', href: '/strings' },
+  { name: 'Shop', href: '/shop' },
   { name: 'My Rackets', href: '/rackets' },
-  { name: 'Referrals', href: '/referrals' },
   { name: 'Dashboard', href: '/dashboard' },
 ]
 
