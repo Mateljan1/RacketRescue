@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { useState } from 'react'
+import Link from 'next/link'
 import StringWizard from '@/components/StringWizard'
 
 interface Props {
@@ -11,13 +12,9 @@ interface Props {
   onNext: () => void
 }
 
-const stringOptions = [
-  { id: 'velocity', name: 'Wilson Velocity MLT', price: 18, type: 'Multifilament', desc: 'Great all-around string', recommended: true },
-  { id: 'rpm_blast', name: 'Babolat RPM Blast', price: 22, type: 'Polyester', desc: 'Maximum spin & control' },
-  { id: 'luxilon_alu', name: 'Luxilon ALU Power', price: 25, type: 'Polyester', desc: 'Tour pro favorite' },
-  { id: 'nxt', name: 'Wilson NXT', price: 20, type: 'Multifilament', desc: 'Arm-friendly comfort' },
-  { id: 'hyper_g', name: 'Solinco Hyper-G', price: 18, type: 'Polyester', desc: 'Spin and durability' },
-]
+import { STRINGS_CATALOG } from '@/lib/strings-catalog'
+
+const stringOptions = STRINGS_CATALOG
 
 export default function ServiceSelection({ orderData, setOrderData, onNext }: Props) {
   const [showStringWizard, setShowStringWizard] = useState(false)
@@ -325,7 +322,7 @@ export default function ServiceSelection({ orderData, setOrderData, onNext }: Pr
               />
             </button>
 
-            {/* String Grid - VISUAL, NOT CARDS */}
+            {/* String Grid - ULTRA CLEAN TENNIS WAREHOUSE */}
             <div className="space-y-3">
               {stringOptions.map((string, i) => {
                 const isSelected = orderData.string_name === string.name
@@ -339,57 +336,91 @@ export default function ServiceSelection({ orderData, setOrderData, onNext }: Pr
                     whileHover={{ x: 8 }}
                     onClick={() => setOrderData({
                       ...orderData,
-                      string_type: string.type,
-                      string_name: string.name,
+                      string_type: string.material,
+                      string_name: `${string.brand} ${string.name}`,
                       string_price: string.price,
                     })}
-                    className={`relative cursor-pointer p-6 rounded-2xl transition-all duration-300 ${
+                    className={`relative cursor-pointer rounded-2xl transition-all duration-300 overflow-hidden ${
                       isSelected
-                        ? 'bg-racket-red text-white shadow-xl'
-                        : 'bg-white border-2 border-gray-200 hover:border-racket-red/50 hover:shadow-lg'
+                        ? 'bg-racket-black text-white shadow-2xl'
+                        : 'bg-white border-3 border-gray-200 hover:border-racket-black/30 hover:shadow-xl'
                     }`}
                   >
-                    <div className="flex items-center justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-2">
-                          {string.recommended && !isSelected && (
-                            <span className="bg-racket-green text-white text-xs px-3 py-1 rounded-full font-bold">
-                              ★ RECOMMENDED
+                    <div className="p-6">
+                      <div className="flex items-start justify-between gap-6">
+                        <div className="flex-1 min-w-0">
+                          {/* Brand + Name */}
+                          <div className="flex items-center gap-3 mb-3">
+                            <span className={`text-xs font-black uppercase tracking-wider ${isSelected ? 'text-white/60' : 'text-racket-gray'}`}>
+                              {string.brand}
                             </span>
-                          )}
-                          <h3 className="text-xl font-bold">{string.name}</h3>
+                            {string.rating >= 4.7 && !isSelected && (
+                              <span className="bg-racket-green text-white text-xs px-2 py-1 rounded-full font-bold">
+                                ★ {string.rating} ({string.reviews}+ reviews)
+                              </span>
+                            )}
+                          </div>
+                          <h3 className="text-2xl font-black mb-2">{string.name}</h3>
+                          <p className={`text-base mb-3 ${isSelected ? 'text-white/80' : 'text-racket-gray'}`}>
+                            {string.description}
+                          </p>
+                          
+                          {/* Best For Tags */}
+                          <div className="flex flex-wrap gap-2">
+                            {string.bestFor.map((feature) => (
+                              <span
+                                key={feature}
+                                className={`text-xs px-3 py-1 rounded-full font-bold ${
+                                  isSelected
+                                    ? 'bg-white/20 text-white'
+                                    : 'bg-gray-100 text-racket-gray'
+                                }`}
+                              >
+                                {feature}
+                              </span>
+                            ))}
+                          </div>
                         </div>
-                        <div className="flex items-center gap-4">
-                          <span className={`text-sm font-semibold ${isSelected ? 'text-white/80' : 'text-racket-gray'}`}>
-                            {string.type}
-                          </span>
-                          <span className={`text-sm ${isSelected ? 'text-white/70' : 'text-racket-gray'}`}>
-                            {string.desc}
-                          </span>
-                        </div>
-                      </div>
 
-                      <div className="flex items-center gap-6">
-                        <div className={`text-4xl font-black ${isSelected ? 'text-white' : 'text-racket-red'}`}>
-                          ${string.price}
+                        {/* Price + Select */}
+                        <div className="flex flex-col items-end justify-between flex-shrink-0">
+                          <div className={`text-5xl font-black ${isSelected ? 'text-white' : 'text-racket-red'}`}>
+                            ${string.price}
+                          </div>
+                          
+                          {isSelected && (
+                            <motion.div
+                              initial={{ scale: 0, rotate: -180 }}
+                              animate={{ scale: 1, rotate: 0 }}
+                              transition={{ type: "spring", stiffness: 200 }}
+                              className="mt-4 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-bold"
+                            >
+                              ✓ SELECTED
+                            </motion.div>
+                          )}
                         </div>
-                        
-                        {isSelected && (
-                          <motion.div
-                            initial={{ scale: 0, rotate: -180 }}
-                            animate={{ scale: 1, rotate: 0 }}
-                            transition={{ type: "spring", stiffness: 200 }}
-                            className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center"
-                          >
-                            <span className="text-2xl">✓</span>
-                          </motion.div>
-                        )}
                       </div>
                     </div>
                   </motion.div>
                 )
               })}
             </div>
+            
+            {/* Link to Shop for More */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1 }}
+              className="text-center pt-6"
+            >
+              <Link
+                href="/shop"
+                className="inline-flex items-center gap-2 text-racket-blue font-bold text-lg hover:gap-4 transition-all"
+              >
+                View Full String Catalog & Buy Direct
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </motion.div>
           </motion.div>
         )}
       </motion.div>

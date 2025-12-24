@@ -1,7 +1,9 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { ArrowLeft, ArrowRight, Info } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { ArrowLeft, ArrowRight } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { RACKET_PRESETS } from '@/lib/strings-catalog'
 
 interface Props {
   orderData: any
@@ -13,243 +15,370 @@ interface Props {
 const popularBrands = ['Wilson', 'Babolat', 'Head', 'Yonex', 'Prince', 'Dunlop', 'Volkl']
 
 export default function RacketDetails({ orderData, setOrderData, onNext, onPrev }: Props) {
+  const [showModels, setShowModels] = useState(false)
+  const [suggestedModels, setSuggestedModels] = useState<string[]>([])
+
+  // Auto-populate models and tension when brand is selected
+  useEffect(() => {
+    if (orderData.racket_brand && RACKET_PRESETS[orderData.racket_brand]) {
+      const preset = RACKET_PRESETS[orderData.racket_brand]
+      setSuggestedModels(preset.models)
+      setShowModels(true)
+      
+      // Auto-set typical tension if not already set by user
+      if (orderData.main_tension === 55 && orderData.cross_tension === 55) {
+        setOrderData({
+          ...orderData,
+          main_tension: preset.typical_tension,
+          cross_tension: preset.typical_tension,
+        })
+      }
+    } else {
+      setShowModels(false)
+      setSuggestedModels([])
+    }
+  }, [orderData.racket_brand])
+
   const isValid = orderData.racket_brand && orderData.main_tension && orderData.cross_tension
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
+      {/* Racket Brand - CLEAN SELECTION */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white rounded-3xl shadow-2xl p-10"
       >
-        <h2 className="text-3xl font-bold text-racket-black mb-3">Racket Details</h2>
-        <p className="text-racket-gray text-lg mb-10">Tell us about your racket</p>
+        <h2 className="text-5xl font-bold text-racket-black mb-3">Your Racket</h2>
+        <p className="text-xl text-racket-gray mb-10">Tell us what you're playing with</p>
 
-        <div className="space-y-8">
-          {/* Racket Brand */}
+        <div className="space-y-6">
           <div>
-            <label className="block text-sm font-bold text-racket-black mb-3 uppercase tracking-wide">
-              Racket Brand *
+            <label className="block text-sm font-black text-racket-black mb-4 uppercase tracking-wider">
+              Select Brand
             </label>
-            <div className="grid grid-cols-3 md:grid-cols-4 gap-3 mb-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {popularBrands.map((brand) => (
                 <motion.button
                   key={brand}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => setOrderData({ ...orderData, racket_brand: brand })}
-                  className={`py-3 px-4 rounded-xl font-semibold transition-all ${
+                  onClick={() => setOrderData({ ...orderData, racket_brand: brand, racket_model: '' })}
+                  className={`relative py-5 px-6 rounded-2xl font-bold text-lg transition-all duration-300 ${
                     orderData.racket_brand === brand
-                      ? 'bg-racket-red text-white shadow-lg'
-                      : 'bg-gray-100 text-racket-gray hover:bg-gray-200'
+                      ? 'bg-racket-black text-white shadow-2xl'
+                      : 'bg-white border-3 border-gray-200 text-racket-gray hover:border-racket-black/30'
                   }`}
                 >
                   {brand}
+                  {orderData.racket_brand === brand && (
+                    <motion.div
+                      layoutId="brand-indicator"
+                      className="absolute inset-0 bg-racket-black rounded-2xl -z-10"
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    />
+                  )}
                 </motion.button>
               ))}
             </div>
-            <input
-              type="text"
-              placeholder="Or type another brand..."
-              value={!popularBrands.includes(orderData.racket_brand) ? orderData.racket_brand : ''}
-              onChange={(e) => setOrderData({ ...orderData, racket_brand: e.target.value })}
-              className="w-full px-6 py-4 border-2 border-gray-200 rounded-xl focus:border-racket-red focus:outline-none text-lg transition-colors"
-            />
           </div>
 
-          {/* Racket Model */}
-          <div>
-            <label className="block text-sm font-bold text-racket-black mb-3 uppercase tracking-wide">
-              Model (Optional)
-            </label>
-            <input
-              type="text"
-              placeholder="e.g., Pro Staff 97, Pure Aero..."
-              value={orderData.racket_model}
-              onChange={(e) => setOrderData({ ...orderData, racket_model: e.target.value })}
-              className="w-full px-6 py-4 border-2 border-gray-200 rounded-xl focus:border-racket-red focus:outline-none text-lg transition-colors"
-            />
-          </div>
-
-          {/* Tension */}
-          <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <label className="block text-sm font-bold text-racket-black mb-3 uppercase tracking-wide">
-                Main Tension (lbs) *
-              </label>
-              <div className="space-y-4">
-                <input
-                  type="range"
-                  min="40"
-                  max="70"
-                  value={orderData.main_tension}
-                  onChange={(e) => setOrderData({ ...orderData, main_tension: parseInt(e.target.value) })}
-                  className="w-full h-3 bg-gray-200 rounded-full appearance-none cursor-pointer accent-racket-red"
-                />
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-racket-gray">40 lbs</span>
-                  <div className="text-4xl font-bold text-racket-red">
-                    {orderData.main_tension}
-                  </div>
-                  <span className="text-sm text-racket-gray">70 lbs</span>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-bold text-racket-black mb-3 uppercase tracking-wide">
-                Cross Tension (lbs) *
-              </label>
-              <div className="space-y-4">
-                <input
-                  type="range"
-                  min="40"
-                  max="70"
-                  value={orderData.cross_tension}
-                  onChange={(e) => setOrderData({ ...orderData, cross_tension: parseInt(e.target.value) })}
-                  className="w-full h-3 bg-gray-200 rounded-full appearance-none cursor-pointer accent-racket-red"
-                />
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-racket-gray">40 lbs</span>
-                  <div className="text-4xl font-bold text-racket-red">
-                    {orderData.cross_tension}
-                  </div>
-                  <span className="text-sm text-racket-gray">70 lbs</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Special Instructions */}
-          <div>
-            <label className="block text-sm font-bold text-racket-black mb-3 uppercase tracking-wide">
-              Special Instructions (Optional)
-            </label>
-            <textarea
-              rows={4}
-              placeholder="Any special requests or notes for the stringer..."
-              value={orderData.special_instructions}
-              onChange={(e) => setOrderData({ ...orderData, special_instructions: e.target.value })}
-              className="w-full px-6 py-4 border-2 border-gray-200 rounded-xl focus:border-racket-red focus:outline-none text-lg transition-colors resize-none"
-            />
-          </div>
-
-          {/* Add-ons */}
-          <div className="space-y-4 pt-4">
-            <h3 className="text-xl font-bold text-racket-black">Add-Ons</h3>
-            
-            {/* Re-grip */}
-            <label className="flex items-center gap-4 p-5 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors group">
-              <input
-                type="checkbox"
-                checked={orderData.add_regrip}
-                onChange={(e) => setOrderData({ ...orderData, add_regrip: e.target.checked })}
-                className="w-6 h-6 accent-racket-red"
-              />
-              <div className="flex-1">
-                <div className="flex items-center gap-3">
-                  <span className="text-lg font-semibold text-racket-black">Add Re-grip</span>
-                  <span className="text-xl font-bold text-racket-red">+$10</span>
-                </div>
-                <p className="text-racket-gray text-sm">Premium replacement grip</p>
-              </div>
-            </label>
-
-            {/* Dampener Bundle */}
-            <label className="flex items-center gap-4 p-5 bg-racket-orange/10 border-2 border-racket-orange/30 rounded-xl cursor-pointer hover:bg-racket-orange/20 transition-colors group">
-              <input
-                type="checkbox"
-                checked={orderData.dampener_bundle}
-                onChange={(e) => setOrderData({ ...orderData, dampener_bundle: e.target.checked })}
-                className="w-6 h-6 accent-racket-orange"
-              />
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-1">
-                  <span className="text-lg font-semibold text-racket-black">Dampener Bundle</span>
-                  <span className="text-xl font-bold text-racket-orange">$7</span>
-                  <span className="text-xs bg-racket-green text-white px-2 py-0.5 rounded-full font-bold">SAVE $1</span>
-                </div>
-                <p className="text-racket-gray text-sm">Overgrip + Dampener combo</p>
-              </div>
-            </label>
-
-            {/* Individual add-ons if not bundle */}
-            {!orderData.dampener_bundle && (
-              <div className="grid md:grid-cols-2 gap-4 pl-10">
-                <label className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors">
-                  <input
-                    type="checkbox"
-                    checked={orderData.add_overgrip}
-                    onChange={(e) => setOrderData({ ...orderData, add_overgrip: e.target.checked })}
-                    className="w-5 h-5 accent-racket-red"
-                  />
-                  <div>
-                    <span className="font-semibold text-racket-black">Overgrip</span>
-                    <span className="ml-2 text-racket-red font-bold">+$3</span>
-                  </div>
+          {/* Popular Models - AUTO-POPULATED */}
+          <AnimatePresence>
+            {showModels && suggestedModels.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="overflow-hidden"
+              >
+                <label className="block text-sm font-black text-racket-black mb-4 uppercase tracking-wider">
+                  Popular {orderData.racket_brand} Models
                 </label>
-
-                <label className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors">
-                  <input
-                    type="checkbox"
-                    checked={orderData.add_dampener}
-                    onChange={(e) => setOrderData({ ...orderData, add_dampener: e.target.checked })}
-                    className="w-5 h-5 accent-racket-red"
-                  />
-                  <div>
-                    <span className="font-semibold text-racket-black">Dampener</span>
-                    <span className="ml-2 text-racket-red font-bold">+$5</span>
-                  </div>
-                </label>
-              </div>
+                <div className="grid grid-cols-2 gap-3 mb-4">
+                  {suggestedModels.map((model) => (
+                    <motion.button
+                      key={model}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                      onClick={() => setOrderData({ ...orderData, racket_model: model })}
+                      className={`py-4 px-6 rounded-xl text-base font-semibold transition-all ${
+                        orderData.racket_model === model
+                          ? 'bg-racket-red text-white shadow-lg'
+                          : 'bg-gray-100 text-racket-gray hover:bg-gray-200'
+                      }`}
+                    >
+                      {model}
+                    </motion.button>
+                  ))}
+                </div>
+              </motion.div>
             )}
+          </AnimatePresence>
 
-            {/* Second Racket */}
-            <label className="flex items-center gap-4 p-5 bg-racket-blue/10 border-2 border-racket-blue/30 rounded-xl cursor-pointer hover:bg-racket-blue/20 transition-colors">
-              <input
-                type="checkbox"
-                checked={orderData.add_second_racket}
-                onChange={(e) => setOrderData({ ...orderData, add_second_racket: e.target.checked })}
-                className="w-6 h-6 accent-racket-blue"
-              />
-              <div className="flex-1">
-                <div className="flex items-center gap-3">
-                  <span className="text-lg font-semibold text-racket-black">Add Second Racket</span>
-                  <span className="text-xl font-bold text-racket-blue">
-                    +${orderData.service_package === 'match_ready' ? 35 : 50}
-                  </span>
-                </div>
-                <p className="text-racket-gray text-sm">Same service for an additional racket</p>
-              </div>
+          {/* Or type custom */}
+          <input
+            type="text"
+            placeholder="Or type your model..."
+            value={!suggestedModels.includes(orderData.racket_model) ? orderData.racket_model : ''}
+            onChange={(e) => setOrderData({ ...orderData, racket_model: e.target.value })}
+            className="w-full px-6 py-5 border-4 border-gray-200 rounded-2xl focus:border-racket-black focus:outline-none text-lg transition-all"
+          />
+        </div>
+      </motion.div>
+
+      {/* Tension - VISUAL SLIDERS */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+        className="bg-gradient-to-br from-gray-50 to-white rounded-3xl p-10 border-4 border-gray-200"
+      >
+        <h3 className="text-3xl font-bold text-racket-black mb-8">String Tension</h3>
+
+        <div className="grid md:grid-cols-2 gap-10">
+          <div>
+            <label className="block text-sm font-black text-racket-gray mb-6 uppercase tracking-wider">
+              Main Strings
             </label>
+            <div className="relative">
+              <input
+                type="range"
+                min="40"
+                max="70"
+                value={orderData.main_tension}
+                onChange={(e) => setOrderData({ ...orderData, main_tension: parseInt(e.target.value) })}
+                className="w-full h-4 bg-gray-200 rounded-full appearance-none cursor-pointer accent-racket-red"
+                style={{
+                  background: `linear-gradient(to right, #ec1f27 0%, #ec1f27 ${((orderData.main_tension - 40) / 30) * 100}%, #e5e7eb ${((orderData.main_tension - 40) / 30) * 100}%, #e5e7eb 100%)`,
+                }}
+              />
+              <div className="flex justify-between text-sm text-racket-gray mt-3 mb-6">
+                <span>40 lbs</span>
+                <span>70 lbs</span>
+              </div>
+              <motion.div
+                key={orderData.main_tension}
+                initial={{ scale: 1.2 }}
+                animate={{ scale: 1 }}
+                className="text-center"
+              >
+                <div className="text-7xl font-black text-racket-red">
+                  {orderData.main_tension}
+                </div>
+                <div className="text-lg text-racket-gray font-semibold">pounds</div>
+              </motion.div>
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-black text-racket-gray mb-6 uppercase tracking-wider">
+              Cross Strings
+            </label>
+            <div className="relative">
+              <input
+                type="range"
+                min="40"
+                max="70"
+                value={orderData.cross_tension}
+                onChange={(e) => setOrderData({ ...orderData, cross_tension: parseInt(e.target.value) })}
+                className="w-full h-4 bg-gray-200 rounded-full appearance-none cursor-pointer accent-racket-red"
+                style={{
+                  background: `linear-gradient(to right, #ec1f27 0%, #ec1f27 ${((orderData.cross_tension - 40) / 30) * 100}%, #e5e7eb ${((orderData.cross_tension - 40) / 30) * 100}%, #e5e7eb 100%)`,
+                }}
+              />
+              <div className="flex justify-between text-sm text-racket-gray mt-3 mb-6">
+                <span>40 lbs</span>
+                <span>70 lbs</span>
+              </div>
+              <motion.div
+                key={orderData.cross_tension}
+                initial={{ scale: 1.2 }}
+                animate={{ scale: 1 }}
+                className="text-center"
+              >
+                <div className="text-7xl font-black text-racket-red">
+                  {orderData.cross_tension}
+                </div>
+                <div className="text-lg text-racket-gray font-semibold">pounds</div>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+
+        {/* Tension Helper */}
+        <div className="mt-8 p-6 bg-white rounded-2xl border-2 border-gray-200">
+          <div className="text-sm font-bold text-racket-gray mb-3">💡 TENSION GUIDE:</div>
+          <div className="grid md:grid-cols-2 gap-4 text-sm text-racket-gray">
+            <div>
+              <strong className="text-racket-black">Lower (40-52):</strong> More power, comfort
+            </div>
+            <div>
+              <strong className="text-racket-black">Higher (56-70):</strong> More control, spin
+            </div>
           </div>
         </div>
       </motion.div>
 
+      {/* Special Instructions */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+      >
+        <label className="block text-sm font-black text-racket-black mb-4 uppercase tracking-wider">
+          Special Instructions (Optional)
+        </label>
+        <textarea
+          rows={4}
+          placeholder="Any special requests for the stringer..."
+          value={orderData.special_instructions}
+          onChange={(e) => setOrderData({ ...orderData, special_instructions: e.target.value })}
+          className="w-full px-6 py-5 border-4 border-gray-200 rounded-2xl focus:border-racket-black focus:outline-none text-lg transition-all resize-none"
+        />
+      </motion.div>
+
+      {/* Add-ons - PREMIUM TOGGLES */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+        className="space-y-4"
+      >
+        <h3 className="text-3xl font-bold text-racket-black mb-6">Add-Ons</h3>
+        
+        {/* Re-grip */}
+        <label className="relative block cursor-pointer group">
+          <input
+            type="checkbox"
+            checked={orderData.add_regrip}
+            onChange={(e) => setOrderData({ ...orderData, add_regrip: e.target.checked })}
+            className="sr-only peer"
+          />
+          <div className="p-6 bg-white border-4 border-gray-200 rounded-2xl peer-checked:border-racket-red peer-checked:bg-racket-red peer-checked:text-white transition-all duration-300 peer-checked:shadow-2xl">
+            <div className="flex items-center justify-between">
+              <div>
+                <span className="text-2xl font-bold block mb-1">Add Re-grip</span>
+                <span className="text-base opacity-80">Premium replacement grip</span>
+              </div>
+              <span className="text-4xl font-black">+$10</span>
+            </div>
+          </div>
+        </label>
+
+        {/* Dampener Bundle */}
+        <label className="relative block cursor-pointer group">
+          <input
+            type="checkbox"
+            checked={orderData.dampener_bundle}
+            onChange={(e) => setOrderData({ ...orderData, dampener_bundle: e.target.checked })}
+            className="sr-only peer"
+          />
+          <div className="p-6 bg-gradient-to-r from-orange-50 to-yellow-50 border-4 border-orange-200 rounded-2xl peer-checked:border-racket-orange peer-checked:shadow-2xl transition-all duration-300">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="flex items-center gap-3 mb-1">
+                  <span className="text-2xl font-bold text-racket-black">Dampener Bundle</span>
+                  <span className="bg-racket-green text-white text-xs px-3 py-1 rounded-full font-bold">
+                    SAVE $1
+                  </span>
+                </div>
+                <span className="text-base text-racket-gray">Overgrip + Dampener combo</span>
+              </div>
+              <span className="text-4xl font-black text-racket-orange">$7</span>
+            </div>
+          </div>
+        </label>
+
+        {/* Individual add-ons if not bundle */}
+        <AnimatePresence>
+          {!orderData.dampener_bundle && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="grid md:grid-cols-2 gap-4 pl-6"
+            >
+              <label className="relative block cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={orderData.add_overgrip}
+                  onChange={(e) => setOrderData({ ...orderData, add_overgrip: e.target.checked })}
+                  className="sr-only peer"
+                />
+                <div className="p-4 bg-gray-100 border-3 border-gray-300 rounded-xl peer-checked:border-racket-red peer-checked:bg-racket-red/10 transition-all">
+                  <span className="font-semibold text-racket-black">Overgrip</span>
+                  <span className="ml-2 text-racket-red font-bold">+$3</span>
+                </div>
+              </label>
+
+              <label className="relative block cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={orderData.add_dampener}
+                  onChange={(e) => setOrderData({ ...orderData, add_dampener: e.target.checked })}
+                  className="sr-only peer"
+                />
+                <div className="p-4 bg-gray-100 border-3 border-gray-300 rounded-xl peer-checked:border-racket-red peer-checked:bg-racket-red/10 transition-all">
+                  <span className="font-semibold text-racket-black">Dampener</span>
+                  <span className="ml-2 text-racket-red font-bold">+$5</span>
+                </div>
+              </label>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Second Racket */}
+        <label className="relative block cursor-pointer">
+          <input
+            type="checkbox"
+            checked={orderData.add_second_racket}
+            onChange={(e) => setOrderData({ ...orderData, add_second_racket: e.target.checked })}
+            className="sr-only peer"
+          />
+          <div className="p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-4 border-blue-200 rounded-2xl peer-checked:border-racket-blue peer-checked:shadow-2xl transition-all duration-300">
+            <div className="flex items-center justify-between">
+              <div>
+                <span className="text-2xl font-bold text-racket-black block mb-1">Add Second Racket</span>
+                <span className="text-base text-racket-gray">Same service for additional racket</span>
+              </div>
+              <span className="text-4xl font-black text-racket-blue">
+                +${orderData.service_package === 'match_ready' ? 35 : 50}
+              </span>
+            </div>
+          </div>
+        </label>
+      </motion.div>
+
       {/* Navigation */}
-      <div className="flex justify-between">
+      <div className="flex justify-between pt-6">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.98 }}
           onClick={onPrev}
-          className="inline-flex items-center gap-3 bg-gray-200 text-racket-black px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-300 transition-colors"
+          className="inline-flex items-center gap-3 bg-gray-200 text-racket-black px-10 py-5 rounded-full text-xl font-bold hover:bg-gray-300 transition-colors"
         >
-          <ArrowLeft className="w-5 h-5" />
+          <ArrowLeft className="w-6 h-6" />
           Back
         </motion.button>
 
         <motion.button
-          whileHover={{ scale: 1.05 }}
+          whileHover={{ scale: 1.05, boxShadow: "0 20px 60px rgba(3,7,7,0.3)" }}
           whileTap={{ scale: 0.98 }}
           onClick={onNext}
           disabled={!isValid}
-          className="inline-flex items-center gap-3 bg-racket-red text-white px-10 py-5 rounded-full text-lg font-bold shadow-xl hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+          className="inline-flex items-center gap-4 bg-racket-black text-white px-12 py-6 rounded-full text-2xl font-black shadow-2xl disabled:opacity-30 disabled:cursor-not-allowed transition-all"
         >
-          Continue
-          <ArrowRight className="w-6 h-6" />
+          Continue to Pickup
+          <motion.div
+            animate={{ x: [0, 5, 0] }}
+            transition={{ duration: 1, repeat: Infinity }}
+          >
+            <ArrowRight className="w-8 h-8" />
+          </motion.div>
         </motion.button>
       </div>
     </div>
   )
 }
-
