@@ -62,23 +62,23 @@ export default function HomePage() {
         </div>
 
         {/* Floating particles */}
-        <div className="absolute inset-0 overflow-hidden">
-          {[...Array(20)].map((_, i) => (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[...Array(15)].map((_, i) => (
             <motion.div
               key={i}
               className="absolute w-2 h-2 bg-racket-red/20 rounded-full"
               animate={{
-                x: [Math.random() * window.innerWidth, Math.random() * window.innerWidth],
-                y: [Math.random() * window.innerHeight, Math.random() * window.innerHeight],
+                x: [`${Math.random() * 100}%`, `${Math.random() * 100}%`],
+                y: [`${Math.random() * 100}%`, `${Math.random() * 100}%`],
               }}
               transition={{
-                duration: Math.random() * 10 + 20,
+                duration: Math.random() * 15 + 25,
                 repeat: Infinity,
                 ease: "linear"
               }}
               style={{
-                left: Math.random() * 100 + '%',
-                top: Math.random() * 100 + '%',
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
               }}
             />
           ))}
