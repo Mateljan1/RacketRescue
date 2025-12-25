@@ -30,13 +30,13 @@ export const sendSMS = async (payload: NotificationPayload) => {
 // Pre-built message templates
 export const NotificationTemplates = {
   orderPlaced: (orderNumber: string) =>
-    `🎾 Order #${orderNumber} confirmed! We'll pick up your racket soon. Track: racketrescue.com/track/${orderNumber}`,
+    `🎾 Order #${orderNumber} confirmed! We&apos;ll pick up your racket soon. Track: racketrescue.com/track/${orderNumber}`,
 
   pickedUp: (orderNumber: string, eta: string) =>
     `✅ We picked up your racket! Being strung now. Estimated delivery: ${eta}. Track: racketrescue.com/track/${orderNumber}`,
 
   inProgress: (orderNumber: string, stringer: string) =>
-    `🎯 Your racket is being strung by ${stringer}. We'll update you when it's ready!`,
+    `🎯 Your racket is being strung by ${stringer}. We&apos;ll update you when it&apos;s ready!`,
 
   qualityCheck: (orderNumber: string) =>
     `✨ Quality check complete! Your racket is tournament-ready. Out for delivery soon.`,
