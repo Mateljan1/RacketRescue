@@ -3,277 +3,150 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, Truck, Zap, Shield, Crown } from 'lucide-react'
+import { ArrowRight, Truck, Zap, Shield, Star, MapPin, Check } from 'lucide-react'
+import { useState } from 'react'
 import SocialProof from '@/components/SocialProof'
 import Testimonials from '@/components/Testimonials'
 import TrustBadges from '@/components/TrustBadges'
 import FAQ from '@/components/FAQ'
 import FloatingCTA from '@/components/FloatingCTA'
+import ZipChecker from '@/components/ZipChecker'
 
 const LOGO_URL = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68b77f9f4a7eae9e097474c2/e406f4500_RacketRescueLogoFinal_Horizontal.png"
 
-const services = [
+const packages = [
   {
-    id: 'match_ready',
-    name: 'Match-Ready',
-    price: 35,
-    turnaround: '2-3 Days',
-    description: 'Professional stringing for casual and club players',
-    features: ['Professional stringing', 'Quality guaranteed', 'Perfect for regular play'],
+    id: 'starter',
+    name: 'Starter Package',
+    price: 52,
+    service: 'Match-Ready',
+    string: 'Wilson Velocity MLT',
+    description: 'Perfect for casual players',
+    features: ['Professional stringing', 'Quality multifilament string', 'Pickup & delivery', '2-3 day turnaround'],
+    popular: false,
   },
   {
-    id: 'pro_performance',
-    name: 'Pro-Performance',
-    price: 50,
-    turnaround: '2 Days',
-    description: 'Premium stringing for competitors',
+    id: 'pro',
+    name: 'Pro Package',
+    price: 75,
+    service: 'Pro-Performance',
+    string: 'Luxilon ALU or RPM Blast',
+    description: 'Tournament-ready',
+    features: ['Premium stringing service', 'Tour-level string', 'Priority pickup', '2-day turnaround'],
     popular: true,
-    features: ['Tournament-ready', 'Maximum performance', 'Advanced techniques'],
-  },
-]
-
-const membershipTiers = [
-  {
-    name: 'Standard',
-    price: 25,
-    savings: 'Save $21+/month',
-    features: ['FREE pickup & delivery', '10% off labor', 'Free overgrip monthly'],
-    trial: '30 days free',
   },
   {
-    name: 'Elite',
-    price: 60,
-    savings: 'Save $90+/month',
-    features: ['All Standard benefits', 'UNLIMITED Express', 'Dedicated manager'],
-    trial: '$1 first month',
-    premium: true,
+    id: 'custom',
+    name: 'Custom Package',
+    price: 50,
+    priceNote: 'Starting at',
+    service: 'Your choice',
+    string: 'Any string ($8-60)',
+    description: 'For players with preferences',
+    features: ['Choose your service level', 'Pick any string', 'Add-ons available', 'Flexible options'],
+    popular: false,
   },
 ]
 
 export default function HomePage() {
   const { scrollYProgress } = useScroll()
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
-  const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95])
 
   return (
     <main className="min-h-screen bg-white">
       <SocialProof />
       <FloatingCTA />
-      {/* Cinematic Hero */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-racket-black via-racket-charcoal to-racket-black">
-        {/* Animated gradient mesh background */}
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(236,31,39,0.3),transparent_50%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(59,130,246,0.2),transparent_50%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(249,115,22,0.2),transparent_50%)]" />
-        </div>
 
-        {/* Floating particles */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(15)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-2 h-2 bg-racket-red/20 rounded-full"
-              animate={{
-                x: [`${Math.random() * 100}%`, `${Math.random() * 100}%`],
-                y: [`${Math.random() * 100}%`, `${Math.random() * 100}%`],
-              }}
-              transition={{
-                duration: Math.random() * 15 + 25,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-            />
-          ))}
+      {/* UPGRADED Hero - Benefit-Focused */}
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-racket-black via-racket-charcoal to-racket-black">
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(236,31,39,0.4),transparent_50%)]" />
         </div>
 
         <motion.div
-          style={{ opacity, scale }}
+          style={{ opacity }}
           className="relative z-10 container-racket text-center text-white pt-24 px-6"
         >
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.22, 0.61, 0.36, 1] }}
-            className="space-y-12"
+            transition={{ duration: 0.8 }}
+            className="space-y-10"
           >
-            {/* Logo */}
+            <Image
+              src={LOGO_URL}
+              alt="Racket Rescue"
+              width={350}
+              height={90}
+              className="h-20 md:h-24 w-auto mx-auto drop-shadow-2xl mb-8"
+              priority
+            />
+
+            {/* UPGRADED Headline - Clear Value Prop */}
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight max-w-5xl mx-auto">
+              Professional Racquet Stringing.<br />
+              We Pick Up, String, Deliver.
+            </h1>
+
+            <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
+              Never drive to a pro shop again. Tournament-ready strings in 2-3 days.  
+              <span className="block mt-3 text-racket-red font-bold">Free pickup for members. Starting at $52.</span>
+            </p>
+
+            {/* UPGRADED Social Proof Bar */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2, duration: 0.6, type: "spring", stiffness: 100 }}
-              className="flex justify-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="flex flex-wrap justify-center items-center gap-6 pt-8 pb-12"
             >
-              <Image
-                src={LOGO_URL}
-                alt="Racket Rescue"
-                width={400}
-                height={100}
-                className="h-20 md:h-24 w-auto drop-shadow-2xl"
-                priority
-              />
+              <div className="flex items-center gap-2 text-white/80">
+                <Star className="w-5 h-5 text-yellow-400 fill-current" />
+                <span className="font-semibold">4.9/5 from 312 reviews</span>
+              </div>
+              <div className="w-px h-6 bg-white/30" />
+              <div className="text-white/80 font-semibold">
+                1,247 rackets strung
+              </div>
+              <div className="w-px h-6 bg-white/30" />
+              <div className="text-white/80 font-semibold">
+                25+ years experience
+              </div>
             </motion.div>
 
-            {/* Headline */}
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-              className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight"
-            >
-              We Save Your Game!
-            </motion.h1>
-
-            {/* Subheadline */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
-              className="text-xl md:text-3xl text-white/90 max-w-4xl mx-auto leading-relaxed"
-            >
-              Professional racket stringing with{' '}
-              <span className="text-racket-red font-semibold">pickup & delivery</span> in Laguna Beach.
-              <span className="block mt-3">Get back to playing while we handle your equipment.</span>
-            </motion.p>
+            {/* UPGRADED ZIP Checker */}
+            <ZipChecker />
 
             {/* CTAs */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.8 }}
-              className="flex flex-col sm:flex-row gap-6 justify-center pt-8"
-            >
-              <motion.div
-                whileHover={{ scale: 1.05, boxShadow: "0 20px 60px rgba(236, 31, 39, 0.4)" }}
-                whileTap={{ scale: 0.98 }}
-              >
+            <div className="flex flex-col sm:flex-row gap-6 justify-center pt-6">
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
                 <Link
                   href="/schedule"
-                  className="inline-flex items-center justify-center gap-3 bg-racket-red text-white px-10 py-5 rounded-full text-lg font-semibold shadow-xl hover:bg-red-600 transition-colors"
+                  className="inline-flex items-center justify-center gap-3 bg-racket-red text-white px-10 py-5 rounded-full text-xl font-bold shadow-2xl hover:bg-red-600 transition-colors"
                 >
-                  Schedule Service
-                  <ArrowRight className="w-6 h-6" />
+                  Get Started - $52
+                  <ArrowRight className="w-7 h-7" />
                 </Link>
               </motion.div>
 
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-              >
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
                 <Link
-                  href="/membership"
-                  className="inline-flex items-center justify-center gap-3 bg-white/10 backdrop-blur-lg text-white border-2 border-white/30 px-10 py-5 rounded-full text-lg font-semibold hover:bg-white/20 transition-all"
+                  href="#packages"
+                  className="inline-flex items-center justify-center gap-3 bg-white/10 backdrop-blur-lg text-white border-2 border-white/30 px-10 py-5 rounded-full text-xl font-bold hover:bg-white/20 transition-all"
                 >
-                  View Memberships
+                  See Packages
                 </Link>
               </motion.div>
-            </motion.div>
-
-            {/* Quick Stats */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1, duration: 0.8 }}
-              className="flex flex-wrap justify-center gap-12 pt-16 text-white/80"
-            >
-              <div className="text-center">
-                <div className="text-4xl md:text-5xl font-bold text-racket-red mb-2">25+</div>
-                <div className="text-sm uppercase tracking-wider">Years Experience</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl md:text-5xl font-bold text-racket-red mb-2">FREE</div>
-                <div className="text-sm uppercase tracking-wider">Pickup & Delivery*</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl md:text-5xl font-bold text-racket-red mb-2">2-3</div>
-                <div className="text-sm uppercase tracking-wider">Days Turnaround</div>
-              </div>
-            </motion.div>
-
-            <p className="text-xs text-white/50 pt-8">*Free for Standard, Elite & Family members</p>
-          </motion.div>
-        </motion.div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 0.6 }}
-          className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10"
-        >
-          <motion.div
-            animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-            className="w-8 h-12 border-2 border-white/30 rounded-full flex justify-center pt-2"
-          >
-            <div className="w-1.5 h-3 bg-racket-red rounded-full" />
+            </div>
           </motion.div>
         </motion.div>
       </section>
 
-      {/* Pickup & Delivery Hero Feature */}
-      <section className="py-32 bg-white relative overflow-hidden">
-        <div className="container-racket">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center max-w-4xl mx-auto mb-20"
-          >
-            <motion.div
-              initial={{ scale: 0 }}
-              whileInView={{ scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-              className="inline-flex p-6 bg-racket-red/10 rounded-full mb-8"
-            >
-              <Truck className="w-16 h-16 text-racket-red" />
-            </motion.div>
-            <h2 className="text-5xl md:text-6xl font-bold text-racket-black mb-6">
-              We Come To You
-            </h2>
-            <p className="text-2xl text-racket-gray leading-relaxed">
-              No need to drop off your racket. We pick it up, string it professionally, and deliver it back to your door.
-              <span className="block mt-4 text-racket-red font-semibold">It&apos;s that simple.</span>
-            </p>
-          </motion.div>
+      {/* Trust Badges */}
+      <TrustBadges />
 
-          {/* Process Steps */}
-          <div className="grid md:grid-cols-3 gap-12 max-w-5xl mx-auto">
-            {[
-              { step: 1, title: 'Schedule Online', desc: '4-step wizard in under 2 minutes' },
-              { step: 2, title: 'We Pick Up', desc: 'Free for members, $15 for non-members' },
-              { step: 3, title: 'We Deliver', desc: 'Tournament-ready racket at your door' },
-            ].map((item, i) => (
-              <motion.div
-                key={item.step}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.2, duration: 0.6 }}
-                className="relative text-center group"
-              >
-                <motion.div
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  className="inline-flex items-center justify-center w-20 h-20 bg-racket-red text-white text-3xl font-bold rounded-2xl mb-6 shadow-xl group-hover:shadow-2xl transition-shadow"
-                >
-                  {item.step}
-                </motion.div>
-                <h3 className="text-2xl font-bold text-racket-black mb-3">{item.title}</h3>
-                <p className="text-racket-gray leading-relaxed">{item.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Services Section */}
-      <section className="py-32 bg-racket-lightgray">
+      {/* UPGRADED: Bundle Packages (Not À La Carte) */}
+      <section id="packages" className="py-32 bg-racket-lightgray">
         <div className="container-racket">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -282,142 +155,83 @@ export default function HomePage() {
             className="text-center max-w-3xl mx-auto mb-20"
           >
             <h2 className="text-5xl md:text-6xl font-bold text-racket-black mb-6">
-              Professional Service Packages
+              Simple, All-In Pricing
             </h2>
             <p className="text-2xl text-racket-gray">
-              Choose the perfect service for your playing style
+              No hidden fees. No surprises. Everything included.
             </p>
           </motion.div>
 
-          <div className="grid lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {services.map((service, i) => (
+          <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {packages.map((pkg, i) => (
               <motion.div
-                key={service.id}
+                key={pkg.id}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.2, duration: 0.6 }}
-                whileHover={{ y: -8, boxShadow: "0 25px 60px rgba(0,0,0,0.15)" }}
-                className={`relative bg-white rounded-3xl p-10 shadow-xl transition-all ${
-                  service.popular ? 'ring-4 ring-racket-red' : ''
+                transition={{ delay: i * 0.15 }}
+                whileHover={{ y: -12, boxShadow: "0 30px 70px rgba(0,0,0,0.2)" }}
+                className={`relative bg-white rounded-3xl p-10 shadow-2xl transition-all ${
+                  pkg.popular ? 'ring-4 ring-racket-red scale-105' : ''
                 }`}
               >
-                {service.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                    <span className="inline-flex items-center gap-2 bg-racket-red text-white px-6 py-2 rounded-full text-sm font-bold uppercase tracking-wider shadow-lg">
-                      <Crown className="w-4 h-4" />
-                      Most Popular
-                    </span>
+                {pkg.popular && (
+                  <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-racket-red text-white px-8 py-3 rounded-full font-bold text-sm shadow-xl">
+                    ⭐ MOST POPULAR
                   </div>
                 )}
 
                 <div className="text-center space-y-6">
-                  <h3 className="text-3xl font-bold text-racket-black">{service.name}</h3>
+                  <h3 className="text-3xl font-bold text-racket-black">{pkg.name}</h3>
                   
                   <div>
-                    <div className="text-6xl font-bold text-racket-red mb-2">
-                      ${service.price}
+                    {pkg.priceNote && (
+                      <div className="text-lg text-racket-gray mb-2">{pkg.priceNote}</div>
+                    )}
+                    <div className="text-7xl font-black text-racket-red">
+                      ${pkg.price}
                     </div>
-                    <div className="text-racket-gray text-lg">Turnaround: {service.turnaround}</div>
+                    <div className="text-lg text-racket-gray mt-2">All-in price</div>
                   </div>
 
-                  <p className="text-xl text-racket-gray leading-relaxed">
-                    {service.description}
+                  <p className="text-xl text-racket-gray font-semibold">
+                    {pkg.description}
                   </p>
 
-                  <ul className="space-y-4 pt-4">
-                    {service.features.map((feature) => (
-                      <li key={feature} className="flex items-center gap-3 text-lg text-racket-gray">
-                        <div className="flex-shrink-0 w-6 h-6 bg-racket-green/20 rounded-full flex items-center justify-center">
-                          <div className="w-3 h-3 bg-racket-green rounded-full" />
+                  <div className="space-y-4 pt-6">
+                    <div className="text-left space-y-3">
+                      <div className="flex items-start gap-3">
+                        <Check className="w-6 h-6 text-racket-green flex-shrink-0 mt-1" />
+                        <div>
+                          <div className="font-bold text-racket-black">{pkg.service} Service</div>
                         </div>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <Check className="w-6 h-6 text-racket-green flex-shrink-0 mt-1" />
+                        <div>
+                          <div className="font-bold text-racket-black">{pkg.string}</div>
+                        </div>
+                      </div>
+                      {pkg.features.slice(2).map((feature) => (
+                        <div key={feature} className="flex items-start gap-3">
+                          <Check className="w-6 h-6 text-racket-green flex-shrink-0 mt-1" />
+                          <div className="text-racket-gray">{feature}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
 
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`w-full py-5 rounded-full text-lg font-semibold transition-all mt-8 ${
-                      service.popular
-                        ? 'bg-racket-red text-white shadow-lg hover:shadow-xl'
+                    className={`w-full py-5 rounded-full text-xl font-bold transition-all mt-8 ${
+                      pkg.popular
+                        ? 'bg-racket-red text-white shadow-xl hover:bg-red-600'
                         : 'bg-racket-black text-white hover:bg-racket-charcoal'
                     }`}
                   >
-                    Select {service.name}
+                    Select {pkg.name}
                   </motion.button>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Membership Teaser */}
-      <section className="py-32 bg-white">
-        <div className="container-racket">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center max-w-3xl mx-auto mb-20"
-          >
-            <h2 className="text-5xl md:text-6xl font-bold text-racket-black mb-6">
-              Save More With Membership
-            </h2>
-            <p className="text-2xl text-racket-gray">
-              Get free pickup & delivery plus exclusive member benefits
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {membershipTiers.map((tier, i) => (
-              <motion.div
-                key={tier.name}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.2, duration: 0.6 }}
-                whileHover={{ y: -8, boxShadow: "0 25px 60px rgba(236,31,39,0.2)" }}
-                className={`relative bg-gradient-to-br ${
-                  tier.premium
-                    ? 'from-racket-red to-red-600 text-white'
-                    : 'from-white to-racket-lightgray text-racket-black'
-                } rounded-3xl p-10 shadow-xl transition-all`}
-              >
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-3xl font-bold mb-2">{tier.name}</h3>
-                    <div className="text-5xl font-bold mb-2">
-                      ${tier.price}<span className="text-2xl font-normal">/mo</span>
-                    </div>
-                    <div className={`text-lg font-semibold ${tier.premium ? 'text-white/90' : 'text-racket-green'}`}>
-                      {tier.savings}
-                    </div>
-                  </div>
-
-                  <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold ${
-                    tier.premium ? 'bg-white/20' : 'bg-racket-green/20 text-racket-green'
-                  }`}>
-                    <Zap className="w-4 h-4" />
-                    {tier.trial}
-                  </div>
-
-                  <ul className="space-y-3">
-                    {tier.features.map((feature) => (
-                      <li key={feature} className="flex items-center gap-3 text-lg">
-                        <div className={`flex-shrink-0 w-6 h-6 ${
-                          tier.premium ? 'bg-white/20' : 'bg-racket-red/20'
-                        } rounded-full flex items-center justify-center`}>
-                          <div className={`w-3 h-3 ${
-                            tier.premium ? 'bg-white' : 'bg-racket-red'
-                          } rounded-full`} />
-                        </div>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
                 </div>
               </motion.div>
             ))}
@@ -427,57 +241,121 @@ export default function HomePage() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.6 }}
-            className="text-center mt-12"
+            className="text-center mt-16"
           >
+            <p className="text-racket-gray text-lg mb-6">
+              Not sure which package? Our string wizard will recommend the perfect setup for your game.
+            </p>
             <Link
-              href="/membership"
-              className="inline-flex items-center gap-2 text-racket-red text-lg font-semibold hover:gap-4 transition-all"
+              href="/schedule"
+              className="inline-flex items-center gap-2 text-racket-red font-bold text-xl hover:gap-4 transition-all"
             >
-              See All Plans & Calculate Your Savings
+              Start Custom Order
               <ArrowRight className="w-6 h-6" />
             </Link>
           </motion.div>
         </div>
       </section>
 
-      {/* Why Choose Us */}
-      <section className="py-32 bg-racket-black text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(236,31,39,0.4),transparent_70%)]" />
-        </div>
-
-        <div className="container-racket relative z-10">
+      {/* Process Section - "How It Actually Works" */}
+      <section className="py-32 bg-white">
+        <div className="container-racket">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-center max-w-3xl mx-auto mb-20"
           >
-            <h2 className="text-5xl md:text-6xl font-bold mb-6">
-              Why Racket Rescue?
+            <h2 className="text-5xl md:text-6xl font-bold text-racket-black mb-6">
+              Engineered for Convenience
             </h2>
-            <p className="text-2xl text-white/80">
-              Expert service, convenience, and trust—all in one place
+            <p className="text-2xl text-racket-gray">
+              Save 2+ hours. Get better strings. Never leave home.
             </p>
           </motion.div>
 
+          {/* Timeline */}
+          <div className="max-w-4xl mx-auto">
+            {[
+              {
+                day: 'Today',
+                title: 'Schedule Online',
+                time: '2 minutes',
+                desc: 'Choose your package, pick a time. Done.',
+              },
+              {
+                day: 'Tomorrow',
+                title: 'We Pick Up',
+                time: '2-hour window',
+                desc: 'We come to your door. Free for members.',
+              },
+              {
+                day: 'Day 3',
+                title: 'We Deliver',
+                time: 'Tournament-ready',
+                desc: 'Strung to perfection. Back at your door.',
+              },
+            ].map((step, i) => (
+              <motion.div
+                key={step.day}
+                initial={{ opacity: 0, x: -40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.2 }}
+                className="relative flex gap-8 mb-12 last:mb-0"
+              >
+                {/* Timeline Line */}
+                {i < 2 && (
+                  <div className="absolute left-10 top-24 w-1 h-full bg-racket-red/20" />
+                )}
+
+                {/* Day Badge */}
+                <div className="flex-shrink-0">
+                  <div className="w-20 h-20 bg-racket-red rounded-2xl flex items-center justify-center text-white font-black text-lg shadow-xl">
+                    {i + 1}
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="flex-1 bg-white rounded-2xl p-8 shadow-lg">
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <div className="text-sm font-bold text-racket-gray uppercase tracking-wider mb-2">
+                        {step.day}
+                      </div>
+                      <h3 className="text-3xl font-bold text-racket-black">{step.title}</h3>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-2xl font-bold text-racket-red">{step.time}</div>
+                    </div>
+                  </div>
+                  <p className="text-xl text-racket-gray">{step.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Us */}
+      <section className="py-32 bg-racket-lightgray">
+        <div className="container-racket">
           <div className="grid md:grid-cols-3 gap-12">
             {[
               {
                 icon: Truck,
-                title: 'Pickup & Delivery',
-                desc: 'We come to you! Free pickup and delivery throughout Laguna Beach for members.',
+                title: 'Save 2+ Hours',
+                desc: 'No more driving to pro shops. We handle pickup and delivery.',
               },
               {
                 icon: Shield,
-                title: 'Expert Craftsmanship',
-                desc: 'Professional stringing by certified technicians with decades of experience.',
+                title: 'Strung to 0.5 lb Accuracy',
+                desc: 'Professional equipment. Every racquet inspected twice.',
               },
               {
                 icon: Zap,
-                title: 'Fast Turnaround',
-                desc: 'Get your racket back in 2-3 days, or next day with Express service.',
+                title: 'Back in 2-3 Days',
+                desc: 'Or next-day with Express. Tournament-ready when you need it.',
               },
             ].map((item, i) => (
               <motion.div
@@ -485,25 +363,19 @@ export default function HomePage() {
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.2, duration: 0.6 }}
-                className="text-center group"
+                transition={{ delay: i * 0.15 }}
+                className="bg-white rounded-3xl p-10 shadow-xl text-center"
               >
-                <motion.div
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  className="inline-flex p-6 bg-racket-red/20 rounded-2xl mb-6 group-hover:bg-racket-red/30 transition-colors"
-                >
+                <div className="inline-flex p-6 bg-racket-red/10 rounded-2xl mb-6">
                   <item.icon className="w-12 h-12 text-racket-red" />
-                </motion.div>
-                <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
-                <p className="text-lg text-white/80 leading-relaxed">{item.desc}</p>
+                </div>
+                <h3 className="text-2xl font-bold text-racket-black mb-4">{item.title}</h3>
+                <p className="text-lg text-racket-gray leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
-
-      {/* Trust Badges */}
-      <TrustBadges />
 
       {/* Testimonials */}
       <Testimonials />
@@ -512,39 +384,32 @@ export default function HomePage() {
       <FAQ />
 
       {/* Final CTA */}
-      <section className="py-32 bg-gradient-to-br from-racket-red to-red-600 text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1),transparent_70%)]" />
-        
-        <div className="container-racket text-center relative z-10">
+      <section className="py-32 bg-gradient-to-br from-racket-red to-red-600 text-white">
+        <div className="container-racket text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
             className="space-y-10"
           >
             <h2 className="text-5xl md:text-7xl font-bold">
-              Ready to Get Started?
+              Ready to Save Time?
             </h2>
-            <p className="text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-              Join hundreds of satisfied players in Laguna Beach
+            <p className="text-2xl text-white/90 max-w-3xl mx-auto">
+              Join hundreds of players who never drive to a pro shop again
             </p>
 
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
-              className="inline-block"
-            >
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
               <Link
                 href="/schedule"
-                className="inline-flex items-center justify-center gap-3 bg-white text-racket-red px-12 py-6 rounded-full text-xl font-bold shadow-2xl hover:shadow-3xl transition-all"
+                className="inline-flex items-center gap-3 bg-white text-racket-red px-12 py-6 rounded-full text-2xl font-bold shadow-2xl hover:bg-gray-100 transition-all"
               >
-                Schedule Service Now
-                <ArrowRight className="w-7 h-7" />
+                Schedule Pickup Now
+                <ArrowRight className="w-8 h-8" />
               </Link>
             </motion.div>
 
-            <p className="text-white/70">No commitment required • Free for members</p>
+            <p className="text-white/70 text-lg">Free pickup for members • No commitment required</p>
           </motion.div>
         </div>
       </section>
