@@ -8,6 +8,7 @@ import ServiceSelection from '@/components/schedule/ServiceSelection'
 import RacketDetails from '@/components/schedule/RacketDetails'
 import PickupSchedule from '@/components/schedule/PickupSchedule'
 import OrderReview from '@/components/schedule/OrderReview'
+import PriceCalculator from '@/components/PriceCalculator'
 
 const steps = [
   { number: 1, title: 'Service', desc: 'Choose your package' },
@@ -89,6 +90,7 @@ export default function SchedulePage() {
 
   return (
     <div className="min-h-screen bg-white pt-24">
+      <PriceCalculator orderData={orderData} />
       {/* Header */}
       <div className="bg-gradient-to-br from-racket-black to-racket-charcoal text-white py-16">
         <div className="container-racket">

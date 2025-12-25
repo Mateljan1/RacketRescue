@@ -9,10 +9,9 @@ import { motion } from 'framer-motion'
 const LOGO_URL = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68b77f9f4a7eae9e097474c2/e406f4500_RacketRescueLogoFinal_Horizontal.png"
 
 const navigation = [
+  { name: 'Packages', href: '/#packages' },
   { name: 'Membership', href: '/membership' },
-  { name: 'String Education', href: '/strings' },
-  { name: 'Shop', href: '/shop' },
-  { name: 'My Rackets', href: '/rackets' },
+  { name: 'For Shops', href: '/for-shops' },
   { name: 'Dashboard', href: '/dashboard' },
 ]
 
