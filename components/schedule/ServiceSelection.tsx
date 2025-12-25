@@ -23,7 +23,7 @@ export default function ServiceSelection({ orderData, setOrderData, onNext }: Pr
   // SMART DEFAULT: Pre-select most popular string
   const [hasInitialized, setHasInitialized] = useState(false)
   
-  React.useEffect(() => {
+  useEffect(() => {
     if (!hasInitialized && !orderData.string_name && !orderData.customer_provides_string) {
       // Auto-select Wilson Velocity MLT (most popular)
       const defaultString = stringOptions[0] // Wilson Velocity MLT
