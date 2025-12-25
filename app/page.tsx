@@ -377,6 +377,75 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Membership ROI - PROMINENT */}
+      <section className="py-32 bg-gradient-to-br from-racket-green/10 to-green-50">
+        <div className="container-racket max-w-5xl">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="bg-white rounded-3xl shadow-2xl p-12"
+          >
+            <div className="text-center mb-12">
+              <h2 className="text-5xl font-bold text-racket-black mb-4">
+                Save More With Membership
+              </h2>
+              <p className="text-2xl text-racket-gray">
+                String 2X per month? Membership pays for itself.
+              </p>
+            </div>
+
+            <div className="max-w-2xl mx-auto">
+              <label className="block text-lg font-bold text-racket-black mb-6 text-center">
+                How many times do you string per month?
+              </label>
+              <div className="flex items-center gap-8 mb-12">
+                <input
+                  type="range"
+                  min="1"
+                  max="8"
+                  defaultValue="2"
+                  className="flex-1 h-4 bg-gray-200 rounded-full appearance-none cursor-pointer accent-racket-green"
+                  id="membership-calc"
+                />
+              </div>
+
+              <div className="bg-gradient-to-r from-racket-green to-green-600 text-white rounded-3xl p-10 text-center mb-10">
+                <div className="text-sm font-bold mb-3">WITH STANDARD MEMBERSHIP (\$25/mo):</div>
+                <div className="text-6xl font-black mb-3">Save $21</div>
+                <div className="text-xl opacity-90">per month (2 orders)</div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="text-center p-6 bg-gray-50 rounded-2xl">
+                  <div className="text-3xl font-bold text-racket-red mb-2">$30</div>
+                  <div className="text-racket-gray">Saved on pickup</div>
+                  <div className="text-sm text-racket-gray">(2 orders × $15)</div>
+                </div>
+                <div className="text-center p-6 bg-gray-50 rounded-2xl">
+                  <div className="text-3xl font-bold text-racket-red mb-2">$7</div>
+                  <div className="text-racket-gray">Saved on labor</div>
+                  <div className="text-sm text-racket-gray">(10% off × 2)</div>
+                </div>
+              </div>
+
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="mt-10"
+              >
+                <Link
+                  href="/membership"
+                  className="block w-full bg-racket-red text-white py-5 rounded-full text-xl font-bold text-center hover:bg-red-600 transition-colors"
+                >
+                  Try Standard Free for 30 Days →
+                </Link>
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Testimonials */}
       <Testimonials />
 

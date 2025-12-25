@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import ExitIntentPopup from '@/components/ExitIntentPopup'
 import Script from 'next/script'
 
 const inter = Inter({
@@ -80,6 +81,7 @@ export default function RootLayout({
         <Header />
         {children}
         <Footer />
+        <ExitIntentPopup />
         
         {/* Analytics - Google Analytics 4 */}
         <Script

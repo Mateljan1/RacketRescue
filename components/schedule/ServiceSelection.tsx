@@ -20,6 +20,23 @@ export default function ServiceSelection({ orderData, setOrderData, onNext }: Pr
   const [showStringWizard, setShowStringWizard] = useState(false)
   const [hoveredService, setHoveredService] = useState<string | null>(null)
 
+  // SMART DEFAULT: Pre-select most popular string
+  const [hasInitialized, setHasInitialized] = useState(false)
+  
+  React.useEffect(() => {
+    if (!hasInitialized && !orderData.string_name && !orderData.customer_provides_string) {
+      // Auto-select Wilson Velocity MLT (most popular)
+      const defaultString = stringOptions[0] // Wilson Velocity MLT
+      setOrderData({
+        ...orderData,
+        string_type: defaultString.material,
+        string_name: `${defaultString.brand} ${defaultString.name}`,
+        string_price: defaultString.price,
+      })
+      setHasInitialized(true)
+    }
+  }, [hasInitialized, orderData, setOrderData])
+
   const handleStringSelect = (stringId: string, stringName: string, stringPrice: number) => {
     setOrderData({
       ...orderData,
