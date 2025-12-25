@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { DollarSign, TrendingUp, Users, Check, ArrowRight, Calculator, Award, Zap } from 'lucide-react'
+import { DollarSign, TrendingUp, Users, Check, ArrowRight, Calculator, Award, Zap, X } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 
