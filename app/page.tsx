@@ -3,7 +3,8 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, Truck, Zap, Shield, Star, MapPin, Check } from 'lucide-react'
+import { ArrowRight, Star, MapPin, Check } from 'lucide-react'
+import { TimeSavingsIllustration, PrecisionIllustration, SpeedIllustration } from '@/components/CustomIllustrations'
 import { useState } from 'react'
 import SocialProof from '@/components/SocialProof'
 import Testimonials from '@/components/Testimonials'
@@ -341,38 +342,46 @@ export default function HomePage() {
       <section className="py-32 bg-racket-lightgray">
         <div className="container-racket">
           <div className="grid md:grid-cols-3 gap-12">
-            {[
-              {
-                icon: Truck,
-                title: 'Save 2+ Hours',
-                desc: 'No more driving to pro shops. We handle pickup and delivery.',
-              },
-              {
-                icon: Shield,
-                title: 'Strung to 0.5 lb Accuracy',
-                desc: 'Professional equipment. Every racquet inspected twice.',
-              },
-              {
-                icon: Zap,
-                title: 'Back in 2-3 Days',
-                desc: 'Or next-day with Express. Tournament-ready when you need it.',
-              },
-            ].map((item, i) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15 }}
-                className="bg-white rounded-3xl p-10 shadow-xl text-center"
-              >
-                <div className="inline-flex p-6 bg-racket-red/10 rounded-2xl mb-6">
-                  <item.icon className="w-12 h-12 text-racket-red" />
-                </div>
-                <h3 className="text-2xl font-bold text-racket-black mb-4">{item.title}</h3>
-                <p className="text-lg text-racket-gray leading-relaxed">{item.desc}</p>
-              </motion.div>
-            ))}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-3xl p-10 shadow-xl text-center"
+            >
+              <TimeSavingsIllustration />
+              <h3 className="text-2xl font-bold text-racket-black mb-4 mt-6">Save 2+ Hours</h3>
+              <p className="text-lg text-racket-gray leading-relaxed">
+                No more driving to pro shops. We handle pickup and delivery.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.15 }}
+              className="bg-white rounded-3xl p-10 shadow-xl text-center"
+            >
+              <PrecisionIllustration />
+              <h3 className="text-2xl font-bold text-racket-black mb-4 mt-6">Strung to 0.5 lb Accuracy</h3>
+              <p className="text-lg text-racket-gray leading-relaxed">
+                Professional equipment. Every racquet inspected twice.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="bg-white rounded-3xl p-10 shadow-xl text-center"
+            >
+              <SpeedIllustration />
+              <h3 className="text-2xl font-bold text-racket-black mb-4 mt-6">Back in 2-3 Days</h3>
+              <p className="text-lg text-racket-gray leading-relaxed">
+                Or next-day with Express. Tournament-ready when you need it.
+              </p>
+            </motion.div>
           </div>
         </div>
       </section>
