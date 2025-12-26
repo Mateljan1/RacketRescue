@@ -171,7 +171,7 @@ export async function POST(request: NextRequest) {
       payment_method_types: ['card'],
       mode: 'payment',
       line_items: lineItems,
-      success_url: `${siteUrl}/track/{CHECKOUT_SESSION_ID}?success=true`,
+      success_url: `${siteUrl}/confirmation?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteUrl}/schedule?canceled=true`,
       customer_email: orderData.customer_email,
       metadata: {

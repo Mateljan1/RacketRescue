@@ -11,8 +11,8 @@ const LOGO_URL = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/pub
 const navigation = [
   { name: 'Packages', href: '/#packages' },
   { name: 'Membership', href: '/membership' },
+  { name: 'My Orders', href: '/my-orders' },
   { name: 'For Shops', href: '/for-shops' },
-  { name: 'Dashboard', href: '/dashboard' },
 ]
 
 export default function Header() {

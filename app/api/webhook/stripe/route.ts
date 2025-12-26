@@ -12,6 +12,14 @@ const TAGS = {
   CUSTOMER: '88',
   MEMBER: '89',
   LEAD: '90',
+  // Order Status Tags (for triggering automations)
+  ORDER_RECEIVED: '91',
+  RACKET_PICKED_UP: '92',
+  STRINGING_STARTED: '93',
+  QUALITY_CHECK: '94',
+  READY_FOR_PICKUP: '95',
+  OUT_FOR_DELIVERY: '96',
+  DELIVERED: '97',
 }
 
 // Disable body parsing - Stripe webhooks need raw body
@@ -195,6 +203,48 @@ async function createNote(contactId: string, note: string) {
   }
 }
 
+async function updateContactField(contactId: string, fieldId: string, value: string) {
+  if (!AC_API_KEY) return
+
+  try {
+    await fetch(`${AC_API_URL}/api/3/fieldValues`, {
+      method: 'POST',
+      headers: {
+        'Api-Token': AC_API_KEY,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        fieldValue: {
+          contact: contactId,
+          field: fieldId,
+          value: value,
+        },
+      }),
+    })
+    console.log(`Field ${fieldId} updated for contact ${contactId}`)
+  } catch (error) {
+    console.error('Field update error:', error)
+  }
+}
+
+// Custom field IDs
+const CUSTOM_FIELDS = {
+  LAST_ORDER_ID: '13',
+  LAST_ORDER_TRACKING_URL: '14',
+}
+
+async function sendTransactionalEmail(
+  contactEmail: string,
+  templateType: 'order_confirmation' | 'ready_pickup' | 'delivered',
+  data: Record<string, string>
+) {
+  if (!AC_API_KEY) return
+
+  // ActiveCampaign transactional emails would go here
+  // For now, we trigger automations via tags which send emails
+  console.log(`Would send ${templateType} email to ${contactEmail}`)
+}
+
 // ============================================
 // Event Handlers
 // ============================================
@@ -243,7 +293,11 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session) {
     // Add Customer tag
     await addTagToContact(contact.id, TAGS.CUSTOMER)
 
-    // Create order note
+    // Add Order Received tag (triggers automation)
+    await addTagToContact(contact.id, TAGS.ORDER_RECEIVED)
+
+    // Create order note with tracking link
+    const trackingUrl = `https://www.racketrescue.com/track/${session.id}`
     const orderNote = `
 🎾 STRINGING ORDER
 ━━━━━━━━━━━━━━━━━━━━
@@ -256,10 +310,15 @@ Pickup: ${metadata.pickup_address}
 Time: ${metadata.pickup_time}
 ${metadata.special_instructions ? `Notes: ${metadata.special_instructions}` : ''}
 ━━━━━━━━━━━━━━━━━━━━
+Track Order: ${trackingUrl}
 Order ID: ${session.id}
     `.trim()
 
     await createNote(contact.id, orderNote)
+
+    // Store order ID in custom field for tracking
+    await updateContactField(contact.id, CUSTOM_FIELDS.LAST_ORDER_ID, session.id)
+    await updateContactField(contact.id, CUSTOM_FIELDS.LAST_ORDER_TRACKING_URL, trackingUrl)
 
     console.log('Stringing order processed for:', customerEmail)
 
