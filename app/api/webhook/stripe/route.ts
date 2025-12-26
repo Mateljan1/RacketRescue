@@ -2,6 +2,18 @@ import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe'
 import Stripe from 'stripe'
 
+// ActiveCampaign Configuration
+const AC_API_URL = process.env.ACTIVECAMPAIGN_API_URL || 'https://tennisbeast.api-us1.com'
+const AC_API_KEY = process.env.ACTIVECAMPAIGN_API_KEY || ''
+
+// RacketRescue ActiveCampaign IDs
+const RACKETRESCUE_LIST_ID = '7'
+const TAGS = {
+  CUSTOMER: '88',
+  MEMBER: '89',
+  LEAD: '90',
+}
+
 // Disable body parsing - Stripe webhooks need raw body
 export const dynamic = 'force-dynamic'
 
@@ -42,40 +54,15 @@ export async function POST(request: NextRequest) {
         break
       }
 
-      case 'payment_intent.succeeded': {
-        const paymentIntent = event.data.object as Stripe.PaymentIntent
-        console.log(`Payment succeeded: ${paymentIntent.id}`)
-        break
-      }
-
       case 'customer.subscription.created': {
         const subscription = event.data.object as Stripe.Subscription
         await handleSubscriptionCreated(subscription)
         break
       }
 
-      case 'customer.subscription.updated': {
-        const subscription = event.data.object as Stripe.Subscription
-        await handleSubscriptionUpdated(subscription)
-        break
-      }
-
       case 'customer.subscription.deleted': {
         const subscription = event.data.object as Stripe.Subscription
         await handleSubscriptionCanceled(subscription)
-        break
-      }
-
-      case 'invoice.paid': {
-        const invoice = event.data.object as Stripe.Invoice
-        console.log(`Invoice paid: ${invoice.id}`)
-        break
-      }
-
-      case 'invoice.payment_failed': {
-        const invoice = event.data.object as Stripe.Invoice
-        console.log(`Invoice payment failed: ${invoice.id}`)
-        // TODO: Send email notification about failed payment
         break
       }
 
@@ -94,73 +81,241 @@ export async function POST(request: NextRequest) {
   }
 }
 
+// ============================================
+// ActiveCampaign Integration Functions
+// ============================================
+
+async function createOrUpdateContact(
+  email: string,
+  firstName: string,
+  lastName: string,
+  phone?: string,
+  customFields?: Record<string, string>
+) {
+  if (!AC_API_KEY) {
+    console.log('ActiveCampaign API key not configured, skipping...')
+    return null
+  }
+
+  try {
+    // Sync contact (creates or updates)
+    const response = await fetch(`${AC_API_URL}/api/3/contact/sync`, {
+      method: 'POST',
+      headers: {
+        'Api-Token': AC_API_KEY,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        contact: {
+          email,
+          firstName,
+          lastName,
+          phone: phone || '',
+        },
+      }),
+    })
+
+    const data = await response.json()
+    console.log('ActiveCampaign contact synced:', data.contact?.id)
+    return data.contact
+  } catch (error) {
+    console.error('ActiveCampaign sync error:', error)
+    return null
+  }
+}
+
+async function subscribeToList(contactId: string, listId: string) {
+  if (!AC_API_KEY) return
+
+  try {
+    await fetch(`${AC_API_URL}/api/3/contactLists`, {
+      method: 'POST',
+      headers: {
+        'Api-Token': AC_API_KEY,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        contactList: {
+          list: listId,
+          contact: contactId,
+          status: 1, // Active
+        },
+      }),
+    })
+    console.log(`Contact ${contactId} subscribed to list ${listId}`)
+  } catch (error) {
+    console.error('List subscription error:', error)
+  }
+}
+
+async function addTagToContact(contactId: string, tagId: string) {
+  if (!AC_API_KEY) return
+
+  try {
+    await fetch(`${AC_API_URL}/api/3/contactTags`, {
+      method: 'POST',
+      headers: {
+        'Api-Token': AC_API_KEY,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        contactTag: {
+          contact: contactId,
+          tag: tagId,
+        },
+      }),
+    })
+    console.log(`Tag ${tagId} added to contact ${contactId}`)
+  } catch (error) {
+    console.error('Tag add error:', error)
+  }
+}
+
+async function createNote(contactId: string, note: string) {
+  if (!AC_API_KEY) return
+
+  try {
+    await fetch(`${AC_API_URL}/api/3/notes`, {
+      method: 'POST',
+      headers: {
+        'Api-Token': AC_API_KEY,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        note: {
+          note,
+          relid: contactId,
+          reltype: 'Subscriber',
+        },
+      }),
+    })
+    console.log(`Note added to contact ${contactId}`)
+  } catch (error) {
+    console.error('Note creation error:', error)
+  }
+}
+
+// ============================================
+// Event Handlers
+// ============================================
+
 async function handleCheckoutComplete(session: Stripe.Checkout.Session) {
   const metadata = session.metadata || {}
+  const customerEmail = session.customer_details?.email
+  const customerName = session.customer_details?.name || ''
+  const customerPhone = session.customer_details?.phone || ''
 
   console.log('='.repeat(50))
   console.log('NEW ORDER RECEIVED!')
   console.log('='.repeat(50))
   console.log('Order Type:', metadata.type)
-  console.log('Customer Email:', session.customer_details?.email)
-  console.log('Customer Name:', session.customer_details?.name)
+  console.log('Customer Email:', customerEmail)
+  console.log('Customer Name:', customerName)
   console.log('Amount:', `$${(session.amount_total || 0) / 100}`)
-  console.log('Payment Status:', session.payment_status)
+
+  if (!customerEmail) {
+    console.log('No customer email, skipping ActiveCampaign sync')
+    return
+  }
+
+  // Parse name
+  const nameParts = customerName.split(' ')
+  const firstName = nameParts[0] || ''
+  const lastName = nameParts.slice(1).join(' ') || ''
+
+  // Create/update contact in ActiveCampaign
+  const contact = await createOrUpdateContact(
+    customerEmail,
+    firstName,
+    lastName,
+    customerPhone
+  )
+
+  if (!contact?.id) {
+    console.log('Failed to create ActiveCampaign contact')
+    return
+  }
+
+  // Subscribe to RacketRescue list
+  await subscribeToList(contact.id, RACKETRESCUE_LIST_ID)
 
   if (metadata.type === 'stringing') {
-    console.log('\nOrder Details:')
-    console.log('- Racket:', `${metadata.racket_brand} ${metadata.racket_model}`)
-    console.log('- Service:', metadata.service_package)
-    console.log('- String:', metadata.string_name)
-    console.log('- Tension:', `${metadata.main_tension}/${metadata.cross_tension} lbs`)
-    console.log('- Express:', metadata.is_express === 'true' ? 'Yes' : 'No')
-    console.log('- Pickup Address:', metadata.pickup_address)
-    console.log('- Pickup Time:', metadata.pickup_time)
-    if (metadata.special_instructions) {
-      console.log('- Notes:', metadata.special_instructions)
-    }
+    // Add Customer tag
+    await addTagToContact(contact.id, TAGS.CUSTOMER)
 
-    // TODO: Create order in database
-    // TODO: Send confirmation email
-    // TODO: Create task in calendar/scheduling system
-    // TODO: Send SMS notification
+    // Create order note
+    const orderNote = `
+🎾 STRINGING ORDER
+━━━━━━━━━━━━━━━━━━━━
+Amount: $${(session.amount_total || 0) / 100}
+Racket: ${metadata.racket_brand} ${metadata.racket_model}
+String: ${metadata.string_name}
+Tension: ${metadata.main_tension}/${metadata.cross_tension} lbs
+Express: ${metadata.is_express === 'true' ? 'Yes' : 'No'}
+Pickup: ${metadata.pickup_address}
+Time: ${metadata.pickup_time}
+${metadata.special_instructions ? `Notes: ${metadata.special_instructions}` : ''}
+━━━━━━━━━━━━━━━━━━━━
+Order ID: ${session.id}
+    `.trim()
+
+    await createNote(contact.id, orderNote)
+
+    console.log('Stringing order processed for:', customerEmail)
 
   } else if (metadata.type === 'membership') {
-    console.log('\nMembership Details:')
-    console.log('- Tier:', metadata.tier)
+    // Add Member tag
+    await addTagToContact(contact.id, TAGS.MEMBER)
 
-    // TODO: Update customer membership status in database
-    // TODO: Send welcome email
+    // Create membership note
+    const memberNote = `
+👑 NEW MEMBERSHIP
+━━━━━━━━━━━━━━━━━━━━
+Tier: ${metadata.tier}
+Amount: $${(session.amount_total || 0) / 100}/month
+━━━━━━━━━━━━━━━━━━━━
+Subscription ID: ${session.subscription}
+    `.trim()
+
+    await createNote(contact.id, memberNote)
+
+    console.log('Membership processed for:', customerEmail)
   }
 
   console.log('='.repeat(50))
 }
 
 async function handleSubscriptionCreated(subscription: Stripe.Subscription) {
-  const metadata = subscription.metadata || {}
-
   console.log('NEW SUBSCRIPTION CREATED!')
   console.log('- Subscription ID:', subscription.id)
-  console.log('- Customer:', subscription.customer)
-  console.log('- Status:', subscription.status)
-  console.log('- Tier:', metadata.tier)
-
-  // TODO: Create/update customer record in database
-  // TODO: Send welcome email
-}
-
-async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
-  console.log('SUBSCRIPTION UPDATED!')
-  console.log('- Subscription ID:', subscription.id)
   console.log('- Status:', subscription.status)
 
-  // TODO: Update customer membership status in database
+  // Get customer email from Stripe
+  if (subscription.customer && typeof subscription.customer === 'string') {
+    try {
+      const customer = await stripe.customers.retrieve(subscription.customer)
+      if ('email' in customer && customer.email) {
+        const contact = await createOrUpdateContact(
+          customer.email,
+          customer.name?.split(' ')[0] || '',
+          customer.name?.split(' ').slice(1).join(' ') || ''
+        )
+
+        if (contact?.id) {
+          await addTagToContact(contact.id, TAGS.MEMBER)
+          await subscribeToList(contact.id, RACKETRESCUE_LIST_ID)
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching customer:', error)
+    }
+  }
 }
 
 async function handleSubscriptionCanceled(subscription: Stripe.Subscription) {
   console.log('SUBSCRIPTION CANCELED!')
   console.log('- Subscription ID:', subscription.id)
-  console.log('- Customer:', subscription.customer)
 
-  // TODO: Update customer membership status in database
-  // TODO: Send cancellation confirmation email
+  // Note: You might want to remove the Member tag here
+  // For now, we'll just log it - the tag remains for historical purposes
 }
