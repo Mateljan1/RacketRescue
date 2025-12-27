@@ -103,6 +103,49 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://qtrypzzcjebvfcihiynt.supabase.co" />
       </head>
       <body className="font-body antialiased">
+        {/* STATIC PWA BANNER - No JavaScript required */}
+        <div
+          id="static-pwa-banner"
+          style={{
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            zIndex: 2147483647,
+            padding: '16px',
+            background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
+            boxShadow: '0 -4px 20px rgba(0,0,0,0.3)',
+            fontFamily: 'system-ui, -apple-system, sans-serif',
+          }}
+        >
+          <div style={{
+            maxWidth: '500px',
+            margin: '0 auto',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '12px',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{
+                width: '50px',
+                height: '50px',
+                background: 'white',
+                borderRadius: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+                <span style={{ fontSize: '24px' }}>🎾</span>
+              </div>
+              <div style={{ color: 'white' }}>
+                <div style={{ fontWeight: 'bold', fontSize: '16px' }}>Get the App!</div>
+                <div style={{ fontSize: '13px', opacity: 0.9 }}>Tap Share → Add to Home Screen</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <Header />
         {children}
         <Footer />
