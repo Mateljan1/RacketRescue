@@ -19,47 +19,43 @@ export default function PWAInstallPrompt() {
   const [isStandalone, setIsStandalone] = useState(false)
 
   useEffect(() => {
+    console.log('[PWA] Install prompt initializing...')
+
     // Check if already installed as PWA
     const standalone = window.matchMedia('(display-mode: standalone)').matches
       || (window.navigator as Navigator & { standalone?: boolean }).standalone === true
     setIsStandalone(standalone)
+    console.log('[PWA] Standalone mode:', standalone)
 
-    if (standalone) return // Don't show prompt if already installed
+    if (standalone) {
+      console.log('[PWA] Already installed, not showing prompt')
+      return
+    }
 
     // Check device type
     const iOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
     const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
     setIsIOS(iOS)
     setIsMobile(mobile)
-
-    // Check if we've already dismissed the prompt recently
-    const dismissed = localStorage.getItem('pwa-prompt-dismissed')
-    const dismissedDate = dismissed ? new Date(dismissed) : null
-    const hoursSinceDismissed = dismissedDate
-      ? (Date.now() - dismissedDate.getTime()) / (1000 * 60 * 60)
-      : null
-
-    // Show again after 24 hours (changed from 7 days)
-    if (dismissedDate && hoursSinceDismissed && hoursSinceDismissed < 24) {
-      return
-    }
+    console.log('[PWA] Device - iOS:', iOS, 'Mobile:', mobile)
 
     // Listen for beforeinstallprompt event (Chrome, Edge, Samsung, etc.)
     const handleBeforeInstall = (e: Event) => {
+      console.log('[PWA] beforeinstallprompt event fired!')
       e.preventDefault()
       setDeferredPrompt(e as BeforeInstallPromptEvent)
-      // Show prompt quickly
-      setTimeout(() => setShowPrompt(true), 1500)
+      setShowPrompt(true) // Show immediately
     }
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstall)
 
-    // For mobile devices (iOS or Android without prompt), show after short delay
+    // ALWAYS show after 1 second for mobile (ignore localStorage for now)
     if (mobile) {
+      console.log('[PWA] Mobile detected, will show prompt in 1 second')
       setTimeout(() => {
-        // Only show if beforeinstallprompt hasn't already triggered it
-        setShowPrompt(prev => prev ? prev : true)
-      }, 2000)
+        console.log('[PWA] Showing prompt now!')
+        setShowPrompt(true)
+      }, 1000)
     }
 
     return () => {
