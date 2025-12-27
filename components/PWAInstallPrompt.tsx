@@ -4,45 +4,60 @@ import { useState, useEffect } from 'react'
 import { X, Download, Share } from 'lucide-react'
 
 export default function PWAInstallPrompt() {
+  const [mounted, setMounted] = useState(false)
   const [dismissed, setDismissed] = useState(false)
   const [showSteps, setShowSteps] = useState(false)
   const [isIOS, setIsIOS] = useState(false)
+  const [isStandalone, setIsStandalone] = useState(false)
 
   useEffect(() => {
-    // Debug log
-    console.log('[PWA Banner] Component mounted')
+    // Mark as mounted for client-side rendering
+    setMounted(true)
+    console.log('[PWA] Component mounted')
 
     // Check if iOS
-    const isIOSDevice = /iPhone|iPad|iPod/.test(navigator.userAgent)
-    setIsIOS(isIOSDevice)
-    console.log('[PWA Banner] iOS device:', isIOSDevice)
+    const iOS = /iPhone|iPad|iPod/.test(navigator.userAgent)
+    setIsIOS(iOS)
+    console.log('[PWA] iOS:', iOS)
 
-    // Check if already installed as PWA
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches
-    console.log('[PWA Banner] Standalone mode:', isStandalone)
+    // Check if already installed
+    const standalone = window.matchMedia('(display-mode: standalone)').matches
+      || (window.navigator as Navigator & { standalone?: boolean }).standalone === true
+    setIsStandalone(standalone)
+    console.log('[PWA] Standalone:', standalone)
 
-    if (isStandalone) {
+    if (standalone) {
       setDismissed(true)
     }
   }, [])
 
-  if (dismissed) return null
+  // Don't render anything on server or if already running as PWA
+  if (!mounted) {
+    // Return a placeholder to prevent hydration mismatch
+    return null
+  }
+
+  if (dismissed || isStandalone) {
+    return null
+  }
 
   return (
     <>
-      {/* ALWAYS VISIBLE BANNER - No conditions */}
+      {/* Install Banner - Fixed at bottom */}
       {!showSteps && (
         <div
-          id="pwa-banner"
+          id="pwa-install-banner"
+          data-testid="pwa-banner"
           style={{
             position: 'fixed',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            zIndex: 999999,
+            bottom: '0px',
+            left: '0px',
+            right: '0px',
+            zIndex: 2147483647, // Maximum z-index
             padding: '16px',
             background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
             boxShadow: '0 -4px 20px rgba(0,0,0,0.3)',
+            borderTop: '3px solid #fef2f2',
           }}
         >
           <div style={{
@@ -62,6 +77,7 @@ export default function PWAInstallPrompt() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
               }}>
                 <span style={{ fontSize: '24px' }}>🎾</span>
               </div>
@@ -86,6 +102,7 @@ export default function PWAInstallPrompt() {
                   display: 'flex',
                   alignItems: 'center',
                   gap: '6px',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
                 }}
               >
                 <Download size={18} />
@@ -93,6 +110,7 @@ export default function PWAInstallPrompt() {
               </button>
               <button
                 onClick={() => setDismissed(true)}
+                aria-label="Dismiss"
                 style={{
                   background: 'rgba(255,255,255,0.2)',
                   color: 'white',
@@ -100,6 +118,9 @@ export default function PWAInstallPrompt() {
                   padding: '12px',
                   borderRadius: '10px',
                   cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 }}
               >
                 <X size={20} />
@@ -109,13 +130,16 @@ export default function PWAInstallPrompt() {
         </div>
       )}
 
-      {/* Installation Steps Modal */}
+      {/* Installation Instructions Modal */}
       {showSteps && (
         <div
           style={{
             position: 'fixed',
-            inset: 0,
-            zIndex: 999999,
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 2147483647,
             background: 'rgba(0,0,0,0.8)',
             display: 'flex',
             alignItems: 'flex-end',
@@ -132,9 +156,10 @@ export default function PWAInstallPrompt() {
               width: '100%',
               maxWidth: '400px',
               overflow: 'hidden',
+              marginBottom: '20px',
             }}
           >
-            {/* Header */}
+            {/* Modal Header */}
             <div style={{
               background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
               padding: '20px',
@@ -152,17 +177,22 @@ export default function PWAInstallPrompt() {
                   background: 'rgba(255,255,255,0.2)',
                   border: 'none',
                   borderRadius: '50%',
-                  padding: '8px',
+                  width: '36px',
+                  height: '36px',
                   cursor: 'pointer',
                   color: 'white',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 }}
               >
                 <X size={20} />
               </button>
             </div>
 
-            {/* Steps */}
+            {/* Installation Steps */}
             <div style={{ padding: '24px' }}>
+              {/* Step 1 */}
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px', marginBottom: '20px' }}>
                 <div style={{
                   width: '36px',
@@ -186,6 +216,7 @@ export default function PWAInstallPrompt() {
                 </div>
               </div>
 
+              {/* Step 2 */}
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px', marginBottom: '20px' }}>
                 <div style={{
                   width: '36px',
@@ -201,14 +232,15 @@ export default function PWAInstallPrompt() {
                 }}>2</div>
                 <div>
                   <p style={{ margin: 0, fontWeight: 'bold', color: '#111' }}>
-                    Scroll down and tap
+                    Scroll and tap &quot;Add to Home Screen&quot;
                   </p>
                   <p style={{ margin: '4px 0 0', color: '#666', fontSize: '14px' }}>
-                    "<span style={{ color: '#dc2626', fontWeight: 'bold' }}>Add to Home Screen</span>"
+                    It&apos;s in the share menu options
                   </p>
                 </div>
               </div>
 
+              {/* Step 3 */}
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
                 <div style={{
                   width: '36px',
@@ -224,10 +256,10 @@ export default function PWAInstallPrompt() {
                 }}>✓</div>
                 <div>
                   <p style={{ margin: 0, fontWeight: 'bold', color: '#111' }}>
-                    Tap "Add" and you're done!
+                    Tap &quot;Add&quot; - Done!
                   </p>
                   <p style={{ margin: '4px 0 0', color: '#666', fontSize: '14px' }}>
-                    The app will appear on your home screen
+                    The app icon will appear on your home screen
                   </p>
                 </div>
               </div>
