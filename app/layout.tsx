@@ -1,9 +1,11 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import ExitIntentPopup from '@/components/ExitIntentPopup'
+import PWAInstallPrompt from '@/components/PWAInstallPrompt'
+import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration'
 import Script from 'next/script'
 
 const inter = Inter({
@@ -12,11 +14,28 @@ const inter = Inter({
   display: 'swap',
 })
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: '#ec1f27',
+}
+
 export const metadata: Metadata = {
   title: 'Racket Rescue | Professional Tennis Racquet Stringing with Pickup & Delivery',
   description: 'Professional racquet stringing service with FREE pickup & delivery in Laguna Beach. Match-Ready $35, Pro-Performance $50. Same-day available. We save your game!',
   keywords: 'racquet stringing, tennis stringing Laguna Beach, racket restring, pickup delivery, professional stringing, same day stringing, tennis racket service',
   authors: [{ name: 'Racket Rescue' }],
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'Racket Rescue',
+  },
+  formatDetection: {
+    telephone: true,
+  },
   openGraph: {
     title: 'Racket Rescue - We Save Your Game!',
     description: 'Professional racquet stringing with pickup & delivery in Laguna Beach. Free for members!',
@@ -64,15 +83,21 @@ export default function RootLayout({
     <html lang="en" className={inter.variable}>
       <head>
         {/* Favicon */}
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.ico" sizes="32x32" />
+        <link rel="icon" href="/favicon.png" type="image/png" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        
-        {/* PWA Meta Tags */}
-        <meta name="theme-color" content="#ec1f27" />
+
+        {/* PWA Icons for iOS */}
+        <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192.png" />
+
+        {/* iOS Splash Screens */}
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="Racket Rescue" />
-        
+        <meta name="mobile-web-app-capable" content="yes" />
+
         {/* Preconnect to external domains */}
         <link rel="preconnect" href="https://qtrypzzcjebvfcihiynt.supabase.co" />
         <link rel="dns-prefetch" href="https://qtrypzzcjebvfcihiynt.supabase.co" />
@@ -82,6 +107,8 @@ export default function RootLayout({
         {children}
         <Footer />
         <ExitIntentPopup />
+        <PWAInstallPrompt />
+        <ServiceWorkerRegistration />
         
         {/* Analytics - Google Analytics 4 */}
         <Script
