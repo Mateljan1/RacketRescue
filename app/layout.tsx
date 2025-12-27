@@ -124,6 +124,53 @@ export default function RootLayout({
           `}
         </Script>
 
+        {/* PWA Install Banner - Vanilla JS for guaranteed rendering */}
+        <Script id="pwa-install-banner" strategy="afterInteractive">
+          {`
+            (function() {
+              // Check if already dismissed or running as PWA
+              if (localStorage.getItem('pwa-dismissed') === 'true') return;
+              if (window.matchMedia('(display-mode: standalone)').matches) return;
+              if (window.navigator.standalone === true) return;
+
+              // Create banner after DOM is ready
+              function createBanner() {
+                if (document.getElementById('pwa-install-banner-js')) return;
+
+                var banner = document.createElement('div');
+                banner.id = 'pwa-install-banner-js';
+                banner.innerHTML = '<div style="max-width:500px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;"><div style="display:flex;align-items:center;gap:12px;"><div style="width:50px;height:50px;background:white;border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.15);"><span style="font-size:24px;">🎾</span></div><div style="color:white;"><div style="font-weight:bold;font-size:16px;">Get the App!</div><div style="font-size:13px;opacity:0.9;">Add to Home Screen</div></div></div><div style="display:flex;gap:8px;"><button id="pwa-install-btn" style="background:white;color:#dc2626;border:none;padding:12px 20px;border-radius:10px;font-weight:bold;font-size:14px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.15);">📲 Install</button><button id="pwa-dismiss-btn" style="background:rgba(255,255,255,0.2);color:white;border:none;padding:12px;border-radius:10px;cursor:pointer;">✕</button></div></div>';
+
+                banner.style.cssText = 'position:fixed;bottom:0;left:0;right:0;z-index:2147483647;padding:16px;background:linear-gradient(135deg,#dc2626 0%,#b91c1c 100%);box-shadow:0 -4px 20px rgba(0,0,0,0.3);font-family:system-ui,-apple-system,sans-serif;';
+
+                document.body.appendChild(banner);
+
+                // Install button click
+                document.getElementById('pwa-install-btn').onclick = function() {
+                  var isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
+                  if (isIOS) {
+                    alert('To install:\\n\\n1. Tap the Share button (box with arrow)\\n2. Scroll down and tap "Add to Home Screen"\\n3. Tap "Add"\\n\\nThe app will appear on your home screen!');
+                  } else {
+                    alert('To install:\\n\\n1. Tap the menu (3 dots)\\n2. Tap "Add to Home Screen" or "Install App"');
+                  }
+                };
+
+                // Dismiss button click
+                document.getElementById('pwa-dismiss-btn').onclick = function() {
+                  banner.remove();
+                  localStorage.setItem('pwa-dismissed', 'true');
+                };
+              }
+
+              if (document.readyState === 'complete') {
+                createBanner();
+              } else {
+                window.addEventListener('load', createBanner);
+              }
+            })();
+          `}
+        </Script>
+
         {/* Structured Data for SEO */}
         <Script id="structured-data" type="application/ld+json">
           {JSON.stringify({
