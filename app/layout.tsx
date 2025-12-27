@@ -103,7 +103,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://qtrypzzcjebvfcihiynt.supabase.co" />
       </head>
       <body className="font-body antialiased">
-        {/* STATIC PWA BANNER - No JavaScript required */}
+        {/* STATIC PWA BANNER - v2 - No JavaScript required */}
         <div
           id="static-pwa-banner"
           style={{
