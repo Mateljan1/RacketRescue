@@ -49,7 +49,7 @@ export default function StickyMobileCTA() {
                 className="flex-[2] flex items-center justify-center gap-2 bg-racket-red text-white py-3 rounded-xl font-bold text-sm hover:bg-red-600 transition-colors shadow-lg"
               >
                 <Calendar className="w-4 h-4" />
-                Schedule Pickup - $52
+                Schedule Pickup - $55
               </Link>
             </div>
 

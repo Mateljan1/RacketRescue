@@ -41,7 +41,7 @@ export default function NewportBeachLayout({
           description: 'Professional tennis racquet stringing with free pickup and delivery in Newport Beach, CA.',
           offers: {
             '@type': 'Offer',
-            price: '52.00',
+            price: '55.00',
             priceCurrency: 'USD',
           },
         })}

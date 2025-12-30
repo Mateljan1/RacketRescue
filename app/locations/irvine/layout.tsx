@@ -41,7 +41,7 @@ export default function IrvineLayout({
           description: 'Professional tennis racquet stringing with free pickup and delivery in Irvine, CA.',
           offers: {
             '@type': 'Offer',
-            price: '52.00',
+            price: '55.00',
             priceCurrency: 'USD',
           },
         })}
