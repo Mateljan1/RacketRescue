@@ -153,8 +153,8 @@ export default function ContactPage() {
                       className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-racket-orange focus:outline-none transition-colors"
                     >
                       <option value="">Select a service</option>
-                      <option value="standard">Standard Stringing ($25)</option>
-                      <option value="same-day">Same-Day Service ($35)</option>
+                      <option value="standard">Standard 24-Hour ($55)</option>
+                      <option value="same-day">Same-Day Rush ($65)</option>
                       <option value="customization">Racquet Customization ($50+)</option>
                       <option value="grip">Grip Replacement ($10)</option>
                     </select>
