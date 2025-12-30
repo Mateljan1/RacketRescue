@@ -47,11 +47,12 @@ export default function PickupSchedule({ orderData, setOrderData, onNext, onPrev
         <div className="space-y-8">
           {/* Pickup Address */}
           <div>
-            <label className="block text-sm font-bold text-racket-black mb-3 uppercase tracking-wide">
+            <label htmlFor="pickup-address" className="block text-sm font-bold text-racket-black mb-3 uppercase tracking-wide">
               Pickup Address *
             </label>
             <div className="relative">
               <input
+                id="pickup-address"
                 type="text"
                 placeholder="Enter your pickup address in Laguna Beach..."
                 value={orderData.pickup_address}
@@ -62,6 +63,7 @@ export default function PickupSchedule({ orderData, setOrderData, onNext, onPrev
                   }
                 }}
                 className="w-full pl-6 pr-14 py-5 border-2 border-gray-200 rounded-xl focus:border-racket-red focus:outline-none text-lg transition-colors"
+                aria-required="true"
               />
               <div className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-racket-red/10 rounded-lg">
                 <Home className="w-6 h-6 text-racket-red" />
@@ -89,31 +91,35 @@ export default function PickupSchedule({ orderData, setOrderData, onNext, onPrev
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
             >
-              <label className="block text-sm font-bold text-racket-black mb-3 uppercase tracking-wide">
+              <label htmlFor="delivery-address" className="block text-sm font-bold text-racket-black mb-3 uppercase tracking-wide">
                 Delivery Address *
               </label>
               <input
+                id="delivery-address"
                 type="text"
                 placeholder="Enter your delivery address..."
                 value={orderData.delivery_address}
                 onChange={(e) => setOrderData({ ...orderData, delivery_address: e.target.value })}
                 className="w-full px-6 py-5 border-2 border-gray-200 rounded-xl focus:border-racket-red focus:outline-none text-lg transition-colors"
+                aria-required="true"
               />
             </motion.div>
           )}
 
           {/* Pickup Time */}
           <div>
-            <label className="block text-sm font-bold text-racket-black mb-3 uppercase tracking-wide">
+            <label htmlFor="pickup-time" className="block text-sm font-bold text-racket-black mb-3 uppercase tracking-wide">
               Preferred Pickup Time *
             </label>
             <div className="relative">
               <input
+                id="pickup-time"
                 type="datetime-local"
                 min={minDateTime}
                 value={orderData.pickup_time}
                 onChange={(e) => setOrderData({ ...orderData, pickup_time: e.target.value })}
                 className="w-full pl-6 pr-14 py-5 border-2 border-gray-200 rounded-xl focus:border-racket-red focus:outline-none text-lg transition-colors"
+                aria-required="true"
               />
               <div className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-racket-blue/10 rounded-lg">
                 <Clock className="w-6 h-6 text-racket-blue" />

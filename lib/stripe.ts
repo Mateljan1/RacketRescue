@@ -1,10 +1,41 @@
 import Stripe from 'stripe'
 
-// Server-side Stripe instance
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-12-15.clover',
-  typescript: true,
-})
+// Server-side Stripe instance - lazy initialization
+// This prevents build-time errors when STRIPE_SECRET_KEY is not available
+let stripeInstance: Stripe | null = null
+
+export function getStripe(): Stripe {
+  if (!stripeInstance) {
+    const stripeSecretKey = process.env.STRIPE_SECRET_KEY
+    if (!stripeSecretKey) {
+      throw new Error('STRIPE_SECRET_KEY is not configured')
+    }
+    stripeInstance = new Stripe(stripeSecretKey, {
+      apiVersion: '2025-12-15.clover',
+      typescript: true,
+    })
+  }
+  return stripeInstance
+}
+
+// For backwards compatibility - will throw if used at build time
+export const stripe = {
+  get checkout() {
+    return getStripe().checkout
+  },
+  get customers() {
+    return getStripe().customers
+  },
+  get paymentIntents() {
+    return getStripe().paymentIntents
+  },
+  get prices() {
+    return getStripe().prices
+  },
+  get products() {
+    return getStripe().products
+  },
+} as unknown as Stripe
 
 // Product IDs - These will be created by the setup script
 export const STRIPE_PRODUCTS = {

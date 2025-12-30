@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, ArrowRight, Check } from 'lucide-react'
 import Link from 'next/link'
@@ -9,6 +10,8 @@ import RacketDetails from '@/components/schedule/RacketDetails'
 import PickupSchedule from '@/components/schedule/PickupSchedule'
 import OrderReview from '@/components/schedule/OrderReview'
 import PriceCalculator from '@/components/PriceCalculator'
+import type { OrderData, OrderPricing, ServicePackage } from '@/lib/types'
+import { PRICING } from '@/lib/pricing'
 
 const steps = [
   { number: 1, title: 'Service', desc: 'Choose your package' },
@@ -17,10 +20,23 @@ const steps = [
   { number: 4, title: 'Review', desc: 'Confirm your order' },
 ]
 
-export default function SchedulePage() {
+// Map package IDs from homepage to service_package values
+const packageToService: Record<string, ServicePackage> = {
+  starter: 'match_ready',
+  pro: 'pro_performance',
+  custom: 'match_ready',
+}
+
+function ScheduleContent() {
+  const searchParams = useSearchParams()
+  const packageParam = searchParams.get('package')
+  const initialService: ServicePackage = packageParam && packageToService[packageParam]
+    ? packageToService[packageParam]
+    : 'match_ready'
+
   const [currentStep, setCurrentStep] = useState(1)
-  const [orderData, setOrderData] = useState({
-    service_package: 'match_ready',
+  const [orderData, setOrderData] = useState<OrderData>({
+    service_package: initialService,
     racket_brand: '',
     racket_model: '',
     string_type: '',
@@ -41,6 +57,16 @@ export default function SchedulePage() {
     special_instructions: '',
   })
 
+  // Update service package when URL param changes
+  useEffect(() => {
+    if (packageParam && packageToService[packageParam]) {
+      setOrderData(prev => ({
+        ...prev,
+        service_package: packageToService[packageParam]
+      }))
+    }
+  }, [packageParam])
+
   const nextStep = () => {
     if (currentStep < 4) {
       setCurrentStep(prev => prev + 1)
@@ -53,23 +79,23 @@ export default function SchedulePage() {
     }
   }
 
-  const calculatePricing = () => {
-    const serviceLabor = orderData.service_package === 'match_ready' ? 35 : 50
+  const calculatePricing = (): OrderPricing => {
+    const serviceLabor = PRICING.services[orderData.service_package]
     const stringPrice = orderData.customer_provides_string ? 0 : orderData.string_price
-    const expressFee = orderData.is_express ? 15 : 0
-    const regripFee = orderData.add_regrip ? 10 : 0
-    
+    const expressFee = orderData.is_express ? PRICING.addOns.express : 0
+    const regripFee = orderData.add_regrip ? PRICING.addOns.regrip : 0
+
     let overGripFee = 0
     let dampenerFee = 0
     if (orderData.dampener_bundle) {
-      dampenerFee = 7
+      dampenerFee = PRICING.addOns.dampenerBundle
     } else {
-      overGripFee = orderData.add_overgrip ? 3 : 0
-      dampenerFee = orderData.add_dampener ? 5 : 0
+      overGripFee = orderData.add_overgrip ? PRICING.addOns.overgrip : 0
+      dampenerFee = orderData.add_dampener ? PRICING.addOns.dampener : 0
     }
-    
+
     const secondRacketFee = orderData.add_second_racket ? serviceLabor : 0
-    const pickupFee = 15 // Will be waived for members
+    const pickupFee = PRICING.delivery.pickupFee // Will be waived for members
 
     const subtotal = serviceLabor + stringPrice + expressFee + regripFee + overGripFee + dampenerFee + secondRacketFee
     const total = subtotal + pickupFee
@@ -202,3 +228,41 @@ export default function SchedulePage() {
   )
 }
 
+// Loading fallback for Suspense
+function ScheduleLoading() {
+  return (
+    <div className="min-h-screen bg-white pt-24">
+      <div className="bg-gradient-to-br from-racket-black to-racket-charcoal text-white py-16">
+        <div className="container-racket">
+          <div className="flex items-center gap-4 mb-8">
+            <div className="w-11 h-11 bg-white/10 rounded-full animate-pulse" />
+            <div>
+              <div className="h-10 w-64 bg-white/10 rounded animate-pulse" />
+              <div className="h-6 w-96 bg-white/10 rounded animate-pulse mt-2" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="container-racket py-16">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white rounded-3xl shadow-2xl p-10 animate-pulse">
+            <div className="h-8 w-48 bg-gray-200 rounded mb-6" />
+            <div className="space-y-4">
+              <div className="h-20 bg-gray-200 rounded" />
+              <div className="h-20 bg-gray-200 rounded" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// Export wrapped in Suspense boundary
+export default function SchedulePage() {
+  return (
+    <Suspense fallback={<ScheduleLoading />}>
+      <ScheduleContent />
+    </Suspense>
+  )
+}

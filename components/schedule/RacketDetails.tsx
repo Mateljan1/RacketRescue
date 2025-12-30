@@ -139,11 +139,12 @@ export default function RacketDetails({ orderData, setOrderData, onNext, onPrev 
 
         <div className="grid md:grid-cols-2 gap-10">
           <div>
-            <label className="block text-sm font-black text-racket-gray mb-6 uppercase tracking-wider">
+            <label htmlFor="main-tension" className="block text-sm font-black text-racket-gray mb-6 uppercase tracking-wider">
               Main Strings
             </label>
             <div className="relative">
               <input
+                id="main-tension"
                 type="range"
                 min="40"
                 max="70"
@@ -153,6 +154,9 @@ export default function RacketDetails({ orderData, setOrderData, onNext, onPrev 
                 style={{
                   background: `linear-gradient(to right, #ec1f27 0%, #ec1f27 ${((orderData.main_tension - 40) / 30) * 100}%, #e5e7eb ${((orderData.main_tension - 40) / 30) * 100}%, #e5e7eb 100%)`,
                 }}
+                aria-valuemin={40}
+                aria-valuemax={70}
+                aria-valuenow={orderData.main_tension}
               />
               <div className="flex justify-between text-sm text-racket-gray mt-3 mb-6">
                 <span>40 lbs</span>
@@ -173,11 +177,12 @@ export default function RacketDetails({ orderData, setOrderData, onNext, onPrev 
           </div>
 
           <div>
-            <label className="block text-sm font-black text-racket-gray mb-6 uppercase tracking-wider">
+            <label htmlFor="cross-tension" className="block text-sm font-black text-racket-gray mb-6 uppercase tracking-wider">
               Cross Strings
             </label>
             <div className="relative">
               <input
+                id="cross-tension"
                 type="range"
                 min="40"
                 max="70"
@@ -187,6 +192,9 @@ export default function RacketDetails({ orderData, setOrderData, onNext, onPrev 
                 style={{
                   background: `linear-gradient(to right, #ec1f27 0%, #ec1f27 ${((orderData.cross_tension - 40) / 30) * 100}%, #e5e7eb ${((orderData.cross_tension - 40) / 30) * 100}%, #e5e7eb 100%)`,
                 }}
+                aria-valuemin={40}
+                aria-valuemax={70}
+                aria-valuenow={orderData.cross_tension}
               />
               <div className="flex justify-between text-sm text-racket-gray mt-3 mb-6">
                 <span>40 lbs</span>

@@ -1,0 +1,10 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.racketrescue.app",
+    "sha256_cert_fingerprints": [
+      "DC:1C:AB:15:8B:29:38:75:D1:74:85:E5:5F:F8:F3:7F:7D:DF:EF:94:A7:20:9B:E1:65:F1:C7:A7:55:37:DF:5F"
+    ]
+  }
+}]

@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe'
+import { validateAdminAccess, unauthorizedResponse } from '@/lib/admin-auth'
+
+export const dynamic = 'force-dynamic'
 
 // Order status types
 export type OrderStatus =
@@ -94,10 +97,17 @@ export async function GET(
 }
 
 // PATCH - Update order status (for admin use)
+// Requires admin authentication via x-admin-key or x-admin-email header
 export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  // Require admin authentication
+  const auth = validateAdminAccess(request)
+  if (!auth.authenticated) {
+    return unauthorizedResponse(auth.error)
+  }
+
   try {
     const { id } = await params
     const body = await request.json()

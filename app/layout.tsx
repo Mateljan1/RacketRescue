@@ -6,6 +6,7 @@ import Footer from '@/components/Footer'
 import ExitIntentPopup from '@/components/ExitIntentPopup'
 import PWAInstallPrompt from '@/components/PWAInstallPrompt'
 import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration'
+import StickyMobileCTA from '@/components/StickyMobileCTA'
 import Script from 'next/script'
 
 const inter = Inter({
@@ -17,15 +18,13 @@ const inter = Inter({
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
   themeColor: '#ec1f27',
 }
 
 export const metadata: Metadata = {
-  title: 'Racket Rescue | Professional Tennis Racquet Stringing with Pickup & Delivery',
-  description: 'Professional racquet stringing service with FREE pickup & delivery in Laguna Beach. Match-Ready $35, Pro-Performance $50. Same-day available. We save your game!',
-  keywords: 'racquet stringing, tennis stringing Laguna Beach, racket restring, pickup delivery, professional stringing, same day stringing, tennis racket service',
+  title: 'Racket Rescue | #1 Tennis Racquet Stringing in Orange County | Free Pickup & Delivery',
+  description: 'Orange County\'s premier mobile tennis racquet stringing. 4.9★ rating from 312+ reviews. Free pickup & delivery for members. 2-3 day turnaround. USRSA Certified. Starting at $52.',
+  keywords: 'racquet stringing Orange County, tennis stringing Laguna Beach, racket restring Newport Beach, Irvine racket stringing, mobile stringing service, pickup delivery tennis, professional stringing, USRSA certified stringer',
   authors: [{ name: 'Racket Rescue' }],
   manifest: '/manifest.json',
   appleWebApp: {
@@ -37,8 +36,8 @@ export const metadata: Metadata = {
     telephone: true,
   },
   openGraph: {
-    title: 'Racket Rescue - We Save Your Game!',
-    description: 'Professional racquet stringing with pickup & delivery in Laguna Beach. Free for members!',
+    title: 'Racket Rescue - #1 Mobile Racquet Stringing in Orange County',
+    description: '4.9★ rated tennis stringing with FREE pickup & delivery. USRSA Certified. 2-3 day turnaround. Serving Laguna Beach, Newport Beach, Irvine & more.',
     type: 'website',
     locale: 'en_US',
     url: 'https://racketrescue.com',
@@ -69,9 +68,9 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  verification: {
-    google: 'your-google-verification-code', // TODO: Add real verification code
-  },
+  // verification: {
+  //   google: 'ADD_YOUR_GOOGLE_VERIFICATION_CODE_HERE',
+  // },
 }
 
 export default function RootLayout({
@@ -103,59 +102,18 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://qtrypzzcjebvfcihiynt.supabase.co" />
       </head>
       <body className="font-body antialiased">
-        {/* STATIC PWA BANNER - v2 - No JavaScript required */}
-        <div
-          id="static-pwa-banner"
-          style={{
-            position: 'fixed',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            zIndex: 2147483647,
-            padding: '16px',
-            background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
-            boxShadow: '0 -4px 20px rgba(0,0,0,0.3)',
-            fontFamily: 'system-ui, -apple-system, sans-serif',
-          }}
-        >
-          <div style={{
-            maxWidth: '500px',
-            margin: '0 auto',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '12px',
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <div style={{
-                width: '50px',
-                height: '50px',
-                background: 'white',
-                borderRadius: '12px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-                <span style={{ fontSize: '24px' }}>🎾</span>
-              </div>
-              <div style={{ color: 'white' }}>
-                <div style={{ fontWeight: 'bold', fontSize: '16px' }}>Get the App!</div>
-                <div style={{ fontSize: '13px', opacity: 0.9 }}>Tap Share → Add to Home Screen</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <Header />
         {children}
         <Footer />
         <ExitIntentPopup />
         <PWAInstallPrompt />
         <ServiceWorkerRegistration />
+        <StickyMobileCTA />
         
         {/* Analytics - Google Analytics 4 */}
+        {/* TODO: Add real Google Analytics ID
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
+          src="https://www.googletagmanager.com/gtag/js?id=G-YOUR_REAL_ID"
           strategy="afterInteractive"
         />
         <Script id="google-analytics" strategy="afterInteractive">
@@ -163,9 +121,10 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-XXXXXXXXXX');
+            gtag('config', 'G-YOUR_REAL_ID');
           `}
         </Script>
+        */}
 
         {/* PWA Install Banner - Vanilla JS for guaranteed rendering */}
         <Script id="pwa-install-banner" strategy="afterInteractive">

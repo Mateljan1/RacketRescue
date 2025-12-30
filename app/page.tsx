@@ -12,6 +12,8 @@ import TrustBadges from '@/components/TrustBadges'
 import FAQ from '@/components/FAQ'
 import FloatingCTA from '@/components/FloatingCTA'
 import ZipChecker from '@/components/ZipChecker'
+import MembershipCalculator from '@/components/MembershipCalculator'
+import StringerProfile from '@/components/StringerProfile'
 
 const LOGO_URL = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68b77f9f4a7eae9e097474c2/e406f4500_RacketRescueLogoFinal_Horizontal.png"
 
@@ -94,24 +96,49 @@ export default function HomePage() {
               <span className="block mt-3 text-racket-red font-bold">Free pickup for members. Starting at $52.</span>
             </p>
 
-            {/* UPGRADED Social Proof Bar */}
+            {/* UPGRADED Social Proof Bar - Enhanced with clickable reviews and guarantees */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="flex flex-wrap justify-center items-center gap-6 pt-8 pb-12"
+              className="flex flex-wrap justify-center items-center gap-4 md:gap-6 pt-8 pb-6"
             >
-              <div className="flex items-center gap-2 text-white/80">
-                <Star className="w-5 h-5 text-yellow-400 fill-current" />
-                <span className="font-semibold">4.9/5 from 312 reviews</span>
+              <a
+                href="https://g.page/r/racketrescue/review"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-white/20 transition-colors group"
+              >
+                <div className="flex">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                  ))}
+                </div>
+                <span className="font-bold text-white">4.9/5</span>
+                <span className="text-white/80 text-sm group-hover:text-white transition-colors">312 Google reviews</span>
+              </a>
+              <div className="hidden md:block w-px h-6 bg-white/30" />
+              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+                <span className="text-2xl">✓</span>
+                <span className="font-bold text-white">99.7% satisfaction</span>
               </div>
-              <div className="w-px h-6 bg-white/30" />
-              <div className="text-white/80 font-semibold">
-                1,247 rackets strung
+              <div className="hidden md:block w-px h-6 bg-white/30" />
+              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+                <span className="text-2xl">🛡️</span>
+                <span className="font-bold text-white">Money-back guarantee</span>
               </div>
-              <div className="w-px h-6 bg-white/30" />
-              <div className="text-white/80 font-semibold">
-                25+ years experience
+            </motion.div>
+
+            {/* Next Pickup Urgency Indicator */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8 }}
+              className="text-center pb-6"
+            >
+              <div className="inline-flex items-center gap-2 bg-racket-red/80 backdrop-blur-sm px-5 py-2 rounded-full text-white text-sm font-medium">
+                <span className="animate-pulse w-2 h-2 bg-green-400 rounded-full"></span>
+                Next available pickup: Tomorrow morning
               </div>
             </motion.div>
 
@@ -222,17 +249,22 @@ export default function HomePage() {
                     </div>
                   </div>
 
-                  <motion.button
+                  <motion.div
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`w-full py-5 rounded-full text-xl font-bold transition-all mt-8 ${
-                      pkg.popular
-                        ? 'bg-racket-red text-white shadow-xl hover:bg-red-600'
-                        : 'bg-racket-black text-white hover:bg-racket-charcoal'
-                    }`}
+                    className="mt-8"
                   >
-                    Select {pkg.name}
-                  </motion.button>
+                    <Link
+                      href={`/schedule?package=${pkg.id}`}
+                      className={`block w-full py-5 rounded-full text-xl font-bold text-center transition-all ${
+                        pkg.popular
+                          ? 'bg-racket-red text-white shadow-xl hover:bg-red-600'
+                          : 'bg-racket-black text-white hover:bg-racket-charcoal'
+                      }`}
+                    >
+                      Select {pkg.name}
+                    </Link>
+                  </motion.div>
                 </div>
               </motion.div>
             ))}
@@ -259,7 +291,7 @@ export default function HomePage() {
       </section>
 
       {/* Process Section - "How It Actually Works" */}
-      <section className="py-32 bg-white">
+      <section id="how-it-works" className="py-32 bg-white">
         <div className="container-racket">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -386,74 +418,11 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Meet Your Stringer - Build Trust */}
+      <StringerProfile />
+
       {/* Membership ROI - PROMINENT */}
-      <section className="py-32 bg-gradient-to-br from-racket-green/10 to-green-50">
-        <div className="container-racket max-w-5xl">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="bg-white rounded-3xl shadow-2xl p-12"
-          >
-            <div className="text-center mb-12">
-              <h2 className="text-5xl font-bold text-racket-black mb-4">
-                Save More With Membership
-              </h2>
-              <p className="text-2xl text-racket-gray">
-                String 2X per month? Membership pays for itself.
-              </p>
-            </div>
-
-            <div className="max-w-2xl mx-auto">
-              <label className="block text-lg font-bold text-racket-black mb-6 text-center">
-                How many times do you string per month?
-              </label>
-              <div className="flex items-center gap-8 mb-12">
-                <input
-                  type="range"
-                  min="1"
-                  max="8"
-                  defaultValue="2"
-                  className="flex-1 h-4 bg-gray-200 rounded-full appearance-none cursor-pointer accent-racket-green"
-                  id="membership-calc"
-                />
-              </div>
-
-              <div className="bg-gradient-to-r from-racket-green to-green-600 text-white rounded-3xl p-10 text-center mb-10">
-                <div className="text-sm font-bold mb-3">WITH STANDARD MEMBERSHIP (\$25/mo):</div>
-                <div className="text-6xl font-black mb-3">Save $21</div>
-                <div className="text-xl opacity-90">per month (2 orders)</div>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="text-center p-6 bg-gray-50 rounded-2xl">
-                  <div className="text-3xl font-bold text-racket-red mb-2">$30</div>
-                  <div className="text-racket-gray">Saved on pickup</div>
-                  <div className="text-sm text-racket-gray">(2 orders × $15)</div>
-                </div>
-                <div className="text-center p-6 bg-gray-50 rounded-2xl">
-                  <div className="text-3xl font-bold text-racket-red mb-2">$7</div>
-                  <div className="text-racket-gray">Saved on labor</div>
-                  <div className="text-sm text-racket-gray">(10% off × 2)</div>
-                </div>
-              </div>
-
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="mt-10"
-              >
-                <Link
-                  href="/membership"
-                  className="block w-full bg-racket-red text-white py-5 rounded-full text-xl font-bold text-center hover:bg-red-600 transition-colors"
-                >
-                  Try Standard Free for 30 Days →
-                </Link>
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <MembershipCalculator />
 
       {/* Testimonials */}
       <Testimonials />

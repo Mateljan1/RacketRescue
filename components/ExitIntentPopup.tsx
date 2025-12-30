@@ -65,11 +65,25 @@ export default function ExitIntentPopup() {
                     <Gift className="w-16 h-16 text-racket-red" />
                   </div>
                   <h2 className="text-4xl font-bold text-racket-black mb-4">
-                    Wait! Get $10 Off
+                    Wait! Try Free for 30 Days
                   </h2>
-                  <p className="text-xl text-racket-gray">
-                    First-time customers save $10 on their first stringing service
+                  <p className="text-xl text-racket-gray mb-4">
+                    Get your first stringing FREE with a 30-day membership trial
                   </p>
+                  <div className="bg-racket-lightgray rounded-xl p-4 text-left space-y-2">
+                    <div className="flex items-center gap-2 text-racket-black">
+                      <span className="text-racket-green">✓</span>
+                      <span>FREE first stringing (up to $75 value)</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-racket-black">
+                      <span className="text-racket-green">✓</span>
+                      <span>FREE pickup & delivery for 30 days</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-racket-black">
+                      <span className="text-racket-green">✓</span>
+                      <span>No commitment - cancel anytime</span>
+                    </div>
+                  </div>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -88,12 +102,12 @@ export default function ExitIntentPopup() {
                     type="submit"
                     className="w-full bg-racket-red text-white py-5 rounded-full text-xl font-bold hover:bg-red-600 transition-colors flex items-center justify-center gap-3"
                   >
-                    Claim My $10 Off
+                    Start My Free Trial
                     <ArrowRight className="w-6 h-6" />
                   </motion.button>
 
                   <p className="text-sm text-racket-gray text-center">
-                    Plus, get exclusive tips on when to restring and string selection advice
+                    No credit card required. Cancel anytime in the first 30 days.
                   </p>
                 </form>
               </div>
@@ -108,10 +122,10 @@ export default function ExitIntentPopup() {
                   <Gift className="w-16 h-16 text-racket-green" />
                 </motion.div>
                 <h2 className="text-4xl font-bold text-racket-black mb-4">
-                  Check Your Email!
+                  You're In!
                 </h2>
                 <p className="text-xl text-racket-gray">
-                  Your $10 off code is on its way. See you soon!
+                  Check your email to activate your 30-day free trial. Welcome to Racket Rescue!
                 </p>
               </div>
             )}

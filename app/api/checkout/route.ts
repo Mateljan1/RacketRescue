@@ -3,6 +3,8 @@ import { stripe } from '@/lib/stripe'
 import { STRIPE_PRICE_IDS, STRING_PRICE_MAP } from '@/lib/stripe-prices'
 import Stripe from 'stripe'
 
+export const dynamic = 'force-dynamic'
+
 interface OrderData {
   service_package: 'match_ready' | 'pro_performance'
   racket_brand: string
