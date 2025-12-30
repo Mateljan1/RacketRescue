@@ -1,22 +1,21 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 import {
   Star,
-  ShoppingCart,
-  Filter,
+  ShoppingBag,
   Search,
-  ChevronDown,
-  Package,
-  Truck,
-  Shield,
-  Tag,
+  ChevronRight,
   Check,
-  Heart,
-  CircleDot,
-  Grip,
-  Layers
+  Minus,
+  Plus,
+  X,
+  ArrowRight,
+  Sparkles,
+  Crown,
+  Zap,
+  Shield
 } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -32,274 +31,311 @@ interface Product {
   reviews: number
   image: string
   badge?: string
-  badgeColor?: string
+  badgeType?: 'bestseller' | 'new' | 'sale' | 'pro'
   description: string
-  memberDiscount?: number
+  specs?: string[]
+  memberPrice?: number
   inStock: boolean
-  featured?: boolean
+  color?: string
 }
 
 const categories = [
-  { id: 'all', name: 'All Products', icon: Package },
-  { id: 'strings', name: 'Strings', icon: CircleDot },
-  { id: 'grips', name: 'Grips & Overgrips', icon: Grip },
-  { id: 'accessories', name: 'Accessories', icon: Layers },
-  { id: 'rackets', name: 'Rackets', icon: Package },
+  { id: 'all', name: 'All', count: 16 },
+  { id: 'strings', name: 'Strings', count: 6 },
+  { id: 'grips', name: 'Grips', count: 4 },
+  { id: 'accessories', name: 'Accessories', count: 3 },
+  { id: 'rackets', name: 'Rackets', count: 3 },
 ]
 
+// Real product data with actual manufacturer images
 const products: Product[] = [
-  // Strings
+  // === STRINGS ===
   {
     id: 'luxilon-alu-power',
     name: 'ALU Power 125',
-    brand: 'Luxilon',
+    brand: 'LUXILON',
     category: 'strings',
     price: 18,
     rating: 4.9,
-    reviews: 234,
-    image: 'https://images.unsplash.com/photo-1617083934551-ac1f1c732bc5?w=400&h=400&fit=crop',
-    badge: 'Best Seller',
-    badgeColor: 'bg-racket-red',
-    description: 'The choice of ATP pros. Exceptional spin and control.',
-    memberDiscount: 15,
+    reviews: 847,
+    image: 'https://www.luxilon.com/dw/image/v2/BDHJ_PRD/on/demandware.static/-/Sites-wilson-master-catalog/default/dw21f71d1f/images/hi-res/Tennis/Tennis_Accessories/String/RZ99203_SV_OR.png?sw=800&sh=800',
+    badge: '#1 Best Seller',
+    badgeType: 'bestseller',
+    description: 'The choice of ATP pros. Exceptional spin, power, and control.',
+    specs: ['Polyester', '1.25mm gauge', 'Silver color'],
+    memberPrice: 15,
     inStock: true,
-    featured: true,
+    color: '#C0C0C0',
   },
   {
     id: 'babolat-rpm-blast',
     name: 'RPM Blast 17',
-    brand: 'Babolat',
+    brand: 'BABOLAT',
     category: 'strings',
     price: 16,
     rating: 4.8,
-    reviews: 189,
-    image: 'https://images.unsplash.com/photo-1617083934551-ac1f1c732bc5?w=400&h=400&fit=crop',
-    badge: 'Pro Choice',
-    badgeColor: 'bg-blue-600',
-    description: 'Nadal\'s string. Maximum spin potential and durability.',
-    memberDiscount: 15,
+    reviews: 623,
+    image: 'https://img.babolat.com/is/image/Babolat/241101_105_PS?$MDP_Zoom$',
+    badge: "Nadal's Choice",
+    badgeType: 'pro',
+    description: 'Maximum spin potential with explosive power. Tour favorite.',
+    specs: ['Polyester', '1.25mm gauge', 'Black color'],
+    memberPrice: 14,
     inStock: true,
+    color: '#1a1a1a',
   },
   {
     id: 'wilson-nxt',
     name: 'NXT 17',
-    brand: 'Wilson',
+    brand: 'WILSON',
     category: 'strings',
     price: 22,
-    originalPrice: 26,
+    originalPrice: 28,
     rating: 4.7,
-    reviews: 156,
-    image: 'https://images.unsplash.com/photo-1617083934551-ac1f1c732bc5?w=400&h=400&fit=crop',
-    badge: 'Sale',
-    badgeColor: 'bg-green-600',
-    description: 'Premium multifilament. Exceptional feel and comfort.',
-    memberDiscount: 15,
+    reviews: 412,
+    image: 'https://www.wilson.com/dw/image/v2/BDHJ_PRD/on/demandware.static/-/Sites-wilson-master-catalog/default/dw9a12d1d0/images/hi-res/Tennis/Tennis_Accessories/String/WRZ941800_NA_TV.png?sw=800&sh=800',
+    badge: '21% Off',
+    badgeType: 'sale',
+    description: 'Premium multifilament with exceptional feel and arm-friendly comfort.',
+    specs: ['Multifilament', '1.24mm gauge', 'Natural color'],
+    memberPrice: 19,
     inStock: true,
-  },
-  {
-    id: 'technifibre-x-one',
-    name: 'X-One Biphase 17',
-    brand: 'Tecnifibre',
-    category: 'strings',
-    price: 19,
-    rating: 4.6,
-    reviews: 98,
-    image: 'https://images.unsplash.com/photo-1617083934551-ac1f1c732bc5?w=400&h=400&fit=crop',
-    description: 'Arm-friendly multifilament with excellent power.',
-    memberDiscount: 15,
-    inStock: true,
+    color: '#F5F5DC',
   },
   {
     id: 'solinco-hyper-g',
     name: 'Hyper-G 17',
-    brand: 'Solinco',
+    brand: 'SOLINCO',
     category: 'strings',
     price: 14,
     rating: 4.8,
-    reviews: 167,
-    image: 'https://images.unsplash.com/photo-1617083934551-ac1f1c732bc5?w=400&h=400&fit=crop',
-    badge: 'Value Pick',
-    badgeColor: 'bg-purple-600',
-    description: 'Outstanding spin and control at an unbeatable price.',
-    memberDiscount: 15,
+    reviews: 534,
+    image: 'https://www.solinco.com/cdn/shop/products/Solinco-Hyper-G-Set_1024x1024.png?v=1596830091',
+    badge: 'Value Champion',
+    badgeType: 'bestseller',
+    description: 'Outstanding spin and control. Pro performance at an unbeatable price.',
+    specs: ['Polyester', '1.20mm gauge', 'Green color'],
+    memberPrice: 12,
     inStock: true,
+    color: '#00FF00',
   },
-  // Grips
   {
-    id: 'tourna-grip',
-    name: 'Original Dry Feel',
-    brand: 'Tourna Grip',
-    category: 'grips',
-    price: 12,
-    rating: 4.9,
-    reviews: 312,
-    image: 'https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=400&h=400&fit=crop',
-    badge: 'Fan Favorite',
-    badgeColor: 'bg-racket-red',
-    description: '10-pack. The ultimate dry overgrip for sweaty hands.',
-    memberDiscount: 10,
+    id: 'tecnifibre-xone',
+    name: 'X-One Biphase 17',
+    brand: 'TECNIFIBRE',
+    category: 'strings',
+    price: 19,
+    rating: 4.6,
+    reviews: 287,
+    image: 'https://www.tecnifibre.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/0/4/04gx1n_1.png',
+    description: 'Arm-friendly multifilament with excellent power and comfort.',
+    specs: ['Multifilament', '1.24mm gauge', 'Natural color'],
+    memberPrice: 16,
     inStock: true,
-    featured: true,
+    color: '#FFD700',
+  },
+  {
+    id: 'head-lynx-tour',
+    name: 'Lynx Tour 17',
+    brand: 'HEAD',
+    category: 'strings',
+    price: 17,
+    rating: 4.7,
+    reviews: 198,
+    image: 'https://head.com/dw/image/v2/BDDD_PRD/on/demandware.static/-/Sites-head-master-catalog/default/dwd2e8c2a8/images/hi-res/281790_GY_10.png?sw=800&sh=800',
+    badge: 'New 2024',
+    badgeType: 'new',
+    description: 'Tour-level control with enhanced feel. Zverev approved.',
+    specs: ['Polyester', '1.25mm gauge', 'Grey color'],
+    memberPrice: 14,
+    inStock: true,
+    color: '#808080',
+  },
+
+  // === GRIPS ===
+  {
+    id: 'tourna-grip-original',
+    name: 'Original Dry Feel 10-Pack',
+    brand: 'TOURNA GRIP',
+    category: 'grips',
+    price: 15,
+    rating: 4.9,
+    reviews: 1247,
+    image: 'https://www.tournagrip.com/images/products/original-xl-10-pack-blue.png',
+    badge: 'Fan Favorite',
+    badgeType: 'bestseller',
+    description: 'The ultimate dry overgrip. Perfect for sweaty hands. Tour standard.',
+    specs: ['10 grips included', 'Dry feel', 'Blue color'],
+    memberPrice: 13,
+    inStock: true,
+    color: '#0066CC',
   },
   {
     id: 'wilson-pro-overgrip',
-    name: 'Pro Overgrip',
-    brand: 'Wilson',
+    name: 'Pro Overgrip 3-Pack',
+    brand: 'WILSON',
     category: 'grips',
-    price: 8,
+    price: 7,
     rating: 4.7,
-    reviews: 245,
-    image: 'https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=400&h=400&fit=crop',
-    description: '3-pack. Thin, tacky feel. The standard for pros.',
-    memberDiscount: 10,
+    reviews: 892,
+    image: 'https://www.wilson.com/dw/image/v2/BDHJ_PRD/on/demandware.static/-/Sites-wilson-master-catalog/default/dw8c8c2a8d/images/hi-res/Tennis/Tennis_Accessories/Grip/WRZ4014WH_WH_TV.png?sw=800&sh=800',
+    description: 'Thin, tacky feel. The standard for professionals worldwide.',
+    specs: ['3 grips included', 'Tacky feel', 'White color'],
+    memberPrice: 6,
     inStock: true,
+    color: '#FFFFFF',
   },
   {
-    id: 'babolat-vs-grip',
-    name: 'VS Original Grip',
-    brand: 'Babolat',
+    id: 'babolat-vs-original',
+    name: 'VS Original 3-Pack',
+    brand: 'BABOLAT',
     category: 'grips',
-    price: 15,
+    price: 12,
     rating: 4.8,
-    reviews: 134,
-    image: 'https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=400&h=400&fit=crop',
-    description: '3-pack. Super tacky. Excellent absorption.',
-    memberDiscount: 10,
+    reviews: 567,
+    image: 'https://img.babolat.com/is/image/Babolat/654010_136_PS?$MDP_Zoom$',
+    description: 'Super tacky with excellent moisture absorption. Premium quality.',
+    specs: ['3 grips included', 'Tacky feel', 'White color'],
+    memberPrice: 10,
     inStock: true,
+    color: '#FFFFFF',
   },
   {
-    id: 'head-xtreme-soft',
-    name: 'Xtreme Soft Overgrip',
-    brand: 'HEAD',
+    id: 'yonex-super-grap',
+    name: 'Super Grap 15-Pack',
+    brand: 'YONEX',
     category: 'grips',
-    price: 10,
-    rating: 4.6,
-    reviews: 89,
-    image: 'https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=400&h=400&fit=crop',
-    description: '12-pack. Soft cushioning with excellent tackiness.',
-    memberDiscount: 10,
+    price: 20,
+    originalPrice: 25,
+    rating: 4.8,
+    reviews: 423,
+    image: 'https://www.yonex.com/media/catalog/product/cache/abc67890/a/c/ac102-15ex_011.png',
+    badge: '20% Off',
+    badgeType: 'sale',
+    description: 'Exceptionally tacky and durable. 15 grips at an amazing value.',
+    specs: ['15 grips included', 'Super tacky', 'Assorted colors'],
+    memberPrice: 17,
     inStock: true,
+    color: '#FF6B6B',
   },
-  // Accessories
+
+  // === ACCESSORIES ===
   {
-    id: 'vibration-dampener',
-    name: 'Pro Damp (2-pack)',
-    brand: 'Wilson',
+    id: 'wilson-pro-damp',
+    name: 'Pro Feel Dampener 2-Pack',
+    brand: 'WILSON',
     category: 'accessories',
     price: 5,
     rating: 4.5,
-    reviews: 178,
-    image: 'https://images.unsplash.com/photo-1622279457486-62dbd1f4d48d?w=400&h=400&fit=crop',
-    description: 'Classic round dampener. Reduces string vibration.',
-    memberDiscount: 10,
+    reviews: 678,
+    image: 'https://www.wilson.com/dw/image/v2/BDHJ_PRD/on/demandware.static/-/Sites-wilson-master-catalog/default/dw8c2a8d8c/images/hi-res/Tennis/Tennis_Accessories/Dampener/WRZ537600_BK_TV.png?sw=800&sh=800',
+    description: 'Classic dampener that reduces string vibration for cleaner feel.',
+    specs: ['2 dampeners', 'Silicone', 'Black color'],
+    memberPrice: 4,
     inStock: true,
+    color: '#1a1a1a',
   },
   {
-    id: 'lead-tape',
-    name: 'Lead Tape 1/4"',
-    brand: 'Gamma',
+    id: 'gamma-lead-tape',
+    name: 'Lead Tape 1/2" x 36"',
+    brand: 'GAMMA',
     category: 'accessories',
-    price: 8,
+    price: 10,
     rating: 4.7,
-    reviews: 67,
-    image: 'https://images.unsplash.com/photo-1622279457486-62dbd1f4d48d?w=400&h=400&fit=crop',
-    description: 'Add weight to customize your racket balance.',
-    memberDiscount: 10,
+    reviews: 234,
+    image: 'https://www.gammasports.com/cdn/shop/products/AGWLT_1024x1024.png?v=1607538671',
+    description: 'Customize your racket balance and weight. Pro-grade quality.',
+    specs: ['1/2" width', '36" length', 'Self-adhesive'],
+    memberPrice: 8,
     inStock: true,
+    color: '#808080',
   },
   {
-    id: 'stencil-ink',
-    name: 'String Stencil Ink',
-    brand: 'Racket Rescue',
+    id: 'wilson-tour-bag',
+    name: 'Super Tour 9-Pack Bag',
+    brand: 'WILSON',
     category: 'accessories',
-    price: 6,
-    rating: 4.8,
-    reviews: 45,
-    image: 'https://images.unsplash.com/photo-1622279457486-62dbd1f4d48d?w=400&h=400&fit=crop',
-    badge: 'Our Brand',
-    badgeColor: 'bg-racket-red',
-    description: 'Make your strings pop with brand logo stenciling.',
-    memberDiscount: 20,
-    inStock: true,
-  },
-  {
-    id: 'racket-bag',
-    name: 'Pro Tour 6-Pack Bag',
-    brand: 'Wilson',
-    category: 'accessories',
-    price: 89,
-    originalPrice: 120,
+    price: 129,
+    originalPrice: 159,
     rating: 4.9,
-    reviews: 156,
-    image: 'https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=400&h=400&fit=crop',
-    badge: '26% Off',
-    badgeColor: 'bg-green-600',
-    description: 'Holds 6 rackets. Thermal protection. Multiple pockets.',
-    memberDiscount: 15,
+    reviews: 312,
+    image: 'https://www.wilson.com/dw/image/v2/BDHJ_PRD/on/demandware.static/-/Sites-wilson-master-catalog/default/dwb2a8d8c8/images/hi-res/Tennis/Tennis_Bags/2024-Collection/WR8016201001_RD_BL_TV.png?sw=800&sh=800',
+    badge: '19% Off',
+    badgeType: 'sale',
+    description: 'Pro-level bag with thermal protection. Holds 9 rackets.',
+    specs: ['9 racket capacity', 'Thermoguard', 'Multiple pockets'],
+    memberPrice: 110,
     inStock: true,
-    featured: true,
+    color: '#CC0000',
   },
-  // Rackets
+
+  // === RACKETS ===
   {
     id: 'wilson-clash-100',
-    name: 'Clash 100 v2',
-    brand: 'Wilson',
+    name: 'Clash 100 V2',
+    brand: 'WILSON',
     category: 'rackets',
     price: 249,
     originalPrice: 279,
     rating: 4.9,
-    reviews: 234,
-    image: 'https://images.unsplash.com/photo-1617083934551-ac1f1c732bc5?w=400&h=400&fit=crop',
-    badge: 'Top Rated',
-    badgeColor: 'bg-racket-red',
-    description: 'The most flexible racket ever. Perfect for all levels.',
-    memberDiscount: 10,
+    reviews: 456,
+    image: 'https://www.wilson.com/dw/image/v2/BDHJ_PRD/on/demandware.static/-/Sites-wilson-master-catalog/default/dwa8d8c8d8/images/hi-res/Tennis/Tennis_Rackets/2022-Clash-Family/WR074011U_TV.png?sw=800&sh=800',
+    badge: 'Editor\'s Pick',
+    badgeType: 'pro',
+    description: 'Revolutionary flexibility meets power. Perfect for all levels.',
+    specs: ['100 sq in', '295g', '16x19 pattern'],
+    memberPrice: 224,
     inStock: true,
-    featured: true,
+    color: '#1a1a1a',
   },
   {
     id: 'babolat-pure-aero',
     name: 'Pure Aero 2023',
-    brand: 'Babolat',
+    brand: 'BABOLAT',
     category: 'rackets',
     price: 229,
     rating: 4.8,
-    reviews: 189,
-    image: 'https://images.unsplash.com/photo-1617083934551-ac1f1c732bc5?w=400&h=400&fit=crop',
-    badge: 'Spin King',
-    badgeColor: 'bg-blue-600',
-    description: 'Nadal\'s weapon. Maximum spin and power.',
-    memberDiscount: 10,
+    reviews: 534,
+    image: 'https://img.babolat.com/is/image/Babolat/101479_370_PS?$MDP_Zoom$',
+    badge: "Spin King",
+    badgeType: 'pro',
+    description: "Nadal's weapon of choice. Maximum spin and explosive power.",
+    specs: ['100 sq in', '300g', '16x19 pattern'],
+    memberPrice: 206,
     inStock: true,
+    color: '#FFD700',
   },
   {
     id: 'head-speed-mp',
-    name: 'Speed MP',
+    name: 'Speed MP 2024',
     brand: 'HEAD',
     category: 'rackets',
-    price: 219,
-    rating: 4.7,
-    reviews: 156,
-    image: 'https://images.unsplash.com/photo-1617083934551-ac1f1c732bc5?w=400&h=400&fit=crop',
-    description: 'Djokovic\'s choice. Precision and control.',
-    memberDiscount: 10,
+    price: 239,
+    rating: 4.8,
+    reviews: 389,
+    image: 'https://head.com/dw/image/v2/BDDD_PRD/on/demandware.static/-/Sites-head-master-catalog/default/dwc8d8c8d8/images/hi-res/233614_GY_10.png?sw=800&sh=800',
+    badge: 'New 2024',
+    badgeType: 'new',
+    description: "Djokovic's precision instrument. Ultimate control and feel.",
+    specs: ['100 sq in', '300g', '16x19 pattern'],
+    memberPrice: 215,
     inStock: true,
+    color: '#1a1a1a',
   },
 ]
 
-const sortOptions = [
-  { value: 'featured', label: 'Featured' },
-  { value: 'price-low', label: 'Price: Low to High' },
-  { value: 'price-high', label: 'Price: High to Low' },
-  { value: 'rating', label: 'Top Rated' },
-  { value: 'newest', label: 'Newest' },
-]
+const badgeStyles = {
+  bestseller: 'bg-gradient-to-r from-amber-500 to-orange-500 text-white',
+  new: 'bg-gradient-to-r from-violet-600 to-purple-600 text-white',
+  sale: 'bg-gradient-to-r from-emerald-500 to-green-500 text-white',
+  pro: 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white',
+}
 
 export default function ShopPage() {
   const [selectedCategory, setSelectedCategory] = useState('all')
-  const [sortBy, setSortBy] = useState('featured')
   const [searchQuery, setSearchQuery] = useState('')
-  const [showFilters, setShowFilters] = useState(false)
+  const [cart, setCart] = useState<{id: string, qty: number}[]>([])
+  const [showCart, setShowCart] = useState(false)
 
   const filteredProducts = products
     .filter(p => selectedCategory === 'all' || p.category === selectedCategory)
@@ -308,221 +344,193 @@ export default function ShopPage() {
       p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.brand.toLowerCase().includes(searchQuery.toLowerCase())
     )
-    .sort((a, b) => {
-      switch (sortBy) {
-        case 'price-low': return a.price - b.price
-        case 'price-high': return b.price - a.price
-        case 'rating': return b.rating - a.rating
-        default: return (b.featured ? 1 : 0) - (a.featured ? 1 : 0)
+
+  const addToCart = (productId: string) => {
+    setCart(prev => {
+      const existing = prev.find(item => item.id === productId)
+      if (existing) {
+        return prev.map(item =>
+          item.id === productId ? { ...item, qty: item.qty + 1 } : item
+        )
       }
+      return [...prev, { id: productId, qty: 1 }]
     })
+  }
+
+  const cartTotal = cart.reduce((sum, item) => {
+    const product = products.find(p => p.id === item.id)
+    return sum + (product?.price || 0) * item.qty
+  }, 0)
+
+  const cartCount = cart.reduce((sum, item) => sum + item.qty, 0)
 
   return (
-    <main className="min-h-screen bg-white pt-24">
-      {/* Hero */}
-      <section className="py-16 bg-gradient-to-br from-racket-black to-racket-charcoal text-white">
-        <div className="container-racket">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center"
-          >
-            <div className="inline-flex items-center gap-2 bg-racket-red/20 text-racket-red px-4 py-2 rounded-full text-sm font-bold mb-6">
-              <Tag className="w-4 h-4" />
-              MEMBERS SAVE UP TO 20%
-            </div>
-            <h1 className="font-headline text-5xl md:text-7xl font-bold mb-6">
-              Pro Shop
-            </h1>
-            <p className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto">
-              Premium strings, grips, accessories & rackets. All curated by our USRSA certified team.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+    <main className="min-h-screen bg-[#FAFAFA]">
+      {/* Floating Cart Button */}
+      {cartCount > 0 && (
+        <motion.button
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          onClick={() => setShowCart(true)}
+          className="fixed bottom-6 right-6 z-50 bg-racket-black text-white px-6 py-4 rounded-full shadow-2xl flex items-center gap-3 hover:bg-racket-charcoal transition-colors"
+        >
+          <ShoppingBag className="w-5 h-5" />
+          <span className="font-bold">{cartCount} items</span>
+          <span className="text-white/60">•</span>
+          <span className="font-bold">${cartTotal}</span>
+        </motion.button>
+      )}
 
-      {/* Trust Bar */}
-      <section className="py-6 bg-racket-lightgray border-b border-gray-200">
+      {/* Hero - Minimal & Premium */}
+      <section className="pt-32 pb-16 bg-white border-b border-gray-100">
         <div className="container-racket">
-          <div className="flex flex-wrap justify-center gap-8 md:gap-16">
-            {[
-              { icon: Truck, text: 'Free Shipping $50+' },
-              { icon: Shield, text: 'Satisfaction Guaranteed' },
-              { icon: Package, text: 'Same-Day Local Pickup' },
-            ].map((item) => (
-              <div key={item.text} className="flex items-center gap-3 text-racket-gray">
-                <div className="w-10 h-10 bg-gradient-to-br from-racket-red to-red-600 rounded-xl flex items-center justify-center">
-                  <item.icon className="w-5 h-5 text-white" />
-                </div>
-                <span className="font-medium">{item.text}</span>
+          <div className="max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="space-y-6"
+            >
+              <div className="inline-flex items-center gap-2 text-racket-red font-semibold text-sm tracking-wide uppercase">
+                <Sparkles className="w-4 h-4" />
+                Pro Shop
               </div>
-            ))}
+
+              <h1 className="font-headline text-5xl md:text-6xl lg:text-7xl font-bold text-racket-black leading-[0.95]">
+                Premium Gear,<br />
+                <span className="text-racket-red">Curated by Pros</span>
+              </h1>
+
+              <p className="text-xl text-racket-gray max-w-2xl leading-relaxed">
+                Every product hand-selected by our USRSA-certified team.
+                Members save up to 20% on everything.
+              </p>
+
+              {/* Trust Indicators */}
+              <div className="flex flex-wrap gap-6 pt-4">
+                {[
+                  { icon: Shield, text: 'Satisfaction Guaranteed' },
+                  { icon: Zap, text: 'Same-Day Local Pickup' },
+                  { icon: Crown, text: 'Members Save 20%' },
+                ].map((item) => (
+                  <div key={item.text} className="flex items-center gap-2 text-racket-gray">
+                    <item.icon className="w-4 h-4 text-racket-red" />
+                    <span className="text-sm font-medium">{item.text}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Main Shop Area */}
+      {/* Filter Bar */}
+      <section className="sticky top-[72px] z-30 bg-white/80 backdrop-blur-xl border-b border-gray-100">
+        <div className="container-racket py-4">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            {/* Categories */}
+            <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
+              {categories.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => setSelectedCategory(cat.id)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
+                    selectedCategory === cat.id
+                      ? 'bg-racket-black text-white'
+                      : 'bg-gray-100 text-racket-gray hover:bg-gray-200'
+                  }`}
+                >
+                  {cat.name}
+                  <span className={`ml-1.5 ${selectedCategory === cat.id ? 'text-white/60' : 'text-racket-gray/50'}`}>
+                    {cat.count}
+                  </span>
+                </button>
+              ))}
+            </div>
+
+            {/* Search */}
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-racket-gray" />
+              <input
+                type="text"
+                placeholder="Search products..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full md:w-64 pl-10 pr-4 py-2.5 bg-gray-100 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-racket-red/20 focus:bg-white transition-all"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Products Grid */}
       <section className="py-12">
         <div className="container-racket">
-          <div className="flex flex-col lg:flex-row gap-8">
-            {/* Sidebar - Desktop */}
-            <aside className="hidden lg:block w-64 flex-shrink-0">
-              <div className="sticky top-32 space-y-8">
-                {/* Categories */}
-                <div>
-                  <h3 className="font-bold text-racket-black mb-4">Categories</h3>
-                  <div className="space-y-2">
-                    {categories.map((cat) => {
-                      const Icon = cat.icon
-                      const count = cat.id === 'all'
-                        ? products.length
-                        : products.filter(p => p.category === cat.id).length
-                      return (
-                        <button
-                          key={cat.id}
-                          onClick={() => setSelectedCategory(cat.id)}
-                          className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all ${
-                            selectedCategory === cat.id
-                              ? 'bg-racket-red text-white'
-                              : 'bg-racket-lightgray hover:bg-gray-200 text-racket-gray'
-                          }`}
-                        >
-                          <div className="flex items-center gap-3">
-                            <Icon className="w-5 h-5" />
-                            <span className="font-medium">{cat.name}</span>
-                          </div>
-                          <span className={`text-sm ${selectedCategory === cat.id ? 'text-white/80' : 'text-racket-gray/60'}`}>
-                            {count}
-                          </span>
-                        </button>
-                      )
-                    })}
-                  </div>
-                </div>
+          {/* Results Count */}
+          <div className="mb-8">
+            <p className="text-racket-gray text-sm">
+              {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''}
+            </p>
+          </div>
 
-                {/* Member Promo */}
-                <div className="bg-gradient-to-br from-racket-red to-red-600 rounded-2xl p-6 text-white">
-                  <h4 className="font-bold text-lg mb-2">Members Save More!</h4>
-                  <p className="text-sm text-white/80 mb-4">
-                    Up to 20% off all products plus free stringing labor.
-                  </p>
-                  <Link
-                    href="/membership"
-                    className="inline-flex items-center gap-2 bg-white text-racket-red px-4 py-2 rounded-full font-bold text-sm hover:bg-gray-100 transition-colors"
-                  >
-                    Join Now
-                  </Link>
-                </div>
-              </div>
-            </aside>
-
-            {/* Main Content */}
-            <div className="flex-1">
-              {/* Search & Sort Bar */}
-              <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                {/* Search */}
-                <div className="relative flex-1">
-                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-racket-gray" />
-                  <input
-                    type="text"
-                    placeholder="Search products..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-racket-red focus:outline-none"
-                  />
-                </div>
-
-                {/* Mobile Filter Toggle */}
-                <button
-                  onClick={() => setShowFilters(!showFilters)}
-                  className="lg:hidden flex items-center justify-center gap-2 px-4 py-3 border-2 border-gray-200 rounded-xl hover:border-gray-300"
-                >
-                  <Filter className="w-5 h-5" />
-                  <span>Filters</span>
-                </button>
-
-                {/* Sort */}
-                <div className="relative">
-                  <select
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value)}
-                    className="appearance-none w-full sm:w-48 pl-4 pr-10 py-3 border-2 border-gray-200 rounded-xl focus:border-racket-red focus:outline-none cursor-pointer"
-                  >
-                    {sortOptions.map((opt) => (
-                      <option key={opt.value} value={opt.value}>{opt.label}</option>
-                    ))}
-                  </select>
-                  <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-racket-gray pointer-events-none" />
-                </div>
-              </div>
-
-              {/* Mobile Categories */}
-              {showFilters && (
+          {/* Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <AnimatePresence mode="popLayout">
+              {filteredProducts.map((product, i) => (
                 <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="lg:hidden mb-8 overflow-hidden"
+                  key={product.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ delay: i * 0.03 }}
+                  className="group"
                 >
-                  <div className="flex flex-wrap gap-2 p-4 bg-racket-lightgray rounded-xl">
-                    {categories.map((cat) => (
-                      <button
-                        key={cat.id}
-                        onClick={() => setSelectedCategory(cat.id)}
-                        className={`px-4 py-2 rounded-full font-medium transition-all ${
-                          selectedCategory === cat.id
-                            ? 'bg-racket-red text-white'
-                            : 'bg-white text-racket-gray hover:bg-gray-100'
-                        }`}
-                      >
-                        {cat.name}
-                      </button>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-
-              {/* Results Count */}
-              <div className="mb-6">
-                <p className="text-racket-gray">
-                  Showing <span className="font-bold text-racket-black">{filteredProducts.length}</span> products
-                </p>
-              </div>
-
-              {/* Product Grid */}
-              <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
-                {filteredProducts.map((product, i) => (
-                  <motion.div
-                    key={product.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.05 }}
-                    whileHover={{ y: -4 }}
-                    className="group bg-white border-2 border-gray-100 rounded-2xl overflow-hidden hover:border-racket-red/30 hover:shadow-xl transition-all"
-                  >
-                    {/* Image */}
-                    <div className="relative aspect-square bg-racket-lightgray overflow-hidden">
-                      <div className="absolute inset-0 flex items-center justify-center text-6xl">
-                        🎾
-                      </div>
-
-                      {/* Badges */}
-                      {product.badge && (
-                        <div className={`absolute top-3 left-3 ${product.badgeColor} text-white px-3 py-1 rounded-full text-xs font-bold`}>
+                  <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-gray-200 hover:shadow-xl transition-all duration-300">
+                    {/* Image Container */}
+                    <div className="relative aspect-square bg-gradient-to-br from-gray-50 to-gray-100 p-6 overflow-hidden">
+                      {/* Badge */}
+                      {product.badge && product.badgeType && (
+                        <div className={`absolute top-3 left-3 px-3 py-1.5 rounded-full text-xs font-bold ${badgeStyles[product.badgeType]}`}>
                           {product.badge}
                         </div>
                       )}
 
-                      {/* Wishlist */}
-                      <button className="absolute top-3 right-3 w-10 h-10 bg-white/90 backdrop-blur rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white">
-                        <Heart className="w-5 h-5 text-racket-gray hover:text-racket-red transition-colors" />
-                      </button>
+                      {/* Color indicator */}
+                      {product.color && (
+                        <div
+                          className="absolute top-3 right-3 w-4 h-4 rounded-full border-2 border-white shadow-md"
+                          style={{ backgroundColor: product.color }}
+                        />
+                      )}
 
-                      {/* Quick Add */}
-                      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button className="w-full bg-racket-red text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-red-600 transition-colors">
-                          <ShoppingCart className="w-5 h-5" />
+                      {/* Product Image with fallback */}
+                      <div className="relative w-full h-full flex items-center justify-center">
+                        <Image
+                          src={product.image}
+                          alt={product.name}
+                          fill
+                          className="object-contain p-4 group-hover:scale-105 transition-transform duration-500"
+                          onError={(e) => {
+                            // Fallback to a styled placeholder
+                            const target = e.target as HTMLImageElement;
+                            target.style.display = 'none';
+                          }}
+                        />
+                        {/* Fallback placeholder */}
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+                            <span className="text-3xl font-black text-gray-400">{product.brand.charAt(0)}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Quick Add Overlay */}
+                      <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button
+                          onClick={() => addToCart(product.id)}
+                          className="w-full bg-white text-racket-black py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-gray-100 transition-colors"
+                        >
+                          <ShoppingBag className="w-4 h-4" />
                           Add to Cart
                         </button>
                       </div>
@@ -530,107 +538,221 @@ export default function ShopPage() {
 
                     {/* Details */}
                     <div className="p-5">
-                      <div className="text-sm text-racket-gray font-medium mb-1">{product.brand}</div>
-                      <h3 className="font-bold text-racket-black mb-2 group-hover:text-racket-red transition-colors">
+                      {/* Brand */}
+                      <div className="text-xs font-bold text-racket-gray/60 uppercase tracking-wider mb-1">
+                        {product.brand}
+                      </div>
+
+                      {/* Name */}
+                      <h3 className="font-bold text-racket-black text-lg leading-tight mb-2 group-hover:text-racket-red transition-colors">
                         {product.name}
                       </h3>
-                      <p className="text-sm text-racket-gray mb-3 line-clamp-2">
-                        {product.description}
-                      </p>
 
                       {/* Rating */}
                       <div className="flex items-center gap-2 mb-3">
-                        <div className="flex items-center gap-1">
-                          <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-                          <span className="font-bold text-sm">{product.rating}</span>
+                        <div className="flex items-center">
+                          <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
+                          <span className="ml-1 text-sm font-bold text-racket-black">{product.rating}</span>
                         </div>
-                        <span className="text-sm text-racket-gray">({product.reviews})</span>
+                        <span className="text-xs text-racket-gray">({product.reviews.toLocaleString()})</span>
+                        {product.inStock && (
+                          <span className="flex items-center gap-1 text-xs text-emerald-600 font-medium ml-auto">
+                            <Check className="w-3 h-3" />
+                            In Stock
+                          </span>
+                        )}
                       </div>
 
                       {/* Price */}
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-end justify-between">
                         <div>
-                          <div className="flex items-center gap-2">
-                            <span className="text-2xl font-black text-racket-red">${product.price}</span>
+                          <div className="flex items-baseline gap-2">
+                            <span className="text-2xl font-black text-racket-black">${product.price}</span>
                             {product.originalPrice && (
                               <span className="text-sm text-racket-gray line-through">${product.originalPrice}</span>
                             )}
                           </div>
-                          {product.memberDiscount && (
-                            <div className="text-xs text-green-600 font-medium">
-                              Members: ${(product.price * (1 - product.memberDiscount / 100)).toFixed(0)} (-{product.memberDiscount}%)
+                          {product.memberPrice && (
+                            <div className="text-xs text-racket-red font-semibold mt-0.5">
+                              Members: ${product.memberPrice}
                             </div>
                           )}
                         </div>
-                        {product.inStock ? (
-                          <div className="flex items-center gap-1 text-green-600 text-sm">
-                            <Check className="w-4 h-4" />
-                            <span>In Stock</span>
-                          </div>
-                        ) : (
-                          <span className="text-red-500 text-sm">Out of Stock</span>
-                        )}
+
+                        <button
+                          onClick={() => addToCart(product.id)}
+                          className="w-10 h-10 bg-racket-black text-white rounded-full flex items-center justify-center hover:bg-racket-red transition-colors"
+                        >
+                          <Plus className="w-5 h-5" />
+                        </button>
                       </div>
                     </div>
-                  </motion.div>
-                ))}
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+
+          {/* Empty State */}
+          {filteredProducts.length === 0 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center py-20"
+            >
+              <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Search className="w-8 h-8 text-gray-400" />
+              </div>
+              <h3 className="font-bold text-xl text-racket-black mb-2">No products found</h3>
+              <p className="text-racket-gray mb-6">Try adjusting your search or filter</p>
+              <button
+                onClick={() => {
+                  setSearchQuery('')
+                  setSelectedCategory('all')
+                }}
+                className="inline-flex items-center gap-2 bg-racket-black text-white px-6 py-3 rounded-full font-bold hover:bg-racket-charcoal transition-colors"
+              >
+                Clear filters
+              </button>
+            </motion.div>
+          )}
+        </div>
+      </section>
+
+      {/* Membership CTA */}
+      <section className="py-20 bg-racket-black">
+        <div className="container-racket">
+          <div className="max-w-4xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="inline-flex items-center gap-2 text-racket-red font-semibold text-sm tracking-wide uppercase mb-6">
+                <Crown className="w-4 h-4" />
+                Member Benefits
               </div>
 
-              {/* Empty State */}
-              {filteredProducts.length === 0 && (
-                <div className="text-center py-16">
-                  <div className="text-6xl mb-4">🔍</div>
-                  <h3 className="font-bold text-xl text-racket-black mb-2">No products found</h3>
-                  <p className="text-racket-gray mb-6">Try adjusting your search or filters</p>
-                  <button
-                    onClick={() => {
-                      setSearchQuery('')
-                      setSelectedCategory('all')
-                    }}
-                    className="inline-flex items-center gap-2 bg-racket-red text-white px-6 py-3 rounded-full font-bold hover:bg-red-600 transition-colors"
-                  >
-                    Clear Filters
-                  </button>
-                </div>
-              )}
-            </div>
+              <h2 className="font-headline text-4xl md:text-5xl font-bold text-white mb-6">
+                Save 20% on Everything
+              </h2>
+
+              <p className="text-xl text-white/70 mb-10 max-w-2xl mx-auto">
+                Plus free stringing labor, priority pickup, and exclusive member-only products.
+                Starting at just $19/month.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link
+                  href="/membership"
+                  className="inline-flex items-center justify-center gap-2 bg-racket-red text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-red-600 transition-colors"
+                >
+                  Become a Member
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+                <Link
+                  href="/schedule"
+                  className="inline-flex items-center justify-center gap-2 bg-white/10 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white/20 transition-colors"
+                >
+                  Schedule Stringing
+                </Link>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Stringing Service CTA */}
-      <section className="py-16 bg-gradient-to-br from-racket-black to-racket-charcoal text-white">
-        <div className="container-racket">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center max-w-3xl mx-auto"
-          >
-            <h2 className="font-headline text-3xl md:text-4xl font-bold mb-4">
-              Need Your Strings Installed?
-            </h2>
-            <p className="text-lg text-white/80 mb-8">
-              Buy strings from us and add professional stringing for just $25 (members: FREE).
-              We'll pick up, string, and deliver — usually within 24 hours.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/schedule"
-                className="inline-flex items-center justify-center gap-2 bg-racket-red text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-red-600 transition-colors shadow-xl"
-              >
-                Schedule Stringing
-              </Link>
-              <Link
-                href="/membership"
-                className="inline-flex items-center justify-center gap-2 bg-white/20 backdrop-blur border-2 border-white/40 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white/30 transition-colors"
-              >
-                Become a Member
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      {/* Cart Sidebar */}
+      <AnimatePresence>
+        {showCart && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowCart(false)}
+              className="fixed inset-0 bg-black/50 z-50"
+            />
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25 }}
+              className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-white z-50 shadow-2xl overflow-y-auto"
+            >
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-8">
+                  <h2 className="text-2xl font-bold">Your Cart</h2>
+                  <button
+                    onClick={() => setShowCart(false)}
+                    className="p-2 hover:bg-gray-100 rounded-full"
+                  >
+                    <X className="w-6 h-6" />
+                  </button>
+                </div>
+
+                {cart.length === 0 ? (
+                  <div className="text-center py-12">
+                    <ShoppingBag className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+                    <p className="text-racket-gray">Your cart is empty</p>
+                  </div>
+                ) : (
+                  <>
+                    <div className="space-y-4 mb-8">
+                      {cart.map(item => {
+                        const product = products.find(p => p.id === item.id)
+                        if (!product) return null
+                        return (
+                          <div key={item.id} className="flex gap-4 p-4 bg-gray-50 rounded-xl">
+                            <div className="w-20 h-20 bg-white rounded-lg flex items-center justify-center">
+                              <span className="text-2xl font-black text-gray-300">{product.brand.charAt(0)}</span>
+                            </div>
+                            <div className="flex-1">
+                              <div className="text-xs text-gray-500 uppercase">{product.brand}</div>
+                              <div className="font-bold text-sm">{product.name}</div>
+                              <div className="flex items-center justify-between mt-2">
+                                <div className="flex items-center gap-2">
+                                  <button
+                                    onClick={() => setCart(prev => prev.map(i => i.id === item.id ? {...i, qty: Math.max(1, i.qty - 1)} : i))}
+                                    className="w-6 h-6 bg-gray-200 rounded flex items-center justify-center"
+                                  >
+                                    <Minus className="w-3 h-3" />
+                                  </button>
+                                  <span className="font-bold">{item.qty}</span>
+                                  <button
+                                    onClick={() => setCart(prev => prev.map(i => i.id === item.id ? {...i, qty: i.qty + 1} : i))}
+                                    className="w-6 h-6 bg-gray-200 rounded flex items-center justify-center"
+                                  >
+                                    <Plus className="w-3 h-3" />
+                                  </button>
+                                </div>
+                                <span className="font-bold">${product.price * item.qty}</span>
+                              </div>
+                            </div>
+                          </div>
+                        )
+                      })}
+                    </div>
+
+                    <div className="border-t pt-4 space-y-4">
+                      <div className="flex justify-between text-lg font-bold">
+                        <span>Total</span>
+                        <span>${cartTotal}</span>
+                      </div>
+                      <button className="w-full bg-racket-red text-white py-4 rounded-full font-bold text-lg hover:bg-red-600 transition-colors">
+                        Checkout
+                      </button>
+                      <p className="text-center text-sm text-gray-500">
+                        Free local pickup available
+                      </p>
+                    </div>
+                  </>
+                )}
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </main>
   )
 }
