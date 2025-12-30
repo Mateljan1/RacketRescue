@@ -223,8 +223,8 @@ export default function ForShopsPage() {
                 commission: '$20-25',
                 price: 'margin per racquet',
                 features: [
-                  'Buy at $35/$50',
-                  'Sell at $55/$75',
+                  'Buy at $35/$45',
+                  'Sell at $55/$65',
                   'You set final price',
                   'Full control',
                   'White-label option',

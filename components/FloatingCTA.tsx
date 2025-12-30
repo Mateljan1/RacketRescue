@@ -61,7 +61,7 @@ export default function FloatingCTA() {
             </motion.div>
 
             <p className="text-center text-white/70 text-xs mt-3">
-              Free pickup for members • Starting at $35
+              Free pickup for members • Starting at $55
             </p>
           </div>
         </motion.div>
