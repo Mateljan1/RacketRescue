@@ -1,0 +1,33 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /my-orders
+Disallow: /admin
+Disallow: /confirmation
+Disallow: /track/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /offline
+
+# GPTBot
+User-agent: GPTBot
+Disallow: /
+
+# ChatGPT-User
+User-agent: ChatGPT-User
+Disallow: /
+
+# CCBot
+User-agent: CCBot
+Disallow: /
+
+# anthropic-ai
+User-agent: anthropic-ai
+Disallow: /
+
+# Host
+Host: https://www.racketrescue.com
+
+# Sitemaps
+Sitemap: https://www.racketrescue.com/sitemap.xml
