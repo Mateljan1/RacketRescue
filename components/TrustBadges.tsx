@@ -1,22 +1,22 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Shield, Truck, Clock, Award, CreditCard, Lock } from 'lucide-react'
+import { ShieldCheck, Truck, Timer, BadgeCheck, CreditCard, LockKeyhole } from 'lucide-react'
 
 const badges = [
-  { icon: Shield, text: 'Satisfaction Guaranteed', subtext: '100% money back' },
+  { icon: ShieldCheck, text: 'Satisfaction Guaranteed', subtext: '100% money back' },
   { icon: Truck, text: 'Free Pickup', subtext: 'For members' },
-  { icon: Clock, text: 'Fast Turnaround', subtext: '2-3 days standard' },
-  { icon: Award, text: '25+ Years Experience', subtext: 'Certified stringers' },
+  { icon: Timer, text: 'Fast Turnaround', subtext: '2-3 days standard' },
+  { icon: BadgeCheck, text: '25+ Years Experience', subtext: 'Certified stringers' },
   { icon: CreditCard, text: 'Secure Payment', subtext: 'Stripe protected' },
-  { icon: Lock, text: 'Privacy Protected', subtext: 'Your data is safe' },
+  { icon: LockKeyhole, text: 'Privacy Protected', subtext: 'Your data is safe' },
 ]
 
 export default function TrustBadges() {
   return (
-    <section className="py-16 bg-white border-y border-gray-200">
+    <section className="py-12 bg-white border-y border-gray-100">
       <div className="container-racket">
-        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 lg:gap-8">
           {badges.map((badge, i) => {
             const Icon = badge.icon
             return (
@@ -25,16 +25,14 @@ export default function TrustBadges() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="flex items-center gap-3 group"
+                transition={{ delay: i * 0.05 }}
+                className="flex flex-col items-center text-center group"
               >
-                <div className="p-3 bg-racket-red/10 rounded-xl group-hover:bg-racket-red/20 transition-colors">
-                  <Icon className="w-6 h-6 text-racket-red" />
+                <div className="w-14 h-14 bg-gradient-to-br from-racket-red to-red-600 rounded-2xl flex items-center justify-center mb-3 shadow-lg group-hover:scale-110 transition-transform">
+                  <Icon className="w-7 h-7 text-white" strokeWidth={2} />
                 </div>
-                <div>
-                  <div className="font-bold text-racket-black text-sm">{badge.text}</div>
-                  <div className="text-xs text-racket-gray">{badge.subtext}</div>
-                </div>
+                <div className="font-bold text-racket-black text-sm leading-tight">{badge.text}</div>
+                <div className="text-xs text-racket-gray mt-1">{badge.subtext}</div>
               </motion.div>
             )
           })}
@@ -43,4 +41,3 @@ export default function TrustBadges() {
     </section>
   )
 }
-

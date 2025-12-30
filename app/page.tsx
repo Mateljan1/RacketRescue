@@ -3,7 +3,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, Star, MapPin, Check, AlertTriangle, Clock, CalendarDays, Truck, CircleCheckBig, ChevronRight } from 'lucide-react'
+import { ArrowRight, Star, MapPin, Check, AlertTriangle, Clock, CalendarDays, Truck, CircleCheckBig } from 'lucide-react'
 import { TimeSavingsIllustration, PrecisionIllustration, SpeedIllustration } from '@/components/CustomIllustrations'
 import { useState } from 'react'
 import SocialProof from '@/components/SocialProof'
@@ -353,16 +353,19 @@ export default function HomePage() {
                 icon: CalendarDays,
                 title: 'Request Pickup',
                 desc: 'Choose your service, select a time slot, and we handle the rest.',
+                gradient: 'from-racket-red to-red-600',
               },
               {
                 icon: Truck,
                 title: 'We Pick Up & String',
                 desc: 'Our certified stringer picks up your racket and strings it to perfection.',
+                gradient: 'from-racket-black to-gray-800',
               },
               {
                 icon: CircleCheckBig,
                 title: 'Delivered Back Ready',
                 desc: 'Your racket returns to your door — tournament-ready in under 24 hours.',
+                gradient: 'from-racket-green to-green-600',
               },
             ].map((step, i) => {
               const IconComponent = step.icon
@@ -373,17 +376,17 @@ export default function HomePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.15 }}
-                  className="relative bg-racket-lightgray rounded-3xl p-8 lg:p-10 text-center"
+                  className="relative bg-white rounded-3xl p-8 lg:p-10 text-center shadow-xl border border-gray-100 hover:shadow-2xl transition-shadow"
                 >
                   {/* Step Number */}
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-9 h-9 bg-racket-red rounded-full flex items-center justify-center text-white font-bold text-base shadow-lg">
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-racket-black rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg">
                     {i + 1}
                   </div>
 
                   {/* Professional Icon */}
                   <div className="flex items-center justify-center mt-4 mb-6">
-                    <div className="w-20 h-20 bg-white rounded-2xl shadow-lg flex items-center justify-center">
-                      <IconComponent className="w-10 h-10 text-racket-red" strokeWidth={1.5} />
+                    <div className={`w-20 h-20 bg-gradient-to-br ${step.gradient} rounded-2xl flex items-center justify-center shadow-lg`}>
+                      <IconComponent className="w-10 h-10 text-white" strokeWidth={1.5} />
                     </div>
                   </div>
 
@@ -397,8 +400,8 @@ export default function HomePage() {
 
           {/* Arrow connectors on desktop */}
           <div className="hidden md:flex justify-center items-center gap-8 mt-10">
-            <ChevronRight className="w-8 h-8 text-racket-red" strokeWidth={3} />
-            <ChevronRight className="w-8 h-8 text-racket-red" strokeWidth={3} />
+            <ArrowRight className="w-8 h-8 text-racket-red" strokeWidth={2.5} />
+            <ArrowRight className="w-8 h-8 text-racket-red" strokeWidth={2.5} />
           </div>
         </div>
       </section>

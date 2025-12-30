@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Crown, Star, Users, Sparkles, Check, Zap, Calculator, ArrowRight } from 'lucide-react'
+import { Crown, Gem, Users, Trophy, Check, Zap, Calculator, ArrowRight, Car, PiggyBank, Bolt } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 
@@ -11,7 +11,7 @@ const plans = [
     name: 'Pay-As-You-Go',
     price: 0,
     period: 'No commitment',
-    icon: Star,
+    icon: Gem,
     color: 'gray',
     description: 'Perfect for occasional players. Pay only when you need us.',
     benefits: [
@@ -51,7 +51,7 @@ const plans = [
     price: 79,
     annualPrice: 790,
     period: 'per month',
-    icon: Sparkles,
+    icon: Trophy,
     color: 'black',
     description: 'For serious competitors who string frequently.',
     benefits: [
@@ -265,7 +265,7 @@ export default function MembershipPage() {
                       <h3 className={`text-2xl font-bold mb-2 ${plan.premium ? 'text-white' : 'text-racket-black'}`}>
                         {plan.name}
                       </h3>
-                      <p className={`text-sm ${plan.premium ? 'text-white/70' : 'text-racket-gray'} h-16`}>
+                      <p className={`text-sm ${plan.premium ? 'text-white/70' : 'text-racket-gray'} min-h-[3rem]`}>
                         {plan.description}
                       </p>
                     </div>
@@ -364,18 +364,24 @@ export default function MembershipPage() {
             </p>
 
             <div className="grid md:grid-cols-3 gap-8">
-              <div className="p-6 rounded-2xl bg-racket-lightgray">
-                <div className="text-5xl mb-4">🚗</div>
+              <div className="p-8 rounded-2xl bg-racket-lightgray">
+                <div className="w-16 h-16 bg-gradient-to-br from-racket-red to-red-600 rounded-2xl flex items-center justify-center mb-5 shadow-lg">
+                  <Car className="w-8 h-8 text-white" strokeWidth={2} />
+                </div>
                 <div className="text-2xl font-bold text-racket-black mb-2">Zero Driving</div>
                 <div className="text-racket-gray">We come to you. Save 2+ hours every time.</div>
               </div>
-              <div className="p-6 rounded-2xl bg-racket-lightgray">
-                <div className="text-5xl mb-4">💰</div>
+              <div className="p-8 rounded-2xl bg-racket-lightgray">
+                <div className="w-16 h-16 bg-gradient-to-br from-racket-green to-green-600 rounded-2xl flex items-center justify-center mb-5 shadow-lg">
+                  <PiggyBank className="w-8 h-8 text-white" strokeWidth={2} />
+                </div>
                 <div className="text-2xl font-bold text-racket-black mb-2">Real Savings</div>
                 <div className="text-racket-gray">Members save $25-$150+ per month.</div>
               </div>
-              <div className="p-6 rounded-2xl bg-racket-lightgray">
-                <div className="text-5xl mb-4">⚡</div>
+              <div className="p-8 rounded-2xl bg-racket-lightgray">
+                <div className="w-16 h-16 bg-gradient-to-br from-yellow-500 to-amber-600 rounded-2xl flex items-center justify-center mb-5 shadow-lg">
+                  <Bolt className="w-8 h-8 text-white" strokeWidth={2} />
+                </div>
                 <div className="text-2xl font-bold text-racket-black mb-2">Priority Service</div>
                 <div className="text-racket-gray">Same-day available. VIP scheduling.</div>
               </div>
