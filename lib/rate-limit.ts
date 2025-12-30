@@ -47,8 +47,7 @@ export async function checkRateLimit(
   try {
     const supabase = createServiceRoleClient()
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data, error } = await (supabase.rpc as any)('check_rate_limit', {
+    const { data, error } = await (supabase.rpc as unknown as Function)('check_rate_limit', {
       p_identifier: ip,
       p_identifier_type: 'ip',
       p_endpoint: endpoint,
@@ -90,8 +89,7 @@ export async function checkUserRateLimit(
   try {
     const supabase = createServiceRoleClient()
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data, error } = await (supabase.rpc as any)('check_rate_limit', {
+    const { data, error } = await (supabase.rpc as unknown as Function)('check_rate_limit', {
       p_identifier: userId,
       p_identifier_type: 'user',
       p_endpoint: endpoint,
