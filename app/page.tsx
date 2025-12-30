@@ -117,14 +117,14 @@ export default function HomePage() {
               priority
             />
 
-            {/* StoryBrand Headline - Problem/Solution with Loss Aversion */}
+            {/* StoryBrand Headline - Speed + Problem/Solution with Loss Aversion */}
             <h1 className="font-headline text-4xl md:text-6xl lg:text-7xl font-bold leading-tight max-w-5xl mx-auto">
               Stop Losing Points to<br />
               <span className="text-racket-red">Dead Strings</span>
             </h1>
 
             <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-              We pick up your racket, string it perfectly, and deliver it back —
+              <span className="text-yellow-300 font-bold">Book in 60 seconds.</span> We pick up your racket, string it perfectly, and deliver it back —
               <span className="text-white font-bold"> all without you leaving home.</span>
             </p>
 
@@ -152,15 +152,15 @@ export default function HomePage() {
               </div>
             </motion.div>
 
-            {/* CTAs - Loss Aversion Copy + BookingDrawer Triggers */}
+            {/* CTAs - Speed + Loss Aversion Copy + BookingDrawer Triggers */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => openDrawer('standard')}
-                className="inline-flex items-center justify-center gap-3 bg-racket-red text-white px-10 py-5 rounded-full text-xl font-bold shadow-2xl hover:bg-red-600 transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-racket-black"
+                className="inline-flex items-center justify-center gap-3 bg-racket-red text-white px-10 py-5 rounded-full text-xl font-bold shadow-2xl hover:bg-red-600 transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-racket-black min-h-[56px]"
               >
-                Rescue My Racket — $55
+                Book Now — $55
                 <ArrowRight className="w-6 h-6" />
               </motion.button>
 

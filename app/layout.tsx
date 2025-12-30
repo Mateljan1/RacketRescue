@@ -194,7 +194,7 @@ export default function RootLayout({
           `}
         </Script>
 
-        {/* Structured Data for SEO */}
+        {/* Structured Data for SEO - LocalBusiness */}
         <Script id="structured-data" type="application/ld+json">
           {JSON.stringify({
             '@context': 'https://schema.org',
@@ -240,6 +240,107 @@ export default function RootLayout({
               ratingValue: '4.9',
               reviewCount: '312',
             },
+          })}
+        </Script>
+
+        {/* Service Schema for Rich Snippets */}
+        <Script id="service-schema" type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Service',
+            name: 'Tennis Racquet Stringing Service',
+            serviceType: 'Tennis Racquet Stringing',
+            provider: {
+              '@type': 'LocalBusiness',
+              name: 'Racket Rescue',
+              url: 'https://racketrescue.com',
+            },
+            areaServed: {
+              '@type': 'GeoCircle',
+              geoMidpoint: {
+                '@type': 'GeoCoordinates',
+                latitude: 33.5427,
+                longitude: -117.7854,
+              },
+              geoRadius: '30 mi',
+            },
+            hasOfferCatalog: {
+              '@type': 'OfferCatalog',
+              name: 'Stringing Services',
+              itemListElement: [
+                {
+                  '@type': 'Offer',
+                  name: 'Standard 24-Hour Stringing',
+                  price: '55',
+                  priceCurrency: 'USD',
+                  description: 'Professional stringing with free pickup & delivery, 24-hour turnaround',
+                },
+                {
+                  '@type': 'Offer',
+                  name: 'Same-Day Rush Stringing',
+                  price: '65',
+                  priceCurrency: 'USD',
+                  description: 'Priority same-day turnaround with premium string options',
+                },
+                {
+                  '@type': 'Offer',
+                  name: '3-Racket Saver Pack',
+                  price: '150',
+                  priceCurrency: 'USD',
+                  description: 'Bundle deal for 3 rackets with free grip replacement',
+                },
+              ],
+            },
+          })}
+        </Script>
+
+        {/* FAQ Schema for Rich Snippets */}
+        <Script id="faq-schema" type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: [
+              {
+                '@type': 'Question',
+                name: 'How does Racket Rescue pickup and delivery work?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'Simply book online in 60 seconds. We pick up your racket from your home or office, string it with precision at our facility, and deliver it back within 24-48 hours. Free pickup & delivery for members.',
+                },
+              },
+              {
+                '@type': 'Question',
+                name: 'How long does racquet stringing take?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'Standard service is 24-48 hours from pickup to delivery. Same-day rush service is available for $65 if you need your racket back the same day.',
+                },
+              },
+              {
+                '@type': 'Question',
+                name: 'What areas do you serve in Orange County?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'We serve all of Orange County including Laguna Beach, Newport Beach, Irvine, Dana Point, San Clemente, Mission Viejo, Aliso Viejo, Laguna Niguel, and surrounding areas.',
+                },
+              },
+              {
+                '@type': 'Question',
+                name: 'How much does racquet stringing cost?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'Standard stringing starts at $55 including free pickup & delivery for members. Same-day rush service is $65. We also offer a 3-racket bundle for $150.',
+                },
+              },
+              {
+                '@type': 'Question',
+                name: 'Are your stringers certified?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'Yes! All our stringers are USRSA (United States Racquet Stringers Association) certified with 25+ years of combined experience stringing for USTA tournaments and college teams.',
+                },
+              },
+            ],
           })}
         </Script>
       </body>
