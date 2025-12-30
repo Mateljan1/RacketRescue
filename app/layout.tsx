@@ -8,6 +8,7 @@ import ExitIntentPopup from '@/components/ExitIntentPopup'
 import PWAInstallPrompt from '@/components/PWAInstallPrompt'
 import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration'
 import StickyMobileCTA from '@/components/StickyMobileCTA'
+import Providers from '@/components/Providers'
 import Script from 'next/script'
 
 const inter = Inter({
@@ -110,18 +111,20 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://qtrypzzcjebvfcihiynt.supabase.co" />
       </head>
       <body className="font-body antialiased">
-        {/* Skip link for keyboard accessibility */}
-        <a href="#main-content" className="skip-link">
-          Skip to main content
-        </a>
-        <TrustBar />
-        <Header />
-        {children}
-        <Footer />
-        <ExitIntentPopup />
-        <PWAInstallPrompt />
-        <ServiceWorkerRegistration />
-        <StickyMobileCTA />
+        <Providers>
+          {/* Skip link for keyboard accessibility */}
+          <a href="#main-content" className="skip-link">
+            Skip to main content
+          </a>
+          <TrustBar />
+          <Header />
+          {children}
+          <Footer />
+          <ExitIntentPopup />
+          <PWAInstallPrompt />
+          <ServiceWorkerRegistration />
+          <StickyMobileCTA />
+        </Providers>
         
         {/* Google Analytics 4 */}
         {process.env.NEXT_PUBLIC_GA_ID && (
