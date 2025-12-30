@@ -2,32 +2,97 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Gift, ArrowRight } from 'lucide-react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
+
+const STORAGE_KEY = 'racket-rescue-exit-popup'
+const COOLDOWN_DAYS = 7 // Don't show again for 7 days after dismissing
 
 export default function ExitIntentPopup() {
   const [isOpen, setIsOpen] = useState(false)
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
 
+  const shouldShowPopup = useCallback(() => {
+    if (typeof window === 'undefined') return false
+
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY)
+      if (!stored) return true // Never shown before
+
+      const data = JSON.parse(stored)
+
+      // If submitted email, never show again
+      if (data.submitted) return false
+
+      // If dismissed, check cooldown period
+      if (data.dismissedAt) {
+        const dismissedDate = new Date(data.dismissedAt)
+        const now = new Date()
+        const daysSinceDismissed = (now.getTime() - dismissedDate.getTime()) / (1000 * 60 * 60 * 24)
+
+        if (daysSinceDismissed < COOLDOWN_DAYS) return false
+      }
+
+      // If shown this session, don't show again
+      if (data.shownThisSession && sessionStorage.getItem(STORAGE_KEY)) return false
+
+      return true
+    } catch {
+      return true
+    }
+  }, [])
+
+  const markAsShown = useCallback(() => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY)
+      const data = stored ? JSON.parse(stored) : {}
+      data.lastShown = new Date().toISOString()
+      data.shownThisSession = true
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+      sessionStorage.setItem(STORAGE_KEY, 'shown')
+    } catch {}
+  }, [])
+
+  const handleDismiss = useCallback(() => {
+    setIsOpen(false)
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY)
+      const data = stored ? JSON.parse(stored) : {}
+      data.dismissedAt = new Date().toISOString()
+      data.dismissCount = (data.dismissCount || 0) + 1
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+    } catch {}
+  }, [])
+
   useEffect(() => {
-    let hasShown = sessionStorage.getItem('exit-intent-shown')
-    
     const handleMouseLeave = (e: MouseEvent) => {
-      if (e.clientY <= 0 && !hasShown && !submitted) {
+      // Only trigger when mouse leaves through the top of the page
+      if (e.clientY <= 0 && !isOpen && !submitted && shouldShowPopup()) {
         setIsOpen(true)
-        sessionStorage.setItem('exit-intent-shown', 'true')
+        markAsShown()
       }
     }
 
     document.addEventListener('mouseleave', handleMouseLeave)
     return () => document.removeEventListener('mouseleave', handleMouseLeave)
-  }, [submitted])
+  }, [submitted, isOpen, shouldShowPopup, markAsShown])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     // TODO: Integrate with email service (ConvertKit, Mailchimp, etc.)
     console.log('Email captured:', email)
     setSubmitted(true)
+
+    // Mark as submitted so popup never shows again
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY)
+      const data = stored ? JSON.parse(stored) : {}
+      data.submitted = true
+      data.submittedAt = new Date().toISOString()
+      data.email = email
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+    } catch {}
+
     setTimeout(() => {
       setIsOpen(false)
     }, 2000)
@@ -42,7 +107,7 @@ export default function ExitIntentPopup() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-            onClick={() => setIsOpen(false)}
+            onClick={handleDismiss}
           />
 
           <motion.div
@@ -52,8 +117,9 @@ export default function ExitIntentPopup() {
             className="relative bg-white rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden"
           >
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={handleDismiss}
               className="absolute top-6 right-6 p-2 hover:bg-gray-100 rounded-full transition-colors z-10"
+              aria-label="Close popup"
             >
               <X className="w-6 h-6" />
             </button>
