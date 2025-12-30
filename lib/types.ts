@@ -1,6 +1,7 @@
 // Order-related types
 
-export type ServicePackage = 'match_ready' | 'pro_performance'
+// Service packages: new names (standard/rush) + legacy names for backward compatibility
+export type ServicePackage = 'standard' | 'rush' | 'match_ready' | 'pro_performance'
 
 export interface OrderData {
   service_package: ServicePackage

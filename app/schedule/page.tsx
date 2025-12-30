@@ -11,7 +11,7 @@ import PickupSchedule from '@/components/schedule/PickupSchedule'
 import OrderReview from '@/components/schedule/OrderReview'
 import PriceCalculator from '@/components/PriceCalculator'
 import type { OrderData, OrderPricing, ServicePackage } from '@/lib/types'
-import { PRICING } from '@/lib/pricing'
+import { PRICING, getServicePrice } from '@/lib/pricing'
 
 const steps = [
   { number: 1, title: 'Service', desc: 'Choose your package' },
@@ -22,9 +22,9 @@ const steps = [
 
 // Map package IDs from homepage to service_package values
 const packageToService: Record<string, ServicePackage> = {
-  starter: 'match_ready',
-  pro: 'pro_performance',
-  custom: 'match_ready',
+  starter: 'standard',
+  pro: 'rush',
+  custom: 'standard',
 }
 
 function ScheduleContent() {
@@ -80,9 +80,11 @@ function ScheduleContent() {
   }
 
   const calculatePricing = (): OrderPricing => {
-    const serviceLabor = PRICING.services[orderData.service_package]
-    const stringPrice = orderData.customer_provides_string ? 0 : orderData.string_price
-    const expressFee = orderData.is_express ? PRICING.addOns.express : 0
+    // Use helper to get price (handles legacy package names)
+    const serviceLabor = getServicePrice(orderData.service_package)
+    // String price is now included in base - only charge for premium upgrade or give discount for own string
+    const stringPrice = orderData.customer_provides_string ? -10 : orderData.string_price // -$10 if bringing own, +$10 if premium
+    const expressFee = 0 // Rush is now a direct option ($65), not an add-on
     const regripFee = orderData.add_regrip ? PRICING.addOns.regrip : 0
 
     let overGripFee = 0
@@ -95,9 +97,9 @@ function ScheduleContent() {
     }
 
     const secondRacketFee = orderData.add_second_racket ? serviceLabor : 0
-    const pickupFee = PRICING.delivery.pickupFee // Will be waived for members
+    const pickupFee = PRICING.delivery.pickupFee // Now $0 - included in base price
 
-    const subtotal = serviceLabor + stringPrice + expressFee + regripFee + overGripFee + dampenerFee + secondRacketFee
+    const subtotal = serviceLabor + stringPrice + regripFee + overGripFee + dampenerFee + secondRacketFee
     const total = subtotal + pickupFee
 
     return {

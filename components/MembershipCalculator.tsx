@@ -9,14 +9,14 @@ import { PRICING } from '@/lib/pricing'
 const MEMBERSHIP_FEE = PRICING.membership.standard.monthly
 const PICKUP_FEE = PRICING.delivery.pickupFee
 const LABOR_DISCOUNT = PRICING.membership.standard.laborDiscount
-const AVG_LABOR_COST = PRICING.services.match_ready
+const AVG_SERVICE_COST = PRICING.services.standard // $55 all-inclusive
 
 export default function MembershipCalculator() {
   const [stringsPerMonth, setStringsPerMonth] = useState(2)
 
   // Calculate savings
   const pickupSavings = stringsPerMonth * PICKUP_FEE
-  const laborSavings = Math.round(stringsPerMonth * AVG_LABOR_COST * LABOR_DISCOUNT * 10) / 10
+  const laborSavings = Math.round(stringsPerMonth * AVG_SERVICE_COST * LABOR_DISCOUNT * 10) / 10
   const totalBenefits = pickupSavings + laborSavings
   const netSavings = totalBenefits - MEMBERSHIP_FEE
 

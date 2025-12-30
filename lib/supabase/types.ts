@@ -22,7 +22,8 @@ export type OrderStatus =
 export type MembershipTier = 'none' | 'standard' | 'elite' | 'family'
 export type MembershipStatus = 'active' | 'canceled' | 'past_due' | 'trialing' | 'none'
 export type AdminRole = 'super_admin' | 'admin' | 'stringer'
-export type ServicePackage = 'match_ready' | 'pro_performance'
+// Service packages: new names (standard/rush) + legacy names for backward compatibility
+export type ServicePackage = 'standard' | 'rush' | 'match_ready' | 'pro_performance'
 
 export interface Database {
   public: {

@@ -2,24 +2,32 @@
 // Update prices here - they will propagate throughout the app
 
 export const PRICING = {
-  // Service labor
+  // All-inclusive service packages (includes labor + standard string + pickup)
   services: {
-    match_ready: 35,
-    pro_performance: 50,
+    standard: 55,      // 24-hour turnaround
+    rush: 65,          // Same-day turnaround
+  },
+
+  // Legacy names for backward compatibility
+  serviceLegacy: {
+    match_ready: 55,
+    pro_performance: 65,
   },
 
   // Add-ons
   addOns: {
-    express: 15,
+    express: 10,       // Rush upgrade from standard
     regrip: 10,
     overgrip: 3,
     dampener: 5,
     dampenerBundle: 7, // Overgrip + dampener combo
+    premiumString: 10, // Upgrade to premium string
   },
 
-  // Pickup & delivery
+  // Pickup & delivery (included in base price, extra for non-service-area)
   delivery: {
-    pickupFee: 15, // Waived for members
+    pickupFee: 0, // Now included in base price
+    outOfAreaFee: 15, // For addresses outside service area
   },
 
   // Membership
@@ -37,28 +45,39 @@ export const PRICING = {
     },
   },
 
-  // Homepage packages (bundles with string included)
+  // Homepage packages (now all-inclusive)
   packages: {
-    starter: {
-      price: 52,
-      service: 'match_ready',
-      stringPrice: 17, // Wilson Velocity MLT
+    standard: {
+      price: 55,
+      turnaround: '24 hours',
+      includes: ['Professional stringing', 'Standard string', 'Free pickup & delivery'],
     },
-    pro: {
-      price: 75,
-      service: 'pro_performance',
-      stringPrice: 25, // Luxilon/RPM Blast
+    rush: {
+      price: 65,
+      turnaround: 'Same day',
+      includes: ['Priority stringing', 'Standard string', 'Free pickup & delivery'],
     },
   },
 } as const
 
-// Helper to calculate total order price
+// Helper to get service price by package name (handles legacy names)
+export function getServicePrice(servicePackage: string): number {
+  const packageMap: Record<string, 'standard' | 'rush'> = {
+    match_ready: 'standard',
+    pro_performance: 'rush',
+    standard: 'standard',
+    rush: 'rush',
+  }
+  const normalizedPackage = packageMap[servicePackage] || 'standard'
+  return PRICING.services[normalizedPackage]
+}
+
+// Helper to calculate total order price (simplified all-inclusive model)
 export function calculateOrderTotal(
-  servicePackage: 'match_ready' | 'pro_performance',
+  servicePackage: 'standard' | 'rush' | 'match_ready' | 'pro_performance',
   options: {
-    stringPrice?: number
+    premiumString?: boolean      // Upgrade to premium string (+$10)
     customerProvidesString?: boolean
-    isExpress?: boolean
     addRegrip?: boolean
     addOvergrip?: boolean
     addDampener?: boolean
@@ -66,13 +85,31 @@ export function calculateOrderTotal(
     secondRacket?: boolean
     isMember?: boolean
     membershipTier?: 'standard' | 'pro'
+    outOfServiceArea?: boolean
   } = {}
 ) {
-  const serviceLabor = PRICING.services[servicePackage]
-  const stringPrice = options.customerProvidesString ? 0 : (options.stringPrice || 0)
-  const expressFee = options.isExpress ? PRICING.addOns.express : 0
-  const regripFee = options.addRegrip ? PRICING.addOns.regrip : 0
+  // Map legacy names to new names
+  const packageMap: Record<string, 'standard' | 'rush'> = {
+    match_ready: 'standard',
+    pro_performance: 'rush',
+    standard: 'standard',
+    rush: 'rush',
+  }
+  const normalizedPackage = packageMap[servicePackage] || 'standard'
 
+  // Base price is all-inclusive ($55 or $65)
+  const basePrice = PRICING.services[normalizedPackage]
+
+  // Premium string upgrade
+  const premiumStringFee = options.premiumString && !options.customerProvidesString
+    ? PRICING.addOns.premiumString
+    : 0
+
+  // Customer provides string = $10 discount (they save the string cost)
+  const ownStringDiscount = options.customerProvidesString ? 10 : 0
+
+  // Add-ons
+  const regripFee = options.addRegrip ? PRICING.addOns.regrip : 0
   let overGripFee = 0
   let dampenerFee = 0
   if (options.dampenerBundle) {
@@ -82,30 +119,31 @@ export function calculateOrderTotal(
     dampenerFee = options.addDampener ? PRICING.addOns.dampener : 0
   }
 
-  const secondRacketFee = options.secondRacket ? serviceLabor : 0
+  // Second racket = same base price
+  const secondRacketFee = options.secondRacket ? basePrice : 0
 
-  // Apply membership discount
-  let laborDiscount = 0
+  // Apply membership discount (on base price only)
+  let memberDiscount = 0
   if (options.isMember && options.membershipTier) {
-    laborDiscount = serviceLabor * PRICING.membership[options.membershipTier].laborDiscount
+    memberDiscount = basePrice * PRICING.membership[options.membershipTier].laborDiscount
   }
 
-  // Pickup fee (waived for members)
-  const pickupFee = options.isMember ? 0 : PRICING.delivery.pickupFee
+  // Out of service area fee
+  const outOfAreaFee = options.outOfServiceArea ? PRICING.delivery.outOfAreaFee : 0
 
-  const subtotal = serviceLabor + stringPrice + expressFee + regripFee + overGripFee + dampenerFee + secondRacketFee - laborDiscount
-  const total = subtotal + pickupFee
+  const subtotal = basePrice + premiumStringFee - ownStringDiscount + regripFee + overGripFee + dampenerFee + secondRacketFee - memberDiscount
+  const total = subtotal + outOfAreaFee
 
   return {
-    serviceLabor,
-    stringPrice,
-    expressFee,
+    basePrice,
+    premiumStringFee,
+    ownStringDiscount,
     regripFee,
     overGripFee,
     dampenerFee,
     secondRacketFee,
-    laborDiscount,
-    pickupFee,
+    memberDiscount,
+    outOfAreaFee,
     subtotal,
     total,
   }
