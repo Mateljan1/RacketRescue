@@ -3,16 +3,20 @@
  * Handles offline caching, push notifications, and background sync
  */
 
-const CACHE_NAME = 'racket-rescue-v1'
-const STATIC_CACHE = 'racket-rescue-static-v1'
-const DYNAMIC_CACHE = 'racket-rescue-dynamic-v1'
+// Version - update this with each deployment to bust cache
+const SW_VERSION = '2.0.0'
+const CACHE_NAME = `racket-rescue-${SW_VERSION}`
+const STATIC_CACHE = `racket-rescue-static-${SW_VERSION}`
+const DYNAMIC_CACHE = `racket-rescue-dynamic-${SW_VERSION}`
 
 // Static assets to cache on install
 const STATIC_ASSETS = [
   '/',
   '/schedule',
+  '/shop',
   '/membership',
   '/my-orders',
+  '/for-shops',
   '/offline',
   '/manifest.json',
   '/icons/icon-192.png',
@@ -88,9 +92,9 @@ self.addEventListener('fetch', (event) => {
     return
   }
 
-  // Handle page requests with cache-first strategy for static pages
+  // Handle page requests with network-first strategy (always get fresh content)
   if (request.mode === 'navigate' || request.destination === 'document') {
-    event.respondWith(cacheFirst(request))
+    event.respondWith(networkFirst(request))
     return
   }
 
