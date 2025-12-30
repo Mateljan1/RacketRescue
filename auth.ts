@@ -14,18 +14,32 @@ const adapter = supabaseUrl && supabaseServiceKey
     })
   : undefined
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
-  adapter,
-  providers: [
+// Build providers array - only include configured providers
+const providers = []
+
+// Only add Google if credentials are configured
+if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+  providers.push(
     Google({
-      clientId: process.env.GOOGLE_CLIENT_ID ?? '',
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
-    }),
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    })
+  )
+}
+
+// Add Resend for magic link emails
+if (process.env.RESEND_API_KEY) {
+  providers.push(
     Resend({
       apiKey: process.env.RESEND_API_KEY,
-      from: 'Racket Rescue <noreply@racketrescue.com>',
-    }),
-  ],
+      from: 'Racket Rescue <noreply@send.racketrescue.com>',
+    })
+  )
+}
+
+export const { handlers, auth, signIn, signOut } = NextAuth({
+  adapter,
+  providers,
   pages: {
     signIn: '/login',
     error: '/login',
