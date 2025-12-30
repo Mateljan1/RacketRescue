@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { RACKET_PRESETS, GRIP_OPTIONS, SERVICE_ADDONS } from '@/lib/strings-catalog'
+import { getServicePrice } from '@/lib/pricing'
 
 interface Props {
   orderData: any
@@ -368,7 +369,7 @@ export default function RacketDetails({ orderData, setOrderData, onNext, onPrev 
                 <span className="text-base text-racket-gray">Same service + string for additional racket</span>
               </div>
               <span className="text-4xl font-black text-racket-blue">
-                +${orderData.service_package === 'match_ready' ? 35 : 50}
+                +${getServicePrice(orderData.service_package)}
               </span>
             </div>
           </div>
