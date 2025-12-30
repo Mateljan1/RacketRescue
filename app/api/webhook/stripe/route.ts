@@ -1,6 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe'
 import Stripe from 'stripe'
+import { createClient } from '@supabase/supabase-js'
+
+// Supabase Admin Client (for server-side operations)
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+const supabaseAdmin = supabaseUrl && supabaseServiceKey
+  ? createClient(supabaseUrl, supabaseServiceKey)
+  : null
 
 // ActiveCampaign Configuration
 const AC_API_URL = process.env.ACTIVECAMPAIGN_API_URL || 'https://tennisbeast.api-us1.com'
@@ -321,6 +329,60 @@ Order ID: ${session.id}
     await updateContactField(contact.id, CUSTOM_FIELDS.LAST_ORDER_TRACKING_URL, trackingUrl)
 
     console.log('Stringing order processed for:', customerEmail)
+
+    // Sync order to Supabase
+    if (supabaseAdmin) {
+      const { error: orderError } = await supabaseAdmin.from('orders').upsert({
+        stripe_checkout_session_id: session.id,
+        stripe_payment_intent_id: session.payment_intent as string,
+        status: 'pending',
+        service_package: metadata?.service_package,
+        is_express: metadata?.is_express === 'true',
+        racket_brand: metadata?.racket_brand,
+        racket_model: metadata?.racket_model,
+        string_name: metadata?.string_name,
+        main_tension: parseInt(metadata?.main_tension || '0'),
+        cross_tension: parseInt(metadata?.cross_tension || '0'),
+        add_regrip: metadata?.add_regrip === 'true',
+        add_overgrip: metadata?.add_overgrip === 'true',
+        add_dampener: metadata?.add_dampener === 'true',
+        dampener_bundle: metadata?.dampener_bundle === 'true',
+        add_second_racket: metadata?.add_second_racket === 'true',
+        customer_email: session.customer_details?.email || '',
+        customer_name: session.customer_details?.name,
+        customer_phone: session.customer_details?.phone,
+        pickup_address: metadata?.pickup_address,
+        delivery_address: metadata?.delivery_address,
+        pickup_time: metadata?.pickup_time,
+        special_instructions: metadata?.special_instructions,
+        total_cents: session.amount_total,
+        is_member: metadata?.is_member === 'true',
+        membership_tier_at_order: metadata?.membership_tier,
+      }, { onConflict: 'stripe_checkout_session_id' })
+
+      if (orderError) {
+        console.error('Error syncing order to Supabase:', orderError)
+      } else {
+        console.log('Order synced to Supabase:', session.id)
+
+        // Link order to user if they have an account
+        if (session.customer_details?.email) {
+          const { data: user } = await supabaseAdmin
+            .from('users')
+            .select('id')
+            .eq('email', session.customer_details.email)
+            .single()
+
+          if (user) {
+            await supabaseAdmin
+              .from('orders')
+              .update({ user_id: user.id })
+              .eq('stripe_checkout_session_id', session.id)
+            console.log('Order linked to user:', user.id)
+          }
+        }
+      }
+    }
 
   } else if (metadata.type === 'membership') {
     // Add Member tag
