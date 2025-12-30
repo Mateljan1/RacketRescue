@@ -16,7 +16,7 @@ const packages = [
     id: 'standard',
     name: 'Standard 24-Hour',
     price: 55,
-    description: '2-3 day turnaround',
+    description: 'Back tomorrow',
     popular: false,
   },
   {
@@ -146,26 +146,29 @@ export default function BookingDrawer({ isOpen, onClose, initialPackage = 'stand
                 </div>
               )}
 
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="font-bold text-lg text-racket-black">{pkg.name}</div>
-                  <div className="text-sm text-racket-gray">{pkg.description}</div>
+              <div className="flex items-center gap-4">
+                {/* Selection indicator */}
+                <div className={`w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-colors ${
+                  isSelected
+                    ? 'bg-racket-red border-racket-red'
+                    : 'border-gray-300'
+                }`}>
+                  {isSelected && <Check className="w-4 h-4 text-white" />}
                 </div>
-                <div className="text-right">
-                  <div className="text-2xl font-black text-racket-red">${pkg.price}</div>
-                  {pkg.id === 'saver' && (
-                    <div className="text-xs text-green-600 font-medium">Save $15</div>
-                  )}
-                </div>
-              </div>
 
-              {isSelected && (
-                <div className="absolute right-4 top-1/2 -translate-y-1/2">
-                  <div className="w-6 h-6 bg-racket-red rounded-full flex items-center justify-center">
-                    <Check className="w-4 h-4 text-white" />
+                <div className="flex-1 flex items-center justify-between">
+                  <div>
+                    <div className="font-bold text-lg text-racket-black">{pkg.name}</div>
+                    <div className="text-sm text-racket-gray">{pkg.description}</div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-black text-racket-red">${pkg.price}</div>
+                    {pkg.id === 'saver' && (
+                      <div className="text-xs text-green-600 font-medium">Save $15</div>
+                    )}
                   </div>
                 </div>
-              )}
+              </div>
             </motion.button>
           )
         })}
