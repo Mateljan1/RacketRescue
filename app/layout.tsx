@@ -30,7 +30,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: 'Racket Rescue | #1 Tennis Racquet Stringing in Orange County | Free Pickup & Delivery',
-  description: 'Orange County\'s premier mobile tennis racquet stringing. 4.9★ rating from 312+ reviews. Free pickup & delivery for members. 2-3 day turnaround. USRSA Certified. Starting at $52.',
+  description: 'Orange County\'s premier mobile tennis racquet stringing. 4.9★ rating from 312+ reviews. Free pickup & delivery for members. 24-hour turnaround. USRSA Certified. Starting at $55.',
   keywords: 'racquet stringing Orange County, tennis stringing Laguna Beach, racket restring Newport Beach, Irvine racket stringing, mobile stringing service, pickup delivery tennis, professional stringing, USRSA certified stringer',
   authors: [{ name: 'Racket Rescue' }],
   manifest: '/manifest.json',
@@ -190,7 +190,7 @@ export default function RootLayout({
             '@id': 'https://racketrescue.com',
             url: 'https://racketrescue.com',
             telephone: '+1-949-464-6645',
-            priceRange: '$35-$50',
+            priceRange: '$55-$150',
             address: {
               '@type': 'PostalAddress',
               streetAddress: '1098 Balboa Ave',
