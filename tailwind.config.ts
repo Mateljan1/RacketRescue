@@ -24,8 +24,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        headline: ['Inter', 'system-ui', 'sans-serif'],
-        body: ['Inter', 'system-ui', 'sans-serif'],
+        headline: ['var(--font-poppins)', 'Poppins', 'system-ui', 'sans-serif'],
+        body: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
+        label: ['var(--font-poppins)', 'Poppins', 'system-ui', 'sans-serif'],
       },
       fontSize: {
         'display': ['clamp(3rem, 8vw, 6rem)', { lineHeight: '1.1', fontWeight: '800' }],

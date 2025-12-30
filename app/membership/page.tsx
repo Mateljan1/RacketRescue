@@ -10,94 +10,116 @@ const plans = [
     id: 'basic',
     name: 'Pay-As-You-Go',
     price: 0,
-    period: 'Free',
+    period: 'No commitment',
     icon: Star,
     color: 'gray',
-    description: 'No monthly fee – just pay per order',
+    description: 'Perfect for occasional players. Pay only when you need us.',
     benefits: [
-      'Standard pricing',
-      'Email notifications',
-      'Basic customer support',
+      '$55 standard stringing',
+      '$65 same-day rush',
+      'Text notifications',
+      '$10 pickup fee per visit',
     ],
     alaCarteOptions: [
-      { name: 'Express (next-day)', price: 15 },
-      { name: 'Pickup & Delivery', price: 15 },
+      { name: 'Same-Day Rush', price: 10 },
+      { name: 'Pickup & Delivery', price: 10 },
     ],
   },
   {
-    id: 'standard',
-    name: 'Standard',
-    price: 25,
-    annualPrice: 240,
+    id: 'rescue-club',
+    name: 'Rescue Club',
+    price: 19,
+    annualPrice: 190,
     period: 'per month',
     icon: Crown,
     color: 'red',
-    description: '$25/month – Includes free pickup ($15 value) and 10% off labor',
+    description: 'For regular players who want convenience and savings.',
     benefits: [
-      'FREE pickup & delivery (save $15 each time)',
-      '10% discount on stringing labor',
-      'Priority turnaround',
-      'Free overgrip each month',
+      '2 FREE pickups per month ($20 value)',
+      '10% off all stringing services',
+      'Priority text notifications',
+      'Member-only scheduling slots',
+      'Free grip replacement (1/month)',
     ],
     popular: true,
-    trial: 'Standard benefits free for 30 days',
-    savings: 'Save $21+ per month',
+    trial: 'Try FREE for 14 days',
+    savings: 'Save $25+/month',
   },
   {
-    id: 'elite',
-    name: 'Elite',
-    price: 60,
-    annualPrice: 600,
+    id: 'elite-performance',
+    name: 'Elite Performance',
+    price: 79,
+    annualPrice: 790,
     period: 'per month',
     icon: Sparkles,
     color: 'black',
-    description: '$60/month – Unlimited express and free overgrip on every order',
+    description: 'For serious competitors who string frequently.',
     benefits: [
-      'All Standard benefits',
-      'UNLIMITED Express service (normally $15 each)',
-      'Free overgrip with every order',
-      'Dedicated account manager',
+      'UNLIMITED free pickups',
+      '4 restrings per month included',
+      'Same-day rush at no extra cost',
+      'Premium string options',
+      'Dedicated stringer assigned',
+      'VIP scheduling priority',
     ],
-    trial: 'Try Elite for $1 first month',
-    savings: 'Save $90+ per month',
+    trial: 'Try for $1 first month',
+    savings: 'Save $150+/month',
     premium: true,
   },
   {
     id: 'family',
     name: 'Family Plan',
-    price: 80,
-    annualPrice: 800,
+    price: 35,
+    annualPrice: 350,
     period: 'per month',
     icon: Users,
     color: 'purple',
-    description: '$80/month – Standard benefits for two players in your household',
+    description: 'Rescue Club benefits for your whole household (up to 4 players).',
     benefits: [
-      'All Standard benefits for 2 players',
-      'Shared pickup & delivery',
-      'Family account management',
-      'Priority scheduling',
+      'All Rescue Club benefits',
+      'Covers up to 4 family members',
+      '4 FREE pickups per month',
+      'Shared family dashboard',
+      'Coordinated pickup scheduling',
     ],
     new: true,
-    savings: 'Perfect for families',
+    savings: 'Best for families',
   },
 ]
 
 export default function MembershipPage() {
   const [ordersPerMonth, setOrdersPerMonth] = useState(3)
-  const [selectedPlan, setSelectedPlan] = useState('standard')
+  const [selectedPlan, setSelectedPlan] = useState('rescue-club')
 
-  // Calculate savings
+  // Calculate savings based on new pricing
   const calculateSavings = (planId: string) => {
     if (planId === 'basic') return 0
 
     const plan = plans.find(p => p.id === planId)
     if (!plan) return 0
 
-    const pickupSavings = ordersPerMonth * 15 // $15 saved per order
-    const laborSavings = ordersPerMonth * 4 // Approx 10% of $40 avg service
-    const monthlyCost = plan.price
+    if (planId === 'rescue-club') {
+      // 2 free pickups ($10 each = $20) + 10% off stringing (~$5.50 per order)
+      const pickupSavings = Math.min(ordersPerMonth, 2) * 10
+      const discountSavings = ordersPerMonth * 5.5
+      return Math.round(pickupSavings + discountSavings - plan.price)
+    }
 
-    return pickupSavings + laborSavings - monthlyCost
+    if (planId === 'elite-performance') {
+      // Unlimited pickups ($10 each) + 4 included restrings ($55 each = $220 value)
+      const pickupSavings = ordersPerMonth * 10
+      const restringSavings = Math.min(ordersPerMonth, 4) * 55
+      return Math.round(pickupSavings + restringSavings - plan.price)
+    }
+
+    if (planId === 'family') {
+      // 4 free pickups + 10% off for whole family
+      const pickupSavings = Math.min(ordersPerMonth, 4) * 10
+      const discountSavings = ordersPerMonth * 5.5
+      return Math.round(pickupSavings + discountSavings - plan.price)
+    }
+
+    return 0
   }
 
   return (
@@ -109,11 +131,12 @@ export default function MembershipPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h1 className="text-5xl md:text-7xl font-bold mb-6">
-              Choose Your Membership
+            <h1 className="font-headline text-5xl md:text-7xl font-bold mb-6">
+              Join the Rescue Club
             </h1>
             <p className="text-2xl text-white/80 max-w-3xl mx-auto leading-relaxed">
-              Save money and get priority service. Annual plans save you even more!
+              Stop paying pickup fees. Start saving on every restring.
+              <span className="block mt-2 text-racket-red font-bold">Try free for 14 days.</span>
             </p>
           </motion.div>
         </div>
@@ -159,20 +182,27 @@ export default function MembershipPage() {
               </div>
 
               {/* Savings Comparison */}
-              <div className="grid md:grid-cols-3 gap-4">
-                {plans.filter(p => p.id !== 'basic' && p.id !== 'family').map((plan) => {
+              <div className="grid md:grid-cols-2 gap-6">
+                {plans.filter(p => p.id === 'rescue-club' || p.id === 'elite-performance').map((plan) => {
                   const savings = calculateSavings(plan.id)
                   return (
                     <motion.div
                       key={plan.id}
-                      whileHover={{ scale: 1.05 }}
-                      className="p-6 bg-gradient-to-br from-racket-green/10 to-racket-green/5 border-2 border-racket-green/30 rounded-2xl text-center"
+                      whileHover={{ scale: 1.03 }}
+                      className={`p-8 rounded-2xl text-center ${
+                        plan.premium
+                          ? 'bg-gradient-to-br from-racket-black to-racket-charcoal text-white'
+                          : 'bg-gradient-to-br from-racket-green/10 to-racket-green/5 border-2 border-racket-green/30'
+                      }`}
                     >
-                      <h3 className="font-bold text-xl text-racket-black mb-2">{plan.name}</h3>
-                      <div className="text-4xl font-bold text-racket-green mb-1">
+                      <h3 className={`font-headline font-bold text-2xl mb-2 ${plan.premium ? 'text-white' : 'text-racket-black'}`}>
+                        {plan.name}
+                      </h3>
+                      <div className="text-lg mb-4 opacity-80">${plan.price}/month</div>
+                      <div className={`text-5xl font-bold mb-2 ${plan.premium ? 'text-racket-green' : 'text-racket-green'}`}>
                         ${savings > 0 ? savings : 0}
                       </div>
-                      <div className="text-sm text-racket-gray">saved per month</div>
+                      <div className={`text-sm ${plan.premium ? 'text-white/70' : 'text-racket-gray'}`}>saved per month</div>
                     </motion.div>
                   )
                 })}
@@ -326,28 +356,28 @@ export default function MembershipPage() {
             viewport={{ once: true }}
             className="bg-white rounded-3xl shadow-2xl p-12 text-center max-w-5xl mx-auto"
           >
-            <h3 className="text-4xl font-bold text-racket-black mb-6">
-              Unlock Your Best Game
+            <h3 className="font-headline text-4xl font-bold text-racket-black mb-6">
+              Why Members Love Racket Rescue
             </h3>
             <p className="text-xl text-racket-gray mb-12">
-              With just 2-3 orders per month, a membership pays for itself!
+              More than 500 Orange County players save time and money every month.
             </p>
 
             <div className="grid md:grid-cols-3 gap-8">
-              <div>
-                <div className="text-4xl font-bold text-racket-red mb-2">Standard</div>
-                <div className="text-racket-gray mb-4">2 orders/month</div>
-                <div className="text-3xl font-bold text-racket-green">Save $21/mo</div>
+              <div className="p-6 rounded-2xl bg-racket-lightgray">
+                <div className="text-5xl mb-4">🚗</div>
+                <div className="text-2xl font-bold text-racket-black mb-2">Zero Driving</div>
+                <div className="text-racket-gray">We come to you. Save 2+ hours every time.</div>
               </div>
-              <div>
-                <div className="text-4xl font-bold text-racket-black mb-2">Elite</div>
-                <div className="text-racket-gray mb-4">3 orders/month</div>
-                <div className="text-3xl font-bold text-racket-green">Save $90+/mo</div>
+              <div className="p-6 rounded-2xl bg-racket-lightgray">
+                <div className="text-5xl mb-4">💰</div>
+                <div className="text-2xl font-bold text-racket-black mb-2">Real Savings</div>
+                <div className="text-racket-gray">Members save $25-$150+ per month.</div>
               </div>
-              <div>
-                <div className="text-4xl font-bold text-racket-red mb-2">FREE Pickup</div>
-                <div className="text-racket-gray mb-4">on every order</div>
-                <div className="text-3xl font-bold text-racket-green">$15 value</div>
+              <div className="p-6 rounded-2xl bg-racket-lightgray">
+                <div className="text-5xl mb-4">⚡</div>
+                <div className="text-2xl font-bold text-racket-black mb-2">Priority Service</div>
+                <div className="text-racket-gray">Same-day available. VIP scheduling.</div>
               </div>
             </div>
           </motion.div>
@@ -363,25 +393,42 @@ export default function MembershipPage() {
             viewport={{ once: true }}
             className="space-y-8"
           >
-            <h2 className="text-5xl md:text-6xl font-bold">
-              Start Saving Today
+            <h2 className="font-headline text-5xl md:text-6xl font-bold">
+              Start Your Free Trial
             </h2>
             <p className="text-2xl text-white/90">
-              Try Standard free for 30 days or Elite for just $1
+              Try Rescue Club FREE for 14 days. Cancel anytime.
             </p>
 
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Link
-                href="/schedule"
-                className="inline-flex items-center gap-3 bg-white text-racket-red px-12 py-6 rounded-full text-xl font-bold shadow-2xl hover:shadow-3xl transition-all"
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
               >
-                Get Started Now
-                <ArrowRight className="w-7 h-7" />
-              </Link>
-            </motion.div>
+                <Link
+                  href="/schedule?plan=rescue-club"
+                  className="inline-flex items-center gap-3 bg-white text-racket-red px-12 py-6 rounded-full text-xl font-bold font-label shadow-2xl hover:shadow-3xl transition-all"
+                >
+                  <span className="text-2xl">🎾</span>
+                  Start Free Trial
+                  <ArrowRight className="w-7 h-7" />
+                </Link>
+              </motion.div>
+
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Link
+                  href="/schedule?plan=elite-performance"
+                  className="inline-flex items-center gap-3 bg-white/20 backdrop-blur border-2 border-white/40 text-white px-12 py-6 rounded-full text-xl font-bold font-label hover:bg-white/30 transition-all"
+                >
+                  Try Elite for $1
+                </Link>
+              </motion.div>
+            </div>
+
+            <p className="text-white/70">No credit card required • Cancel anytime</p>
           </motion.div>
         </div>
       </section>

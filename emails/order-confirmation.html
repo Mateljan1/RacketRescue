@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Your Racket Rescue Order Confirmation</title>
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+  <style>
+    /* Reset styles */
+    body, table, td, p, a, li, blockquote {
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+    table, td {
+      mso-table-lspace: 0pt;
+      mso-table-rspace: 0pt;
+    }
+    img {
+      -ms-interpolation-mode: bicubic;
+      border: 0;
+      height: auto;
+      line-height: 100%;
+      outline: none;
+      text-decoration: none;
+    }
+    body {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+      background-color: #f3f4f6;
+    }
+
+    /* Main styles */
+    .wrapper {
+      width: 100%;
+      background-color: #f3f4f6;
+      padding: 40px 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .header {
+      background: linear-gradient(135deg, #EC1F27 0%, #c91920 100%);
+      padding: 40px 30px;
+      text-align: center;
+    }
+    .header-emoji {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+    .header h1 {
+      color: #ffffff;
+      font-family: 'Poppins', Arial, sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      margin: 0;
+      line-height: 1.3;
+    }
+    .header p {
+      color: rgba(255, 255, 255, 0.9);
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 16px;
+      margin: 12px 0 0 0;
+    }
+    .content {
+      padding: 40px 30px;
+    }
+    .greeting {
+      font-family: 'Poppins', Arial, sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: #030707;
+      margin: 0 0 16px 0;
+    }
+    .message {
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 16px;
+      color: #4b5563;
+      line-height: 1.7;
+      margin: 0 0 24px 0;
+    }
+
+    /* Order details box */
+    .order-box {
+      background-color: #f9fafb;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 24px;
+      margin: 24px 0;
+    }
+    .order-box h2 {
+      font-family: 'Poppins', Arial, sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: #030707;
+      margin: 0 0 16px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .order-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #e5e7eb;
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 15px;
+    }
+    .order-row:last-child {
+      border-bottom: none;
+    }
+    .order-label {
+      color: #6b7280;
+    }
+    .order-value {
+      color: #030707;
+      font-weight: 500;
+    }
+    .order-total {
+      font-size: 18px;
+      font-weight: 700;
+      color: #EC1F27;
+    }
+
+    /* Delivery estimate box */
+    .delivery-box {
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      border: 2px solid #10b981;
+      border-radius: 12px;
+      padding: 24px;
+      margin: 24px 0;
+      text-align: center;
+    }
+    .delivery-box h3 {
+      font-family: 'Poppins', Arial, sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: #065f46;
+      margin: 0 0 8px 0;
+    }
+    .delivery-date {
+      font-family: 'Poppins', Arial, sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #047857;
+      margin: 0;
+    }
+    .delivery-note {
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 14px;
+      color: #065f46;
+      margin: 12px 0 0 0;
+    }
+
+    /* CTA Button */
+    .cta-container {
+      text-align: center;
+      margin: 32px 0;
+    }
+    .cta-button {
+      display: inline-block;
+      background: linear-gradient(135deg, #EC1F27 0%, #c91920 100%);
+      color: #ffffff !important;
+      font-family: 'Poppins', Arial, sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      padding: 16px 32px;
+      border-radius: 12px;
+      box-shadow: 0 4px 14px rgba(236, 31, 39, 0.4);
+    }
+    .cta-button:hover {
+      background: linear-gradient(135deg, #c91920 0%, #a31519 100%);
+    }
+
+    /* What's next section */
+    .steps {
+      margin: 32px 0;
+    }
+    .steps h3 {
+      font-family: 'Poppins', Arial, sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: #030707;
+      margin: 0 0 20px 0;
+    }
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .step-icon {
+      width: 40px;
+      height: 40px;
+      background-color: #fef2f2;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .step-content h4 {
+      font-family: 'Poppins', Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: #030707;
+      margin: 0 0 4px 0;
+    }
+    .step-content p {
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 14px;
+      color: #6b7280;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #030707;
+      padding: 32px 30px;
+      text-align: center;
+    }
+    .footer-logo {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+    .footer-brand {
+      font-family: 'Poppins', Arial, sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 8px 0;
+    }
+    .footer-tagline {
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+      margin: 0 0 24px 0;
+    }
+    .footer-contact {
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+      margin: 0 0 8px 0;
+    }
+    .footer-contact a {
+      color: #EC1F27;
+      text-decoration: none;
+    }
+    .footer-links {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .footer-links a {
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      margin: 0 12px;
+    }
+
+    /* Mobile responsiveness */
+    @media only screen and (max-width: 600px) {
+      .wrapper {
+        padding: 20px 16px;
+      }
+      .container {
+        border-radius: 12px;
+      }
+      .header {
+        padding: 32px 20px;
+      }
+      .header h1 {
+        font-size: 24px;
+      }
+      .content {
+        padding: 32px 20px;
+      }
+      .order-box, .delivery-box {
+        padding: 20px;
+      }
+      .footer {
+        padding: 24px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+        <td align="center">
+          <div class="container">
+            <!-- Header -->
+            <div class="header">
+              <div class="header-emoji">📦</div>
+              <h1>We're Rescuing Your Racket!</h1>
+              <p>Order confirmed — your pickup is scheduled</p>
+            </div>
+
+            <!-- Content -->
+            <div class="content">
+              <p class="greeting">Hi {{CUSTOMER_NAME}},</p>
+              <p class="message">
+                Great news! Your racket rescue request has been confirmed. We'll be swinging by to pick up your gear and get it strung to perfection. Sit back, relax, and let us handle the rest!
+              </p>
+
+              <!-- Order Details -->
+              <div class="order-box">
+                <h2>🎾 Order Details</h2>
+                <table width="100%" cellpadding="0" cellspacing="0">
+                  <tr class="order-row">
+                    <td class="order-label">Order Number</td>
+                    <td class="order-value" align="right">#{{ORDER_NUMBER}}</td>
+                  </tr>
+                  <tr class="order-row">
+                    <td class="order-label">Service</td>
+                    <td class="order-value" align="right">{{SERVICE_NAME}}</td>
+                  </tr>
+                  <tr class="order-row">
+                    <td class="order-label">String Type</td>
+                    <td class="order-value" align="right">{{STRING_TYPE}}</td>
+                  </tr>
+                  <tr class="order-row">
+                    <td class="order-label">Add-ons</td>
+                    <td class="order-value" align="right">{{ADDONS}}</td>
+                  </tr>
+                  <tr class="order-row">
+                    <td class="order-label">Pickup Time</td>
+                    <td class="order-value" align="right">{{PICKUP_TIME}}</td>
+                  </tr>
+                  <tr class="order-row">
+                    <td class="order-label">Pickup Address</td>
+                    <td class="order-value" align="right">{{PICKUP_ADDRESS}}</td>
+                  </tr>
+                  <tr class="order-row">
+                    <td class="order-label" style="font-weight: 600; color: #030707;">Total</td>
+                    <td class="order-value order-total" align="right">${{ORDER_TOTAL}}</td>
+                  </tr>
+                </table>
+              </div>
+
+              <!-- Delivery Estimate -->
+              <div class="delivery-box">
+                <h3>🚗 Estimated Delivery</h3>
+                <p class="delivery-date">{{DELIVERY_DATE}}</p>
+                <p class="delivery-note">We'll text you 30 minutes before arrival!</p>
+              </div>
+
+              <!-- Track Button -->
+              <div class="cta-container">
+                <a href="{{TRACKING_URL}}" class="cta-button">🔍 Track Your Racket</a>
+              </div>
+
+              <!-- What's Next -->
+              <div class="steps">
+                <h3>What happens next?</h3>
+
+                <table width="100%" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td width="56" valign="top">
+                      <div class="step-icon">📍</div>
+                    </td>
+                    <td valign="top" style="padding-left: 16px; padding-bottom: 16px;">
+                      <h4 style="font-family: 'Poppins', Arial, sans-serif; font-size: 15px; font-weight: 600; color: #030707; margin: 0 0 4px 0;">Pickup</h4>
+                      <p style="font-family: 'Inter', Arial, sans-serif; font-size: 14px; color: #6b7280; margin: 0; line-height: 1.5;">We'll pick up your racket at your scheduled time</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td width="56" valign="top">
+                      <div class="step-icon">🔧</div>
+                    </td>
+                    <td valign="top" style="padding-left: 16px; padding-bottom: 16px;">
+                      <h4 style="font-family: 'Poppins', Arial, sans-serif; font-size: 15px; font-weight: 600; color: #030707; margin: 0 0 4px 0;">Expert Stringing</h4>
+                      <p style="font-family: 'Inter', Arial, sans-serif; font-size: 14px; color: #6b7280; margin: 0; line-height: 1.5;">USRSA certified pro strings your racket with precision</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td width="56" valign="top">
+                      <div class="step-icon">🏠</div>
+                    </td>
+                    <td valign="top" style="padding-left: 16px;">
+                      <h4 style="font-family: 'Poppins', Arial, sans-serif; font-size: 15px; font-weight: 600; color: #030707; margin: 0 0 4px 0;">Delivery</h4>
+                      <p style="font-family: 'Inter', Arial, sans-serif; font-size: 14px; color: #6b7280; margin: 0; line-height: 1.5;">Your freshly strung racket returns to your door</p>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+              <p class="message" style="margin-top: 24px; padding-top: 24px; border-top: 1px solid #e5e7eb;">
+                Questions? Just reply to this email or call us at <strong>(949) 464-6645</strong>. We're here to help!
+              </p>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+              <div class="footer-logo">🎾</div>
+              <p class="footer-brand">Racket Rescue</p>
+              <p class="footer-tagline">We Save Your Game!</p>
+              <p class="footer-contact">
+                <a href="tel:+19494646645">(949) 464-6645</a> &nbsp;|&nbsp;
+                <a href="mailto:hello@racketrescue.com">hello@racketrescue.com</a>
+              </p>
+              <p class="footer-contact">
+                Serving all of Orange County, CA
+              </p>
+              <div class="footer-links">
+                <a href="https://racketrescue.com">Website</a>
+                <a href="https://racketrescue.com/membership">Membership</a>
+                <a href="https://racketrescue.com/shop">Shop</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Legal footer -->
+          <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; margin: 24px auto 0;">
+            <tr>
+              <td align="center" style="font-family: 'Inter', Arial, sans-serif; font-size: 12px; color: #9ca3af; line-height: 1.6;">
+                You're receiving this email because you requested a racket stringing service.<br>
+                © 2024 Racket Rescue. All rights reserved.<br>
+                1098 Balboa Ave, Laguna Beach, CA 92651
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>

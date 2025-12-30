@@ -19,36 +19,41 @@ const LOGO_URL = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/pub
 
 const packages = [
   {
-    id: 'starter',
-    name: 'Starter Package',
-    price: 52,
-    service: 'Match-Ready',
-    string: 'Wilson Velocity MLT',
-    description: 'Perfect for casual players',
-    features: ['Professional stringing', 'Quality multifilament string', 'Pickup & delivery', '2-3 day turnaround'],
+    id: 'standard',
+    name: 'Standard 24-Hour',
+    price: 55,
+    service: 'Professional Restring',
+    string: 'Quality multifilament',
+    description: 'Perfect for regular players',
+    features: ['Professional stringing', 'Free pickup & delivery', '24-hour turnaround', 'Text updates'],
     popular: false,
   },
   {
-    id: 'pro',
-    name: 'Pro Package',
-    price: 75,
-    service: 'Pro-Performance',
-    string: 'Luxilon ALU or RPM Blast',
-    description: 'Tournament-ready',
-    features: ['Premium stringing service', 'Tour-level string', 'Priority pickup', '2-day turnaround'],
+    id: 'rush',
+    name: 'Same-Day Rush',
+    price: 65,
+    service: 'Priority Restring',
+    string: 'Your choice of string',
+    description: 'Need it today? We got you.',
+    features: ['Same-day turnaround', 'Priority pickup slot', 'Premium string options', 'Express delivery'],
     popular: true,
   },
   {
-    id: 'custom',
-    name: 'Custom Package',
-    price: 50,
-    priceNote: 'Starting at',
-    service: 'Your choice',
-    string: 'Any string ($8-60)',
-    description: 'For players with preferences',
-    features: ['Choose your service level', 'Pick any string', 'Add-ons available', 'Flexible options'],
+    id: 'saver',
+    name: '3-Racket Saver Pack',
+    price: 150,
+    priceNote: 'Best value',
+    service: 'Bundle & Save',
+    string: 'Any 3 rackets',
+    description: 'For serious players',
+    features: ['String 3 rackets', 'Mix & match strings', 'Free grip replacement', 'Priority scheduling'],
     popular: false,
   },
+]
+
+const addOns = [
+  { name: 'Grip Replacement', price: 5 },
+  { name: 'Frame Clean & Inspection', price: 10 },
 ]
 
 export default function HomePage() {
@@ -85,15 +90,15 @@ export default function HomePage() {
               priority
             />
 
-            {/* UPGRADED Headline - Clear Value Prop */}
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight max-w-5xl mx-auto">
-              Professional Racquet Stringing.<br />
-              We Pick Up, String, Deliver.
+            {/* StoryBrand Headline - Problem/Solution */}
+            <h1 className="font-headline text-4xl md:text-6xl lg:text-7xl font-bold leading-tight max-w-5xl mx-auto">
+              Your Racket, Ready Before You'd Even<br />
+              <span className="text-racket-red">Drive Back From the Shop.</span>
             </h1>
 
             <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-              Never drive to a pro shop again. Tournament-ready strings in 2-3 days.  
-              <span className="block mt-3 text-racket-red font-bold">Free pickup for members. Starting at $52.</span>
+              Laguna's only door-to-door racket concierge — pickup, restring, and return in under 24 hours.
+              <span className="block mt-3 text-racket-red font-bold">Free pickup for members. Starting at $55.</span>
             </p>
 
             {/* UPGRADED Social Proof Bar - Enhanced with clickable reviews and guarantees */}
@@ -145,24 +150,26 @@ export default function HomePage() {
             {/* UPGRADED ZIP Checker */}
             <ZipChecker />
 
-            {/* CTAs */}
+            {/* CTAs - StoryBrand Direct Response */}
             <div className="flex flex-col sm:flex-row gap-6 justify-center pt-6">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
                 <Link
                   href="/schedule"
-                  className="inline-flex items-center justify-center gap-3 bg-racket-red text-white px-10 py-5 rounded-full text-xl font-bold shadow-2xl hover:bg-red-600 transition-colors"
+                  className="inline-flex items-center justify-center gap-3 bg-racket-red text-white px-10 py-5 rounded-full text-xl font-bold font-label shadow-2xl hover:bg-red-600 transition-colors"
                 >
-                  Get Started - $52
+                  <span className="text-2xl">📦</span>
+                  Schedule Pickup - $55
                   <ArrowRight className="w-7 h-7" />
                 </Link>
               </motion.div>
 
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
                 <Link
-                  href="#packages"
-                  className="inline-flex items-center justify-center gap-3 bg-white/10 backdrop-blur-lg text-white border-2 border-white/30 px-10 py-5 rounded-full text-xl font-bold hover:bg-white/20 transition-all"
+                  href="/schedule?rush=true"
+                  className="inline-flex items-center justify-center gap-3 bg-white/10 backdrop-blur-lg text-white border-2 border-white/30 px-10 py-5 rounded-full text-xl font-bold font-label hover:bg-white/20 transition-all"
                 >
-                  See Packages
+                  <span className="text-2xl">💨</span>
+                  Same-Day Stringing
                 </Link>
               </motion.div>
             </div>
@@ -182,11 +189,11 @@ export default function HomePage() {
             viewport={{ once: true }}
             className="text-center max-w-3xl mx-auto mb-20"
           >
-            <h2 className="text-5xl md:text-6xl font-bold text-racket-black mb-6">
-              Simple, All-In Pricing
+            <h2 className="font-headline text-5xl md:text-6xl font-bold text-racket-black mb-6">
+              Simple, Transparent Pricing
             </h2>
             <p className="text-2xl text-racket-gray">
-              No hidden fees. No surprises. Everything included.
+              Everything included. Free pickup & delivery for members.
             </p>
           </motion.div>
 
@@ -290,7 +297,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Process Section - "How It Actually Works" */}
+      {/* How It Works - 3-Step Flow */}
       <section id="how-it-works" className="py-32 bg-white">
         <div className="container-racket">
           <motion.div
@@ -299,73 +306,60 @@ export default function HomePage() {
             viewport={{ once: true }}
             className="text-center max-w-3xl mx-auto mb-20"
           >
-            <h2 className="text-5xl md:text-6xl font-bold text-racket-black mb-6">
-              Engineered for Convenience
+            <h2 className="font-headline text-5xl md:text-6xl font-bold text-racket-black mb-6">
+              How It Works
             </h2>
             <p className="text-2xl text-racket-gray">
-              Save 2+ hours. Get better strings. Never leave home.
+              Three simple steps. Zero hassle. Your racket returns ready to play.
             </p>
           </motion.div>
 
-          {/* Timeline */}
-          <div className="max-w-4xl mx-auto">
+          {/* 3-Step Cards */}
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {[
               {
-                day: 'Today',
-                title: 'Schedule Online',
-                time: '2 minutes',
-                desc: 'Choose your package, pick a time. Done.',
+                emoji: '📅',
+                title: 'Request Pickup',
+                desc: 'Choose your service, select a time slot, and we handle the rest.',
               },
               {
-                day: 'Tomorrow',
-                title: 'We Pick Up',
-                time: '2-hour window',
-                desc: 'We come to your door. Free for members.',
+                emoji: '🛻',
+                title: 'We Pick Up & String',
+                desc: 'Our certified stringer picks up your racket and strings it to perfection.',
               },
               {
-                day: 'Day 3',
-                title: 'We Deliver',
-                time: 'Tournament-ready',
-                desc: 'Strung to perfection. Back at your door.',
+                emoji: '🎾',
+                title: 'Delivered Back Ready',
+                desc: 'Your racket returns to your door — tournament-ready in under 24 hours.',
               },
             ].map((step, i) => (
               <motion.div
-                key={step.day}
-                initial={{ opacity: 0, x: -40 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                key={step.title}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.2 }}
-                className="relative flex gap-8 mb-12 last:mb-0"
+                transition={{ delay: i * 0.15 }}
+                className="relative bg-racket-lightgray rounded-3xl p-10 text-center"
               >
-                {/* Timeline Line */}
-                {i < 2 && (
-                  <div className="absolute left-10 top-24 w-1 h-full bg-racket-red/20" />
-                )}
-
-                {/* Day Badge */}
-                <div className="flex-shrink-0">
-                  <div className="w-20 h-20 bg-racket-red rounded-2xl flex items-center justify-center text-white font-black text-lg shadow-xl">
-                    {i + 1}
-                  </div>
+                {/* Step Number */}
+                <div className="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-racket-red rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                  {i + 1}
                 </div>
+
+                {/* Emoji */}
+                <div className="text-6xl mb-6 mt-4">{step.emoji}</div>
 
                 {/* Content */}
-                <div className="flex-1 bg-white rounded-2xl p-8 shadow-lg">
-                  <div className="flex justify-between items-start mb-4">
-                    <div>
-                      <div className="text-sm font-bold text-racket-gray uppercase tracking-wider mb-2">
-                        {step.day}
-                      </div>
-                      <h3 className="text-3xl font-bold text-racket-black">{step.title}</h3>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-2xl font-bold text-racket-red">{step.time}</div>
-                    </div>
-                  </div>
-                  <p className="text-xl text-racket-gray">{step.desc}</p>
-                </div>
+                <h3 className="font-headline text-2xl font-bold text-racket-black mb-4">{step.title}</h3>
+                <p className="text-lg text-racket-gray leading-relaxed">{step.desc}</p>
               </motion.div>
             ))}
+          </div>
+
+          {/* Arrow connectors on desktop */}
+          <div className="hidden md:flex justify-center items-center gap-4 mt-8">
+            <div className="text-racket-red text-4xl">→</div>
+            <div className="text-racket-red text-4xl">→</div>
           </div>
         </div>
       </section>
@@ -430,7 +424,7 @@ export default function HomePage() {
       {/* FAQ */}
       <FAQ />
 
-      {/* Final CTA */}
+      {/* Final CTA - Hormozi Style */}
       <section className="py-32 bg-gradient-to-br from-racket-red to-red-600 text-white">
         <div className="container-racket text-center">
           <motion.div
@@ -439,24 +433,37 @@ export default function HomePage() {
             viewport={{ once: true }}
             className="space-y-10"
           >
-            <h2 className="text-5xl md:text-7xl font-bold">
-              Ready to Save Time?
+            <h2 className="font-headline text-5xl md:text-7xl font-bold">
+              Your Racket Deserves Better
             </h2>
             <p className="text-2xl text-white/90 max-w-3xl mx-auto">
-              Join hundreds of players who never drive to a pro shop again
+              Join 500+ Orange County players who never waste time at pro shops again.
+              <span className="block mt-2 font-bold">First pickup is on us for new members.</span>
             </p>
 
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
-              <Link
-                href="/schedule"
-                className="inline-flex items-center gap-3 bg-white text-racket-red px-12 py-6 rounded-full text-2xl font-bold shadow-2xl hover:bg-gray-100 transition-all"
-              >
-                Schedule Pickup Now
-                <ArrowRight className="w-8 h-8" />
-              </Link>
-            </motion.div>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
+                <Link
+                  href="/schedule"
+                  className="inline-flex items-center gap-3 bg-white text-racket-red px-12 py-6 rounded-full text-2xl font-bold font-label shadow-2xl hover:bg-gray-100 transition-all"
+                >
+                  <span className="text-3xl">📦</span>
+                  Schedule Pickup - $55
+                  <ArrowRight className="w-8 h-8" />
+                </Link>
+              </motion.div>
 
-            <p className="text-white/70 text-lg">Free pickup for members • No commitment required</p>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
+                <Link
+                  href="/membership"
+                  className="inline-flex items-center gap-3 bg-white/20 backdrop-blur text-white border-2 border-white/40 px-12 py-6 rounded-full text-2xl font-bold font-label hover:bg-white/30 transition-all"
+                >
+                  View Membership Plans
+                </Link>
+              </motion.div>
+            </div>
+
+            <p className="text-white/70 text-lg">Free pickup for members • Money-back guarantee • USRSA Certified</p>
           </motion.div>
         </div>
       </section>
