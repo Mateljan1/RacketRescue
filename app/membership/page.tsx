@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Crown, Gem, Users, Trophy, Check, Zap, Calculator, ArrowRight, Car, PiggyBank, Bolt } from 'lucide-react'
+import { Crown, Gem, Users, Trophy, Check, Zap, Calculator, ArrowRight, Car, PiggyBank, Bolt, Sparkles } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 
