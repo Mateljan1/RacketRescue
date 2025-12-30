@@ -3,7 +3,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, Star, MapPin, Check, AlertTriangle, Clock } from 'lucide-react'
+import { ArrowRight, Star, MapPin, Check, AlertTriangle, Clock, CalendarDays, Truck, CircleCheckBig, ChevronRight } from 'lucide-react'
 import { TimeSavingsIllustration, PrecisionIllustration, SpeedIllustration } from '@/components/CustomIllustrations'
 import { useState } from 'react'
 import SocialProof from '@/components/SocialProof'
@@ -347,51 +347,58 @@ export default function HomePage() {
           </motion.div>
 
           {/* 3-Step Cards */}
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-6 lg:gap-10 max-w-5xl mx-auto">
             {[
               {
-                emoji: '📅',
+                icon: CalendarDays,
                 title: 'Request Pickup',
                 desc: 'Choose your service, select a time slot, and we handle the rest.',
               },
               {
-                emoji: '🛻',
+                icon: Truck,
                 title: 'We Pick Up & String',
                 desc: 'Our certified stringer picks up your racket and strings it to perfection.',
               },
               {
-                emoji: '🎾',
+                icon: CircleCheckBig,
                 title: 'Delivered Back Ready',
                 desc: 'Your racket returns to your door — tournament-ready in under 24 hours.',
               },
-            ].map((step, i) => (
-              <motion.div
-                key={step.title}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15 }}
-                className="relative bg-racket-lightgray rounded-3xl p-10 text-center"
-              >
-                {/* Step Number */}
-                <div className="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-racket-red rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
-                  {i + 1}
-                </div>
+            ].map((step, i) => {
+              const IconComponent = step.icon
+              return (
+                <motion.div
+                  key={step.title}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.15 }}
+                  className="relative bg-racket-lightgray rounded-3xl p-8 lg:p-10 text-center"
+                >
+                  {/* Step Number */}
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-9 h-9 bg-racket-red rounded-full flex items-center justify-center text-white font-bold text-base shadow-lg">
+                    {i + 1}
+                  </div>
 
-                {/* Emoji */}
-                <div className="text-6xl mb-6 mt-4">{step.emoji}</div>
+                  {/* Professional Icon */}
+                  <div className="flex items-center justify-center mt-4 mb-6">
+                    <div className="w-20 h-20 bg-white rounded-2xl shadow-lg flex items-center justify-center">
+                      <IconComponent className="w-10 h-10 text-racket-red" strokeWidth={1.5} />
+                    </div>
+                  </div>
 
-                {/* Content */}
-                <h3 className="font-headline text-2xl font-bold text-racket-black mb-4">{step.title}</h3>
-                <p className="text-lg text-racket-gray leading-relaxed">{step.desc}</p>
-              </motion.div>
-            ))}
+                  {/* Content */}
+                  <h3 className="font-headline text-xl lg:text-2xl font-bold text-racket-black mb-3">{step.title}</h3>
+                  <p className="text-base lg:text-lg text-racket-gray leading-relaxed">{step.desc}</p>
+                </motion.div>
+              )
+            })}
           </div>
 
           {/* Arrow connectors on desktop */}
-          <div className="hidden md:flex justify-center items-center gap-4 mt-8">
-            <div className="text-racket-red text-4xl">→</div>
-            <div className="text-racket-red text-4xl">→</div>
+          <div className="hidden md:flex justify-center items-center gap-8 mt-10">
+            <ChevronRight className="w-8 h-8 text-racket-red" strokeWidth={3} />
+            <ChevronRight className="w-8 h-8 text-racket-red" strokeWidth={3} />
           </div>
         </div>
       </section>
