@@ -38,10 +38,10 @@ export default function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? 'bg-white/98 backdrop-blur-xl shadow-xl py-4'
-            : 'bg-white/90 backdrop-blur-lg py-6'
+            ? 'top-0 bg-white/98 backdrop-blur-xl shadow-xl py-4'
+            : 'top-[42px] bg-white/90 backdrop-blur-lg py-6'
         }`}
       >
         <nav className="container-racket">
