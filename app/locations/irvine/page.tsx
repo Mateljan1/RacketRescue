@@ -130,7 +130,7 @@ export default function IrvinePage() {
         <div className="container-racket text-center">
           <h2 className="text-4xl font-bold mb-6">Ready for Tournament-Ready Strings?</h2>
           <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            Irvine's trusted stringing service. 2-3 day turnaround with free pickup for members.
+            Irvine's trusted stringing service. 24-hour turnaround with free pickup for members.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Schedule Racquet Stringing | Free Pickup & Delivery | Racket Rescue',
-  description: 'Schedule your tennis racquet stringing in Orange County. Free pickup & delivery for members. 2-3 day turnaround. USRSA Certified stringers. Easy online booking.',
+  description: 'Schedule your tennis racquet stringing in Orange County. Free pickup & delivery for members. 24-hour turnaround. USRSA Certified stringers. Easy online booking.',
   keywords: 'schedule racquet stringing, book tennis stringing, racket pickup Orange County, stringing appointment, tennis racquet service booking',
   openGraph: {
     title: 'Schedule Racquet Stringing | Racket Rescue',

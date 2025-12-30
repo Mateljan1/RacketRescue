@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Racket Rescue - #1 Mobile Racquet Stringing in Orange County',
-    description: '4.9★ rated tennis stringing with FREE pickup & delivery. USRSA Certified. 2-3 day turnaround. Serving Laguna Beach, Newport Beach, Irvine & more.',
+    description: '4.9★ rated tennis stringing with FREE pickup & delivery. USRSA Certified. 24-hour turnaround. Serving Laguna Beach, Newport Beach, Irvine & more.',
     type: 'website',
     locale: 'en_US',
     url: 'https://racketrescue.com',

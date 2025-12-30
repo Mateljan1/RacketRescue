@@ -99,7 +99,7 @@ export default function ServiceSelection({ orderData, setOrderData, onNext }: Pr
                 $35
               </div>
               <div className={`text-lg font-medium ${orderData.service_package === 'match_ready' ? 'text-white/90' : 'text-racket-gray'}`}>
-                Turnaround: 2-3 Days
+                24-hour turnaround
               </div>
               <p className={`text-lg leading-relaxed ${orderData.service_package === 'match_ready' ? 'text-white/80' : 'text-racket-gray'}`}>
                 Professional stringing for casual and club players

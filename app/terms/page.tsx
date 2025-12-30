@@ -69,8 +69,8 @@ export default function TermsPage() {
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-racket-black mb-4">5. Turnaround Time</h2>
             <ul className="list-disc pl-6 space-y-2">
-              <li><strong>Standard Service:</strong> 2-3 business days from pickup</li>
-              <li><strong>Express Service:</strong> Next business day (additional fee applies)</li>
+              <li><strong>Standard Service:</strong> 24 hours from pickup</li>
+              <li><strong>Same-Day Rush:</strong> Same business day (additional fee applies)</li>
               <li>Turnaround times are estimates and may vary based on demand</li>
               <li>We will notify you of any delays as soon as possible</li>
             </ul>

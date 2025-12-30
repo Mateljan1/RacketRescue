@@ -4,31 +4,31 @@ import { Check, ArrowRight } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Pricing | Racket Rescue',
-  description: 'Transparent pricing for professional racquet stringing services. Standard stringing from $25, same-day service $35, customization $50+.',
+  description: 'Transparent pricing for professional racquet stringing services. Standard 24-hour service $55, same-day rush $65. Free pickup & delivery.',
 }
 
 const pricingTiers = [
   {
     name: 'Standard',
-    price: '$25',
-    turnaround: '2-3 Days',
-    description: 'Professional stringing for regular play',
+    price: '$55',
+    turnaround: '24 Hours',
+    description: 'Quality stringing with next-day turnaround',
     features: [
-      'Professional stringing',
-      'Tension: 40-70 lbs',
-      'String recommendations',
+      'Quality multifilament string',
+      '24-hour turnaround',
+      'Free pickup & delivery',
+      'Text status updates',
       'Racquet inspection',
-      'Quality guaranteed',
     ],
   },
   {
     name: 'Same-Day',
-    price: '$35',
+    price: '$65',
     turnaround: 'Same Day',
     description: 'Priority service for urgent needs',
     popular: true,
     features: [
-      'Drop off before noon',
+      'Drop off morning',
       'Pick up same day',
       'Priority queue',
       'Text notifications',
@@ -37,17 +37,17 @@ const pricingTiers = [
     ],
   },
   {
-    name: 'Custom',
-    price: '$50+',
-    turnaround: 'Varies',
-    description: 'Professional customization',
+    name: '3-Pack',
+    price: '$150',
+    turnaround: '24 Hours',
+    description: 'Best value for multiple racquets',
     features: [
-      'Weight adjustments',
-      'Balance modifications',
-      'Lead tape installation',
-      'Grip customization',
-      'Professional consultation',
-      'Performance optimization',
+      'String 3 racquets',
+      'Save $15 total',
+      '24-hour turnaround',
+      'Free pickup & delivery',
+      'Mix string types',
+      'Perfect for serious players',
     ],
   },
 ]

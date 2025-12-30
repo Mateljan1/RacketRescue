@@ -3,11 +3,11 @@ import Script from 'next/script'
 
 export const metadata: Metadata = {
   title: 'Tennis Racquet Stringing Newport Beach | Free Pickup & Delivery | Racket Rescue',
-  description: 'Professional tennis racquet stringing in Newport Beach with FREE pickup & delivery. 4.9★ rated, USRSA certified. 2-3 day turnaround. Balboa Island to Corona del Mar.',
+  description: 'Professional tennis racquet stringing in Newport Beach with FREE pickup & delivery. 4.9★ rated, USRSA certified. 24-hour turnaround. Balboa Island to Corona del Mar.',
   keywords: 'tennis stringing Newport Beach, racquet stringing Newport Beach, racket restring Corona del Mar, mobile stringing service Newport Beach',
   openGraph: {
     title: 'Tennis Racquet Stringing Newport Beach | Racket Rescue',
-    description: 'Professional stringing with FREE pickup & delivery in Newport Beach. 4.9★ rated. 2-3 day turnaround.',
+    description: 'Professional stringing with FREE pickup & delivery in Newport Beach. 4.9★ rated. 24-hour turnaround.',
     url: 'https://racketrescue.com/locations/newport-beach',
   },
 }

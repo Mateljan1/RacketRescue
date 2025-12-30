@@ -3,11 +3,11 @@ import Script from 'next/script'
 
 export const metadata: Metadata = {
   title: 'Tennis Racquet Stringing Irvine | Free Pickup & Delivery | Racket Rescue',
-  description: 'Professional tennis racquet stringing in Irvine with FREE pickup & delivery. 4.9★ rated, USRSA certified. 2-3 day turnaround. Serving all Irvine villages.',
+  description: 'Professional tennis racquet stringing in Irvine with FREE pickup & delivery. 4.9★ rated, USRSA certified. 24-hour turnaround. Serving all Irvine villages.',
   keywords: 'tennis stringing Irvine, racquet stringing Irvine, racket restring Irvine, mobile stringing service Irvine, Great Park tennis',
   openGraph: {
     title: 'Tennis Racquet Stringing Irvine | Racket Rescue',
-    description: 'Professional stringing with FREE pickup & delivery in Irvine. 4.9★ rated. 2-3 day turnaround.',
+    description: 'Professional stringing with FREE pickup & delivery in Irvine. 4.9★ rated. 24-hour turnaround.',
     url: 'https://racketrescue.com/locations/irvine',
   },
 }

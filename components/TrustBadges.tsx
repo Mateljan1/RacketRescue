@@ -6,7 +6,7 @@ import { ShieldCheck, Truck, Timer, BadgeCheck, CreditCard, LockKeyhole } from '
 const badges = [
   { icon: ShieldCheck, text: 'Satisfaction Guaranteed', subtext: '100% money back' },
   { icon: Truck, text: 'Free Pickup', subtext: 'For members' },
-  { icon: Timer, text: 'Fast Turnaround', subtext: '2-3 days standard' },
+  { icon: Timer, text: 'Fast Turnaround', subtext: '24-hour standard' },
   { icon: BadgeCheck, text: '25+ Years Experience', subtext: 'Certified stringers' },
   { icon: CreditCard, text: 'Secure Payment', subtext: 'Stripe protected' },
   { icon: LockKeyhole, text: 'Privacy Protected', subtext: 'Your data is safe' },

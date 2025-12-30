@@ -22,33 +22,42 @@ const LOGO_URL = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/pub
 const packages = [
   {
     id: 'standard',
-    name: 'Standard 24-Hour',
+    name: 'Standard',
     price: 55,
-    service: 'Professional Restring',
-    string: 'Quality multifilament',
     description: 'Perfect for regular players',
-    features: ['Professional stringing', 'Free pickup & delivery', '24-hour turnaround', 'Text updates'],
+    features: [
+      'Quality multifilament string',
+      '24-hour turnaround',
+      'Free pickup & delivery',
+      'Text status updates',
+    ],
     popular: false,
   },
   {
     id: 'rush',
     name: 'Same-Day Rush',
     price: 65,
-    service: 'Priority Restring',
-    string: 'Your choice of string',
-    description: 'Need it today? We got you.',
-    features: ['Same-day turnaround', 'Priority pickup slot', 'Premium string options', 'Express delivery'],
+    description: 'Need it back today',
+    features: [
+      'Premium string selection',
+      'Same-day turnaround',
+      'Priority pickup slot',
+      'Express delivery',
+    ],
     popular: true,
   },
   {
     id: 'saver',
-    name: '3-Racket Saver Pack',
+    name: '3-Racket Pack',
     price: 150,
-    priceNote: 'Best value',
-    service: 'Bundle & Save',
-    string: 'Any 3 rackets',
-    description: 'For serious players',
-    features: ['String 3 rackets', 'Mix & match strings', 'Free grip replacement', 'Priority scheduling'],
+    priceNote: 'Save $15',
+    description: 'Best value for serious players',
+    features: [
+      'String any 3 rackets',
+      'Mix & match strings',
+      'Free grip replacement',
+      'Priority scheduling',
+    ],
     popular: false,
   },
 ]
@@ -250,39 +259,25 @@ export default function HomePage() {
 
                 <div className="text-center space-y-6">
                   <h3 className="text-3xl font-bold text-racket-black">{pkg.name}</h3>
-                  
+
                   <div>
                     {pkg.priceNote && (
-                      <div className="text-lg text-racket-gray mb-2">{pkg.priceNote}</div>
+                      <div className="text-sm font-bold text-green-600 mb-1">{pkg.priceNote}</div>
                     )}
-                    <div className="text-7xl font-black text-racket-red">
+                    <div className="text-6xl font-black text-racket-red">
                       ${pkg.price}
                     </div>
-                    <div className="text-lg text-racket-gray mt-2">All-in price</div>
+                    <div className="text-base text-racket-gray mt-2">{pkg.description}</div>
                   </div>
 
-                  <p className="text-xl text-racket-gray font-semibold">
-                    {pkg.description}
-                  </p>
-
-                  <div className="space-y-4 pt-6">
+                  <div className="pt-4">
                     <div className="text-left space-y-3">
-                      <div className="flex items-start gap-3">
-                        <Check className="w-6 h-6 text-racket-green flex-shrink-0 mt-1" />
-                        <div>
-                          <div className="font-bold text-racket-black">{pkg.service} Service</div>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <Check className="w-6 h-6 text-racket-green flex-shrink-0 mt-1" />
-                        <div>
-                          <div className="font-bold text-racket-black">{pkg.string}</div>
-                        </div>
-                      </div>
-                      {pkg.features.slice(2).map((feature) => (
-                        <div key={feature} className="flex items-start gap-3">
-                          <Check className="w-6 h-6 text-racket-green flex-shrink-0 mt-1" />
-                          <div className="text-racket-gray">{feature}</div>
+                      {pkg.features.map((feature, idx) => (
+                        <div key={feature} className="flex items-center gap-3">
+                          <Check className="w-5 h-5 text-racket-green flex-shrink-0" />
+                          <span className={idx === 0 ? 'font-semibold text-racket-black' : 'text-racket-gray'}>
+                            {feature}
+                          </span>
                         </div>
                       ))}
                     </div>
@@ -445,9 +440,9 @@ export default function HomePage() {
               className="bg-white rounded-3xl p-10 shadow-xl text-center"
             >
               <SpeedIllustration />
-              <h3 className="text-2xl font-bold text-racket-black mb-4 mt-6">Back in 2-3 Days</h3>
+              <h3 className="text-2xl font-bold text-racket-black mb-4 mt-6">24-Hour Turnaround</h3>
               <p className="text-lg text-racket-gray leading-relaxed">
-                Or next-day with Express. Tournament-ready when you need it.
+                Or same-day with Rush service. Tournament-ready when you need it.
               </p>
             </motion.div>
           </div>
