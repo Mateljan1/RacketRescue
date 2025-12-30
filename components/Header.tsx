@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, User, LogOut } from 'lucide-react'
 import { motion } from 'framer-motion'
+import { useSession, signOut } from 'next-auth/react'
 
 const LOGO_URL = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68b77f9f4a7eae9e097474c2/e406f4500_RacketRescueLogoFinal_Horizontal.png"
 
@@ -19,6 +20,7 @@ const navigation = [
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const { data: session } = useSession()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -70,6 +72,37 @@ export default function Header() {
                   {item.name}
                 </Link>
               ))}
+
+              {/* Auth Section */}
+              {session ? (
+                <div className="relative group">
+                  <button className="flex items-center gap-2 text-racket-gray hover:text-racket-red transition-colors">
+                    <User className="w-5 h-5" />
+                    <span>{session.user?.name?.split(' ')[0] || 'Account'}</span>
+                  </button>
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 border border-gray-100">
+                    <Link href="/dashboard" className="block px-4 py-3 hover:bg-gray-50 rounded-t-xl text-racket-gray">
+                      Dashboard
+                    </Link>
+                    <Link href="/my-orders" className="block px-4 py-3 hover:bg-gray-50 text-racket-gray">
+                      My Orders
+                    </Link>
+                    <button
+                      onClick={() => signOut()}
+                      className="w-full text-left px-4 py-3 hover:bg-gray-50 rounded-b-xl text-red-600 flex items-center gap-2"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      Sign Out
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <Link href="/login" className="flex items-center gap-2 text-racket-gray hover:text-racket-red transition-colors">
+                  <User className="w-5 h-5" />
+                  <span>Sign In</span>
+                </Link>
+              )}
+
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
                 <Link
                   href="/schedule"
@@ -125,6 +158,37 @@ export default function Header() {
                   {item.name}
                 </Link>
               ))}
+
+              {/* Mobile Auth Section */}
+              {session ? (
+                <>
+                  <Link
+                    href="/dashboard"
+                    className="block text-xl font-medium text-racket-gray hover:text-racket-red py-5 border-b border-gray-100 transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Dashboard
+                  </Link>
+                  <button
+                    onClick={() => {
+                      signOut()
+                      setMobileMenuOpen(false)
+                    }}
+                    className="block w-full text-left text-xl font-medium text-red-600 py-5 border-b border-gray-100"
+                  >
+                    Sign Out
+                  </button>
+                </>
+              ) : (
+                <Link
+                  href="/login"
+                  className="block text-xl font-medium text-racket-gray hover:text-racket-red py-5 border-b border-gray-100 transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Sign In
+                </Link>
+              )}
+
               <Link
                 href="/schedule"
                 className="block w-full mt-8 text-center bg-racket-red text-white px-8 py-5 rounded-full font-bold hover:bg-red-600 shadow-xl"
