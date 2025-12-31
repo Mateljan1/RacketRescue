@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "racketrescue.com"
+        }
+      ],
+      "destination": "https://www.racketrescue.com/:path*",
+      "permanent": true
+    }
+  ]
+}
