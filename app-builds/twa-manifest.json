@@ -1,0 +1,43 @@
+{
+  "packageId": "com.racketrescue.app",
+  "host": "www.racketrescue.com",
+  "name": "Racket Rescue",
+  "launcherName": "Racket Rescue",
+  "display": "standalone",
+  "themeColor": "#ec1f27",
+  "navigationColor": "#000000",
+  "navigationColorDark": "#000000",
+  "navigationDividerColor": "#000000",
+  "navigationDividerColorDark": "#000000",
+  "backgroundColor": "#ffffff",
+  "enableNotifications": true,
+  "startUrl": "/?source=pwa",
+  "iconUrl": "https://www.racketrescue.com/icons/icon-512.png",
+  "maskableIconUrl": "https://www.racketrescue.com/icons/icon-maskable-512.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "./android.keystore",
+    "alias": "racketrescue"
+  },
+  "appVersionCode": 1,
+  "appVersionName": "1.0.0",
+  "shortcuts": [
+    {
+      "name": "Schedule Service",
+      "shortName": "Schedule",
+      "url": "/schedule?source=pwa",
+      "icons": [{"src": "https://www.racketrescue.com/icons/icon-192.png"}]
+    }
+  ],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://www.racketrescue.com/manifest.json",
+  "fallbackType": "customtabs",
+  "features": {},
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "fullScopeUrl": "https://www.racketrescue.com/",
+  "minSdkVersion": 19,
+  "orientation": "portrait",
+  "fingerprints": []
+}

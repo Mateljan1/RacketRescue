@@ -71,22 +71,6 @@
       "purpose": "maskable"
     }
   ],
-  "screenshots": [
-    {
-      "src": "/screenshots/home.png",
-      "sizes": "1080x1920",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "Home Screen"
-    },
-    {
-      "src": "/screenshots/tracking.png",
-      "sizes": "1080x1920",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "Order Tracking"
-    }
-  ],
   "categories": ["sports", "lifestyle", "shopping"],
   "shortcuts": [
     {
@@ -111,9 +95,24 @@
       "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
     }
   ],
-  "related_applications": [],
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=com.racketrescue.app",
+      "id": "com.racketrescue.app"
+    },
+    {
+      "platform": "itunes",
+      "url": "https://apps.apple.com/app/racket-rescue/id000000000"
+    }
+  ],
   "prefer_related_applications": false,
   "launch_handler": {
     "client_mode": "navigate-existing"
+  },
+  "serviceworker": {
+    "src": "/sw.js",
+    "scope": "/",
+    "type": "module"
   }
 }
