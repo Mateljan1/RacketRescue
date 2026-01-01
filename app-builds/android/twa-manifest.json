@@ -1,6 +1,6 @@
 {
   "packageId": "com.racketrescue.app",
-  "host": "racket-rescue.vercel.app",
+  "host": "www.racketrescue.com",
   "name": "Racket Rescue",
   "launcherName": "Racket Rescue",
   "display": "standalone",
@@ -13,21 +13,21 @@
   "backgroundColor": "#ffffff",
   "enableNotifications": false,
   "startUrl": "/?source=pwa",
-  "iconUrl": "https://racket-rescue.vercel.app/icons/icon-512.png",
-  "maskableIconUrl": "https://racket-rescue.vercel.app/icons/icon-maskable-512.png",
+  "iconUrl": "https://www.racketrescue.com/icons/icon-512.png",
+  "maskableIconUrl": "https://www.racketrescue.com/icons/icon-maskable-512.png",
   "monochromeIconUrl": "",
   "shortcuts": [
     {
       "name": "Schedule Service",
       "shortName": "Schedule",
       "url": "/schedule?source=pwa",
-      "chosenIconUrl": "https://racket-rescue.vercel.app/icons/icon-192.png"
+      "chosenIconUrl": "https://www.racketrescue.com/icons/icon-192.png"
     },
     {
       "name": "Track Order",
       "shortName": "Track",
       "url": "/my-orders?source=pwa",
-      "chosenIconUrl": "https://racket-rescue.vercel.app/icons/icon-192.png"
+      "chosenIconUrl": "https://www.racketrescue.com/icons/icon-192.png"
     }
   ],
   "signingKey": {

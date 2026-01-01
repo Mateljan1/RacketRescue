@@ -44,7 +44,7 @@ git push
 ```
 
 ### 1.3 Verify (after Vercel deploys)
-Open: https://racket-rescue.vercel.app/.well-known/assetlinks.json
+Open: https://www.racketrescue.com/.well-known/assetlinks.json
 
 You should see JSON with the SHA256 fingerprint.
 
@@ -139,7 +139,7 @@ Complete these sections (checkmarks will appear):
 **Contact details:**
 - Email: (your support email)
 - Phone: (optional)
-- Website: https://racket-rescue.vercel.app
+- Website: https://www.racketrescue.com
 
 ### 2.6 Create Release
 
@@ -170,7 +170,7 @@ Complete these sections (checkmarks will appear):
 
 1. Open browser: **https://www.pwabuilder.com**
 
-2. Enter URL: `https://racket-rescue.vercel.app`
+2. Enter URL: `https://www.racketrescue.com`
 
 3. Click **"Start"** button
 
@@ -183,7 +183,7 @@ Complete these sections (checkmarks will appear):
 7. Configure these settings:
    - **Name:** Racket Rescue
    - **Bundle ID:** com.racketrescue.app
-   - **URL:** https://racket-rescue.vercel.app
+   - **URL:** https://www.racketrescue.com
    - **Status bar color:** #ec1f27
 
 8. Click **"Download"**
@@ -273,7 +273,7 @@ Complete these sections (checkmarks will appear):
    - **Promotional Text:** (optional)
    - **Description:** Same as Google Play
    - **Keywords:** tennis, racket, restringing, tennis strings, racquet service
-   - **Support URL:** https://racket-rescue.vercel.app
+   - **Support URL:** https://www.racketrescue.com
    - **Marketing URL:** (optional)
 
 2. **Build:**
@@ -302,9 +302,11 @@ The Android keystore is required for ALL future app updates. If lost, you cannot
 
 ```
 File: android/android.keystore
-Password: racketrescue123
 Key Alias: android
-Key Password: racketrescue123
+
+⚠️ PASSWORD NOT STORED IN GIT (security)
+See: /Users/andrew-mac-studio/RacketRescue-AppStores/android/KEYSTORE-INFO.txt
+Or contact: andrew@tennisbeast.com
 ```
 
 **BACKUP THIS FILE** to secure cloud storage (Google Drive, iCloud, etc.)
@@ -362,7 +364,7 @@ No app update needed! The apps load content from the website, so any website cha
 
 App Configuration:
 - Package ID: com.racketrescue.app
-- Website: https://racket-rescue.vercel.app
+- Website: https://www.racketrescue.com
 - Theme Color: #ec1f27
 
 Both apps are PWA wrappers - they load the website content inside a native app shell. Any updates to the website automatically appear in the apps!

@@ -4,7 +4,7 @@ iOS PACKAGE INSTRUCTIONS
 The iOS package must be generated from PWABuilder.com:
 
 1. Go to https://www.pwabuilder.com
-2. Enter: https://racket-rescue.vercel.app
+2. Enter: https://www.racketrescue.com
 3. Click "Start"
 4. Click "Package for stores"
 5. Select "iOS"
