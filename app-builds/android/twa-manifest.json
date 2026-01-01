@@ -1,0 +1,65 @@
+{
+  "packageId": "com.racketrescue.app",
+  "host": "racket-rescue.vercel.app",
+  "name": "Racket Rescue",
+  "launcherName": "Racket Rescue",
+  "display": "standalone",
+  "themeColor": "#ec1f27",
+  "themeColorDark": "#ec1f27",
+  "navigationColor": "#ffffff",
+  "navigationColorDark": "#000000",
+  "navigationDividerColor": "#ffffff",
+  "navigationDividerColorDark": "#000000",
+  "backgroundColor": "#ffffff",
+  "enableNotifications": false,
+  "startUrl": "/?source=pwa",
+  "iconUrl": "https://racket-rescue.vercel.app/icons/icon-512.png",
+  "maskableIconUrl": "https://racket-rescue.vercel.app/icons/icon-maskable-512.png",
+  "monochromeIconUrl": "",
+  "shortcuts": [
+    {
+      "name": "Schedule Service",
+      "shortName": "Schedule",
+      "url": "/schedule?source=pwa",
+      "chosenIconUrl": "https://racket-rescue.vercel.app/icons/icon-192.png"
+    },
+    {
+      "name": "Track Order",
+      "shortName": "Track",
+      "url": "/my-orders?source=pwa",
+      "chosenIconUrl": "https://racket-rescue.vercel.app/icons/icon-192.png"
+    }
+  ],
+  "signingKey": {
+    "path": "./android.keystore",
+    "alias": "android"
+  },
+  "appVersionCode": 1,
+  "appVersionName": "1.0.0",
+  "splashScreenFadeOutDuration": 300,
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "orientation": "portrait",
+  "fingerprints": [],
+  "additionalTrustedOrigins": [],
+  "retainedBundles": [],
+  "playBilling": {
+    "enabled": false
+  },
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "features": {},
+  "enableWebShareTarget": true,
+  "webShareTargetV2": {
+    "enabled": false
+  },
+  "fallbackType": "customtabs",
+  "serviceAccountJsonFile": "",
+  "locationDelegation": {
+    "enabled": false
+  },
+  "minSdkVersion": 21,
+  "useBrowserOnChromeOS": false,
+  "includeSourceCode": false
+}
