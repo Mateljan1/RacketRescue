@@ -302,9 +302,11 @@ The Android keystore is required for ALL future app updates. If lost, you cannot
 
 ```
 File: android/android.keystore
-Password: racketrescue123
 Key Alias: android
-Key Password: racketrescue123
+
+⚠️ PASSWORD NOT STORED IN GIT (security)
+See: /Users/andrew-mac-studio/RacketRescue-AppStores/android/KEYSTORE-INFO.txt
+Or contact: andrew@tennisbeast.com
 ```
 
 **BACKUP THIS FILE** to secure cloud storage (Google Drive, iCloud, etc.)
