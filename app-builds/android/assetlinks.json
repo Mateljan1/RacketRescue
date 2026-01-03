@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.racketrescue.www.twa",
+        "sha256_cert_fingerprints": ["E4:E4:C7:6C:C4:E5:44:DF:3C:2C:F7:09:F8:DC:14:C1:FE:1F:49:AD:B8:EA:35:F5:00:D2:38:57:7C:EA:EF:45"]
+      }
+    }]
