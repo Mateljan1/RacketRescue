@@ -1,11 +1,12 @@
 'use client'
 
-import { useEffect, useState, Suspense } from 'react'
+import { useEffect, useState, Suspense, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { CheckCircle, Package, Clock, MapPin, Phone, Mail, QrCode, Copy, ExternalLink } from 'lucide-react'
 import Link from 'next/link'
 import QRCode from 'react-qr-code'
+import { analytics } from '@/lib/analytics'
 
 interface OrderDetails {
   id: string
@@ -30,6 +31,7 @@ function ConfirmationContent() {
   const [order, setOrder] = useState<OrderDetails | null>(null)
   const [loading, setLoading] = useState(true)
   const [copied, setCopied] = useState(false)
+  const hasTrackedPurchase = useRef(false)
 
   useEffect(() => {
     if (sessionId) {
@@ -50,6 +52,27 @@ function ConfirmationContent() {
       setLoading(false)
     }
   }
+
+  // Track purchase event once order details are loaded
+  useEffect(() => {
+    if (order && sessionId && !hasTrackedPurchase.current) {
+      const items = [{
+        item_id: order.service_type || 'unknown',
+        item_name: `${order.service_type} Stringing`,
+        item_category: 'stringing',
+        price: order.amount_total / 100, // Convert cents to dollars
+        quantity: 1,
+      }]
+      
+      analytics.purchase(
+        sessionId,
+        order.amount_total / 100,
+        items
+      )
+      
+      hasTrackedPurchase.current = true
+    }
+  }, [order, sessionId])
 
   const trackingUrl = `https://www.racketrescue.com/track/${sessionId}`
 

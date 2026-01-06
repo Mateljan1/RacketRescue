@@ -19,6 +19,7 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { analytics } from '@/lib/analytics'
 
 interface Product {
   id: string
@@ -277,6 +278,19 @@ export default function ShopPage() {
     )
 
   const addToCart = (productId: string) => {
+    const product = products.find(p => p.id === productId)
+    if (!product) return
+    
+    // Track add to cart
+    analytics.shopAddToCart({
+      item_id: product.id,
+      item_name: product.name,
+      item_category: product.category,
+      price: product.price,
+      quantity: 1,
+    })
+    
+    // Existing cart logic
     setCart(prev => {
       const existing = prev.find(item => item.id === productId)
       if (existing) {

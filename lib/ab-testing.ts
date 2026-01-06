@@ -1,0 +1,68 @@
+// Server-side A/B testing with Vercel Edge Config
+// Supports variant assignment, persistence, and analytics tracking
+
+import { get } from '@vercel/edge-config'
+import { analytics } from './analytics'
+
+export interface Experiment {
+  id: string
+  name: string
+  variants: {
+    id: string
+    name: string
+    weight: number // 0-100
+  }[]
+  enabled: boolean
+}
+
+export interface ExperimentAssignment {
+  experimentId: string
+  variantId: string
+}
+
+// Client-side: Get assigned variant from cookie
+export function getVariant(experimentId: string): string | null {
+  if (typeof document === 'undefined') return null
+  
+  const cookies = document.cookie.split(';')
+  const experimentCookie = cookies.find(c => 
+    c.trim().startsWith(`exp_${experimentId}=`)
+  )
+  
+  if (!experimentCookie) return null
+  
+  return experimentCookie.split('=')[1] || null
+}
+
+// Client-side: Track experiment exposure
+export function trackExperimentView(experimentId: string, variantId: string): void {
+  analytics.experimentViewed(experimentId, variantId)
+}
+
+// Server-side: Assign variant (called from middleware)
+export function assignVariant(experiment: Experiment): string {
+  const random = Math.random() * 100
+  let cumulative = 0
+  
+  for (const variant of experiment.variants) {
+    cumulative += variant.weight
+    if (random <= cumulative) {
+      return variant.id
+    }
+  }
+  
+  // Fallback to control
+  return experiment.variants[0].id
+}
+
+// Server-side: Get experiment config from Edge Config
+export async function getExperiment(experimentId: string): Promise<Experiment | null> {
+  try {
+    const experiment = await get<Experiment>(`experiments.${experimentId}`)
+    return experiment || null
+  } catch (error) {
+    console.error('[A/B Testing Error]', error)
+    return null
+  }
+}
+

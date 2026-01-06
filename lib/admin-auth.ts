@@ -70,3 +70,47 @@ export function validateCustomerAccess(
   if (!requestEmail || !orderEmail) return false
   return requestEmail.toLowerCase() === orderEmail.toLowerCase()
 }
+
+// ============================================
+// ROLE-BASED ACCESS CONTROL
+// ============================================
+
+export type AdminRole = 'owner' | 'stringer'
+
+export function getAdminRole(email: string | null | undefined): AdminRole | null {
+  if (!email) return null
+  
+  // Owner has full access
+  if (email === process.env.ADMIN_EMAIL) {
+    return 'owner'
+  }
+  
+  // Check if email is in stringers list
+  const stringerEmails = (process.env.STRINGER_EMAILS || '').split(',').map(e => e.trim())
+  if (stringerEmails.includes(email)) {
+    return 'stringer'
+  }
+  
+  return null
+}
+
+// Permission checks
+export function canAccessInventory(role: AdminRole): boolean {
+  return role === 'owner'
+}
+
+export function canAccessPlayers(role: AdminRole): boolean {
+  return role === 'owner'
+}
+
+export function canAccessAnalytics(role: AdminRole): boolean {
+  return role === 'owner'
+}
+
+export function canUpdateOrders(role: AdminRole): boolean {
+  return true // Both owner and stringer
+}
+
+export function canAccessDashboard(role: AdminRole): boolean {
+  return role === 'owner'
+}

@@ -11,5 +11,19 @@
       "destination": "https://www.racketrescue.com/:path*",
       "permanent": true
     }
+  ],
+  "crons": [
+    {
+      "path": "/api/automation/restring-reminders",
+      "schedule": "0 9 * * *"
+    },
+    {
+      "path": "/api/automation/smart-scheduling",
+      "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/inventory/check-stock",
+      "schedule": "0 8 * * *"
+    }
   ]
 }

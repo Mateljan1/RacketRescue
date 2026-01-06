@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { ArrowLeft, Check, Crown, Sparkles, MapPin, Calendar, CreditCard, Lock, Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import Link from 'next/link'
+import { analytics } from '@/lib/analytics'
 
 interface Props {
   orderData: any
@@ -27,6 +28,17 @@ export default function OrderReview({ orderData, pricing, onPrev }: Props) {
       setError('Please enter your email address')
       return
     }
+
+    // Track checkout initiation
+    const items = [{
+      item_id: orderData.service_package,
+      item_name: `${orderData.service_package} Stringing`,
+      item_category: 'stringing',
+      price: pricing.total,
+      quantity: 1,
+    }]
+    
+    analytics.checkoutInitiated(pricing.total, items)
 
     setIsSubmitting(true)
     setError(null)

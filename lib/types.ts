@@ -23,6 +23,7 @@ export interface OrderData {
   delivery_address: string
   pickup_time: string
   special_instructions: string
+  gclid?: string // Google Click ID for conversion tracking
 }
 
 export interface OrderPricing {

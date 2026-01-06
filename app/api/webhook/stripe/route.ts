@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe'
 import Stripe from 'stripe'
 import { createClient } from '@supabase/supabase-js'
+import { sendGoogleAdsConversion } from '@/lib/google-ads-conversion'
 
 // Supabase Admin Client (for server-side operations)
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -270,6 +271,16 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session) {
   console.log('Customer Email:', customerEmail)
   console.log('Customer Name:', customerName)
   console.log('Amount:', `$${(session.amount_total || 0) / 100}`)
+
+  // Send Google Ads conversion
+  await sendGoogleAdsConversion({
+    conversionAction: `${process.env.GOOGLE_ADS_CONVERSION_ID}/${process.env.GOOGLE_ADS_CONVERSION_LABEL}`,
+    conversionDateTime: new Date().toISOString(),
+    conversionValue: (session.amount_total || 0) / 100,
+    currencyCode: 'USD',
+    orderId: session.id,
+    gclid: metadata.gclid, // Captured from URL parameter
+  })
 
   if (!customerEmail) {
     console.log('No customer email, skipping ActiveCampaign sync')

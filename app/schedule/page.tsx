@@ -12,6 +12,7 @@ import OrderReview from '@/components/schedule/OrderReview'
 import PriceCalculator from '@/components/PriceCalculator'
 import type { OrderData, OrderPricing, ServicePackage } from '@/lib/types'
 import { PRICING, getServicePrice } from '@/lib/pricing'
+import { analytics } from '@/lib/analytics'
 
 const steps = [
   { number: 1, title: 'Service', desc: 'Choose your package' },
@@ -30,6 +31,7 @@ const packageToService: Record<string, ServicePackage> = {
 function ScheduleContent() {
   const searchParams = useSearchParams()
   const packageParam = searchParams.get('package')
+  const gclid = searchParams.get('gclid') // Google Click ID
   const initialService: ServicePackage = packageParam && packageToService[packageParam]
     ? packageToService[packageParam]
     : 'match_ready'
@@ -55,6 +57,7 @@ function ScheduleContent() {
     delivery_address: '',
     pickup_time: '',
     special_instructions: '',
+    gclid: gclid || undefined, // Capture GCLID for conversion tracking
   })
 
   // Update service package when URL param changes
@@ -69,6 +72,24 @@ function ScheduleContent() {
 
   const nextStep = () => {
     if (currentStep < 4) {
+      // Track step completion before moving to next
+      const stepData = {
+        package_id: orderData.service_package,
+        ...(currentStep === 1 && { 
+          string_type: orderData.string_type,
+          tension: orderData.main_tension,
+        }),
+        ...(currentStep === 2 && {
+          racket_brand: orderData.racket_brand,
+          racket_model: orderData.racket_model,
+        }),
+        ...(currentStep === 3 && {
+          pickup_address: orderData.pickup_address,
+          pickup_time: orderData.pickup_time,
+        }),
+      }
+      
+      analytics.scheduleStepComplete(currentStep, stepData)
       setCurrentStep(prev => prev + 1)
     }
   }

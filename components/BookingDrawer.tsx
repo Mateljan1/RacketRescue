@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ArrowRight, Check, Calendar, MapPin, ChevronDown } from 'lucide-react'
 import Link from 'next/link'
+import { analytics } from '@/lib/analytics'
 
 interface BookingDrawerProps {
   isOpen: boolean
@@ -51,6 +52,8 @@ export default function BookingDrawer({ isOpen, onClose, initialPackage = 'stand
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
+      // Track drawer open with source
+      analytics.bookingDrawerOpen('hero_cta', initialPackage)
     } else {
       document.body.style.overflow = ''
       // Reset state when closed
@@ -60,7 +63,7 @@ export default function BookingDrawer({ isOpen, onClose, initialPackage = 'stand
     return () => {
       document.body.style.overflow = ''
     }
-  }, [isOpen])
+  }, [isOpen, initialPackage])
 
   const handleRacketSelect = (count: number) => {
     setRacketCount(count)
@@ -128,7 +131,11 @@ export default function BookingDrawer({ isOpen, onClose, initialPackage = 'stand
             <motion.button
               key={pkg.id}
               whileTap={{ scale: 0.98 }}
-              onClick={() => setSelectedPackage(pkg.id)}
+              onClick={() => {
+                setSelectedPackage(pkg.id)
+                // Track package selection
+                analytics.packageSelected(pkg.id, pkg.price, racketCount || 1)
+              }}
               className={`w-full p-5 rounded-2xl border-2 transition-all text-left relative ${
                 isSelected
                   ? 'border-racket-red bg-racket-red/5'
@@ -176,7 +183,14 @@ export default function BookingDrawer({ isOpen, onClose, initialPackage = 'stand
 
       <Link
         href={`/schedule?package=${selectedPackage}&count=${racketCount}`}
-        onClick={onClose}
+        onClick={() => {
+          // Track schedule flow initiation
+          analytics.scheduleStepComplete(1, {
+            package_id: selectedPackage,
+            racket_count: racketCount,
+          })
+          onClose()
+        }}
         className="flex items-center justify-center gap-2 w-full bg-racket-red text-white py-4 rounded-full font-bold text-lg hover:bg-red-600 transition-colors"
       >
         Continue to Schedule

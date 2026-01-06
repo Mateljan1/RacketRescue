@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, Star, MapPin, Check, AlertTriangle, Clock, CalendarDays, Truck, CircleCheckBig } from 'lucide-react'
 import { TimeSavingsIllustration, PrecisionIllustration, SpeedIllustration } from '@/components/CustomIllustrations'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import SocialProof from '@/components/SocialProof'
 import Testimonials from '@/components/Testimonials'
 import TrustBadges from '@/components/TrustBadges'
@@ -16,6 +16,7 @@ import MembershipCalculator from '@/components/MembershipCalculator'
 import StringerProfile from '@/components/StringerProfile'
 import ValueStack from '@/components/ValueStack'
 import BookingDrawer from '@/components/BookingDrawer'
+import { getVariant, trackExperimentView } from '@/lib/ab-testing'
 
 const LOGO_URL = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68b77f9f4a7eae9e097474c2/e406f4500_RacketRescueLogoFinal_Horizontal.png"
 
@@ -72,6 +73,25 @@ export default function HomePage() {
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [selectedPackage, setSelectedPackage] = useState<'standard' | 'rush' | 'saver'>('standard')
+  const [heroCTAVariant, setHeroCTAVariant] = useState('control')
+
+  // Get A/B test variant from cookie
+  useEffect(() => {
+    const variant = getVariant('hero_cta_copy') || 'control'
+    setHeroCTAVariant(variant)
+    
+    // Track experiment view
+    if (variant) {
+      trackExperimentView('hero_cta_copy', variant)
+    }
+  }, [])
+
+  // Define CTA copy based on variant
+  const ctaCopy = {
+    control: 'Book Now — $55',
+    variant_urgency: 'Get Fresh Strings Today — $55',
+    variant_benefit: 'Rescue Your Power — $55',
+  }[heroCTAVariant] || 'Book Now — $55'
 
   const openDrawer = (pkg: 'standard' | 'rush' | 'saver' = 'standard') => {
     setSelectedPackage(pkg)
@@ -169,7 +189,7 @@ export default function HomePage() {
                 onClick={() => openDrawer('standard')}
                 className="inline-flex items-center justify-center gap-3 bg-racket-red text-white px-10 py-5 rounded-full text-xl font-bold shadow-2xl hover:bg-red-600 transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-racket-black min-h-[56px]"
               >
-                Book Now — $55
+                {ctaCopy}
                 <ArrowRight className="w-6 h-6" />
               </motion.button>
 

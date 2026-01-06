@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Gift, ArrowRight } from 'lucide-react'
 import { useState, useEffect, useCallback } from 'react'
+import { analytics } from '@/lib/analytics'
 
 const STORAGE_KEY = 'racket-rescue-exit-popup'
 const COOLDOWN_DAYS = 7 // Don't show again for 7 days after dismissing
@@ -70,6 +71,7 @@ export default function ExitIntentPopup() {
       if (e.clientY <= 0 && !isOpen && !submitted && shouldShowPopup()) {
         setIsOpen(true)
         markAsShown()
+        analytics.exitIntentShown() // Track exit intent shown
       }
     }
 
@@ -79,6 +81,10 @@ export default function ExitIntentPopup() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    // Track email capture
+    analytics.exitIntentEmailCaptured(email)
+    
     // TODO: Integrate with email service (ConvertKit, Mailchimp, etc.)
     console.log('Email captured:', email)
     setSubmitted(true)

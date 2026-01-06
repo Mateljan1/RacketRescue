@@ -3,7 +3,8 @@
 import { motion } from 'framer-motion'
 import { Crown, Gem, Users, Trophy, Check, Zap, Calculator, ArrowRight, Car, PiggyBank, Bolt, Sparkles } from 'lucide-react'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { analytics } from '@/lib/analytics'
 
 const plans = [
   {
@@ -90,6 +91,12 @@ const plans = [
 export default function MembershipPage() {
   const [ordersPerMonth, setOrdersPerMonth] = useState(3)
   const [selectedPlan, setSelectedPlan] = useState('rescue-club')
+  const calculatorTimeout = useRef<NodeJS.Timeout>()
+
+  // Track page view on mount
+  useEffect(() => {
+    analytics.membershipViewed('direct_navigation')
+  }, [])
 
   // Calculate savings based on new pricing
   const calculateSavings = (planId: string) => {
@@ -171,7 +178,17 @@ export default function MembershipPage() {
                   min="1"
                   max="8"
                   value={ordersPerMonth}
-                  onChange={(e) => setOrdersPerMonth(parseInt(e.target.value))}
+                  onChange={(e) => {
+                    const value = parseInt(e.target.value)
+                    setOrdersPerMonth(value)
+                    
+                    // Debounce tracking to avoid spam
+                    clearTimeout(calculatorTimeout.current)
+                    calculatorTimeout.current = setTimeout(() => {
+                      const savings = calculateSavings(selectedPlan)
+                      analytics.membershipCalculatorUsed(value, selectedPlan, savings)
+                    }, 1000)
+                  }}
                   className="w-full h-4 bg-gray-200 rounded-full appearance-none cursor-pointer accent-racket-red"
                 />
                 <div className="flex justify-between mt-4">

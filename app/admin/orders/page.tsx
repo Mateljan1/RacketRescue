@@ -2,7 +2,10 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Package, Clock, CheckCircle, RefreshCw, ArrowRight, Search, Filter } from 'lucide-react'
+import { Package, RefreshCw, Search, Filter, Download, Calendar } from 'lucide-react'
+import OrderCard from '@/components/admin/OrderCard'
+import OrderDetailsModal from '@/components/admin/OrderDetailsModal'
+import { exportOrders } from '@/lib/utils/export'
 
 interface Order {
   id: string
@@ -10,21 +13,35 @@ interface Order {
   type: string
   customer_email: string
   customer_name: string
-  racket: string
+  customer_phone?: string
+  racket_brand?: string
+  racket_model?: string
+  racket?: string
   string_name: string
+  string_type?: string
+  main_tension?: number
+  cross_tension?: number
   amount: number
   created_at: string
   is_express: boolean
+  pickup_address?: string
+  delivery_address?: string
+  pickup_time?: string
+  special_instructions?: string
+  add_regrip?: boolean
+  add_overgrip?: boolean
+  add_dampener?: boolean
 }
 
 const STATUS_OPTIONS = [
-  { id: 'pending', label: 'Order Received', color: 'bg-yellow-100 text-yellow-800' },
-  { id: 'picked_up', label: 'Picked Up', color: 'bg-blue-100 text-blue-800' },
-  { id: 'in_progress', label: 'Stringing', color: 'bg-purple-100 text-purple-800' },
-  { id: 'quality_check', label: 'QC', color: 'bg-indigo-100 text-indigo-800' },
-  { id: 'ready', label: 'Ready', color: 'bg-green-100 text-green-800' },
-  { id: 'out_for_delivery', label: 'Delivering', color: 'bg-blue-100 text-blue-800' },
-  { id: 'delivered', label: 'Delivered', color: 'bg-gray-100 text-gray-800' },
+  { id: 'all', label: 'All Orders', count: 0 },
+  { id: 'pending', label: 'Pending', count: 0 },
+  { id: 'picked_up', label: 'Picked Up', count: 0 },
+  { id: 'in_progress', label: 'In Progress', count: 0 },
+  { id: 'quality_check', label: 'QC', count: 0 },
+  { id: 'ready', label: 'Ready', count: 0 },
+  { id: 'out_for_delivery', label: 'Delivering', count: 0 },
+  { id: 'delivered', label: 'Delivered', count: 0 },
 ]
 
 export default function AdminOrdersPage() {
@@ -32,11 +49,15 @@ export default function AdminOrdersPage() {
   const [loading, setLoading] = useState(true)
   const [updating, setUpdating] = useState<string | null>(null)
   const [filter, setFilter] = useState<string>('all')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [dateFilter, setDateFilter] = useState<'today' | 'week' | 'month' | 'all'>('week')
 
   const fetchOrders = async () => {
     setLoading(true)
     try {
-      const response = await fetch('/api/orders?limit=50')
+      const response = await fetch('/api/orders?limit=100')
       const data = await response.json()
       setOrders(data.orders || [])
     } catch (error) {
@@ -48,15 +69,18 @@ export default function AdminOrdersPage() {
 
   useEffect(() => {
     fetchOrders()
+    // Auto-refresh every 30 seconds
+    const interval = setInterval(fetchOrders, 30000)
+    return () => clearInterval(interval)
   }, [])
 
   const updateStatus = async (orderId: string, newStatus: string) => {
     setUpdating(orderId)
     try {
-      const response = await fetch(`/api/orders/${orderId}`, {
-        method: 'PATCH',
+      const response = await fetch(`/api/orders/update-status`, {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: newStatus }),
+        body: JSON.stringify({ orderId, status: newStatus }),
       })
 
       if (response.ok) {
@@ -72,12 +96,51 @@ export default function AdminOrdersPage() {
     }
   }
 
-  const filteredOrders = filter === 'all'
-    ? orders
-    : orders.filter(o => o.status === filter)
+  const openDetails = (order: Order) => {
+    setSelectedOrder(order)
+    setModalOpen(true)
+  }
 
-  const getStatusInfo = (status: string) =>
-    STATUS_OPTIONS.find(s => s.id === status) || STATUS_OPTIONS[0]
+  // Filter orders by status, search, and date
+  const filteredOrders = orders.filter(order => {
+    // Status filter
+    if (filter !== 'all' && order.status !== filter) return false
+
+    // Search filter
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase()
+      const matchesSearch = 
+        order.customer_name.toLowerCase().includes(query) ||
+        order.customer_email.toLowerCase().includes(query) ||
+        order.id.toLowerCase().includes(query) ||
+        (order.racket_brand || order.racket || '').toLowerCase().includes(query)
+      if (!matchesSearch) return false
+    }
+
+    // Date filter
+    const orderDate = new Date(order.created_at)
+    const now = new Date()
+    if (dateFilter === 'today') {
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+      if (orderDate < today) return false
+    } else if (dateFilter === 'week') {
+      const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
+      if (orderDate < weekAgo) return false
+    } else if (dateFilter === 'month') {
+      const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
+      if (orderDate < monthAgo) return false
+    }
+
+    return true
+  })
+
+  // Calculate status counts
+  const statusCounts = STATUS_OPTIONS.map(status => ({
+    ...status,
+    count: status.id === 'all' 
+      ? orders.length 
+      : orders.filter(o => o.status === status.id).length
+  }))
 
   if (loading) {
     return (
@@ -97,136 +160,129 @@ export default function AdminOrdersPage() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Order Management</h1>
-            <p className="text-gray-600 mt-1">{orders.length} total orders</p>
+            <p className="text-gray-600 mt-1">{filteredOrders.length} orders</p>
           </div>
-          <button
-            onClick={fetchOrders}
-            className="flex items-center gap-2 px-4 py-2 bg-white rounded-lg shadow hover:shadow-md transition-shadow"
-          >
-            <RefreshCw className="w-4 h-4" />
-            Refresh
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={fetchOrders}
+              className="flex items-center gap-2 px-4 py-2 bg-white rounded-lg shadow hover:shadow-md transition-shadow"
+            >
+              <RefreshCw className="w-4 h-4" />
+              Refresh
+            </button>
+            <button
+              onClick={() => exportOrders(filteredOrders)}
+              className="flex items-center gap-2 px-4 py-2 bg-racket-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+            >
+              <Download className="w-4 h-4" />
+              Export CSV
+            </button>
+          </div>
         </div>
 
-        {/* Filters */}
+        {/* Search & Date Filter */}
+        <div className="bg-white rounded-xl shadow-sm p-4 mb-6">
+          <div className="flex flex-col md:flex-row gap-4">
+            {/* Search */}
+            <div className="flex-1 relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search by customer, order ID, or racket..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-racket-red/20 focus:border-racket-red"
+              />
+            </div>
+
+            {/* Date Filter */}
+            <div className="flex items-center gap-2">
+              <Calendar className="w-4 h-4 text-gray-400" />
+              <select
+                value={dateFilter}
+                onChange={(e) => setDateFilter(e.target.value as any)}
+                className="px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-racket-red/20 focus:border-racket-red"
+              >
+                <option value="today">Today</option>
+                <option value="week">Last 7 Days</option>
+                <option value="month">Last 30 Days</option>
+                <option value="all">All Time</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {/* Status Filters */}
         <div className="bg-white rounded-xl shadow-sm p-4 mb-6">
           <div className="flex items-center gap-2 flex-wrap">
             <Filter className="w-4 h-4 text-gray-400" />
-            <button
-              onClick={() => setFilter('all')}
-              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                filter === 'all' ? 'bg-racket-red text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              All
-            </button>
-            {STATUS_OPTIONS.map(status => (
+            {statusCounts.map(status => (
               <button
                 key={status.id}
                 onClick={() => setFilter(status.id)}
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                  filter === status.id ? 'bg-racket-red text-white' : `${status.color} hover:opacity-80`
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  filter === status.id 
+                    ? 'bg-racket-red text-white' 
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                 }`}
               >
                 {status.label}
+                <span className="ml-2 opacity-70">({status.count})</span>
               </button>
             ))}
           </div>
         </div>
 
-        {/* Orders Table */}
-        <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-          <table className="w-full">
-            <thead className="bg-gray-50 border-b">
-              <tr>
-                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">Order</th>
-                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">Customer</th>
-                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">Racket</th>
-                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">Status</th>
-                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100">
-              {filteredOrders.map((order, i) => {
-                const statusInfo = getStatusInfo(order.status)
-                const currentIndex = STATUS_OPTIONS.findIndex(s => s.id === order.status)
-                const nextStatus = STATUS_OPTIONS[currentIndex + 1]
-
-                return (
-                  <motion.tr
-                    key={order.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.05 }}
-                    className="hover:bg-gray-50"
-                  >
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-2">
-                        {order.is_express && (
-                          <span className="px-2 py-0.5 bg-red-500 text-white text-xs rounded font-bold">
-                            EXPRESS
-                          </span>
-                        )}
-                        <div>
-                          <div className="font-mono text-sm text-gray-500">
-                            #{order.id.slice(-8)}
-                          </div>
-                          <div className="text-xs text-gray-400">
-                            {new Date(order.created_at).toLocaleDateString()}
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="font-medium text-gray-900">{order.customer_name}</div>
-                      <div className="text-sm text-gray-500">{order.customer_email}</div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="text-gray-900">{order.racket}</div>
-                      <div className="text-sm text-gray-500">{order.string_name}</div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${statusInfo.color}`}>
-                        {statusInfo.label}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      {nextStatus && order.status !== 'delivered' ? (
-                        <button
-                          onClick={() => updateStatus(order.id, nextStatus.id)}
-                          disabled={updating === order.id}
-                          className="flex items-center gap-2 px-3 py-1.5 bg-racket-black text-white rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors disabled:opacity-50"
-                        >
-                          {updating === order.id ? (
-                            <RefreshCw className="w-4 h-4 animate-spin" />
-                          ) : (
-                            <>
-                              <ArrowRight className="w-4 h-4" />
-                              {nextStatus.label}
-                            </>
-                          )}
-                        </button>
-                      ) : (
-                        <span className="text-green-600 font-medium flex items-center gap-1">
-                          <CheckCircle className="w-4 h-4" />
-                          Complete
-                        </span>
-                      )}
-                    </td>
-                  </motion.tr>
-                )
-              })}
-            </tbody>
-          </table>
-
-          {filteredOrders.length === 0 && (
-            <div className="text-center py-12">
-              <Package className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-500">No orders found</p>
-            </div>
-          )}
+        {/* Orders Grid */}
+        <div className="grid gap-6">
+          {filteredOrders.map((order) => (
+            <OrderCard
+              key={order.id}
+              order={order}
+              onStatusUpdate={updateStatus}
+              onViewDetails={openDetails}
+              updating={updating === order.id}
+            />
+          ))}
         </div>
+
+        {/* Empty State */}
+        {filteredOrders.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-16"
+          >
+            <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+            <h3 className="text-xl font-bold text-gray-900 mb-2">No orders found</h3>
+            <p className="text-gray-500 mb-6">
+              {searchQuery ? 'Try adjusting your search or filters' : 'No orders match the selected filters'}
+            </p>
+            {(searchQuery || filter !== 'all' || dateFilter !== 'week') && (
+              <button
+                onClick={() => {
+                  setSearchQuery('')
+                  setFilter('all')
+                  setDateFilter('week')
+                }}
+                className="px-6 py-2 bg-racket-red text-white rounded-lg font-medium hover:bg-red-600 transition-colors"
+              >
+                Clear Filters
+              </button>
+            )}
+          </motion.div>
+        )}
       </div>
+
+      {/* Order Details Modal */}
+      <OrderDetailsModal
+        order={selectedOrder}
+        isOpen={modalOpen}
+        onClose={() => {
+          setModalOpen(false)
+          setSelectedOrder(null)
+        }}
+      />
     </main>
   )
 }
