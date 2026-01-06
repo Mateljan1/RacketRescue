@@ -1,79 +1,83 @@
-import type { Metadata, Viewport } from 'next'
-import { Inter, Poppins } from 'next/font/google'
-import './globals.css'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-import TrustBar from '@/components/TrustBar'
-import ExitIntentPopup from '@/components/ExitIntentPopup'
-import PWAInstallPrompt from '@/components/PWAInstallPrompt'
-import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration'
-import StickyMobileCTA from '@/components/StickyMobileCTA'
-import Providers from '@/components/Providers'
-import Script from 'next/script'
+import type React from "react"
+import type { Metadata, Viewport } from "next"
+import { Inter, Poppins } from "next/font/google"
+import "./globals.css"
+import Header from "@/components/Header"
+import Footer from "@/components/Footer"
+import TrustBar from "@/components/TrustBar"
+import ExitIntentPopup from "@/components/ExitIntentPopup"
+import PWAInstallPrompt from "@/components/PWAInstallPrompt"
+import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration"
+import StickyMobileCTA from "@/components/StickyMobileCTA"
+import Providers from "@/components/Providers"
+import Script from "next/script"
 
 const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
 })
 
 const poppins = Poppins({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
-  variable: '--font-poppins',
-  display: 'swap',
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-poppins",
+  display: "swap",
 })
 
 export const viewport: Viewport = {
-  width: 'device-width',
+  width: "device-width",
   initialScale: 1,
-  themeColor: '#ec1f27',
+  themeColor: "#ec1f27",
 }
 
 export const metadata: Metadata = {
-  title: 'Racket Rescue | #1 Tennis Racquet Stringing in Orange County | Free Pickup & Delivery',
-  description: 'Orange County\'s premier mobile tennis racquet stringing. 4.9★ rating from 312+ reviews. Free pickup & delivery for members. 24-hour turnaround. USRSA Certified. Starting at $55.',
-  keywords: 'racquet stringing Orange County, tennis stringing Laguna Beach, racket restring Newport Beach, Irvine racket stringing, mobile stringing service, pickup delivery tennis, professional stringing, USRSA certified stringer',
-  authors: [{ name: 'Racket Rescue' }],
-  manifest: '/manifest.json',
+  title: "Racket Rescue | #1 Tennis Racquet Stringing in Orange County | Free Pickup & Delivery",
+  description:
+    "Orange County's premier mobile tennis racquet stringing. 4.9★ rating from 312+ reviews. Free pickup & delivery for members. 24-hour turnaround. USRSA Certified. Starting at $55.",
+  keywords:
+    "racquet stringing Orange County, tennis stringing Laguna Beach, racket restring Newport Beach, Irvine racket stringing, mobile stringing service, pickup delivery tennis, professional stringing, USRSA certified stringer",
+  authors: [{ name: "Racket Rescue" }],
+  manifest: "/manifest.json",
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: '32x32' },
-      { url: '/favicon.png', type: 'image/png' },
+      { url: "/favicon.ico", sizes: "32x32" },
+      { url: "/favicon.png", type: "image/png" },
     ],
-    apple: [
-      { url: '/apple-touch-icon.png', sizes: '180x180' },
-    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
   },
   appleWebApp: {
     capable: true,
-    statusBarStyle: 'black-translucent',
-    title: 'Racket Rescue',
+    statusBarStyle: "black-translucent",
+    title: "Racket Rescue",
   },
   formatDetection: {
     telephone: true,
   },
   openGraph: {
-    title: 'Racket Rescue - #1 Mobile Racquet Stringing in Orange County',
-    description: '4.9★ rated tennis stringing with FREE pickup & delivery. USRSA Certified. 24-hour turnaround. Serving Laguna Beach, Newport Beach, Irvine & more.',
-    type: 'website',
-    locale: 'en_US',
-    url: 'https://racketrescue.com',
-    siteName: 'Racket Rescue',
+    title: "Racket Rescue - #1 Mobile Racquet Stringing in Orange County",
+    description:
+      "4.9★ rated tennis stringing with FREE pickup & delivery. USRSA Certified. 24-hour turnaround. Serving Laguna Beach, Newport Beach, Irvine & more.",
+    type: "website",
+    locale: "en_US",
+    url: "https://racketrescue.com",
+    siteName: "Racket Rescue",
     images: [
       {
-        url: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68b77f9f4a7eae9e097474c2/e406f4500_RacketRescueLogoFinal_Horizontal.png',
+        url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68b77f9f4a7eae9e097474c2/e406f4500_RacketRescueLogoFinal_Horizontal.png",
         width: 1200,
         height: 630,
-        alt: 'Racket Rescue - Professional Stringing Service',
+        alt: "Racket Rescue - Professional Stringing Service",
       },
     ],
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'Racket Rescue - We Save Your Game!',
-    description: 'Professional racquet stringing with pickup & delivery. Free for members!',
-    images: ['https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68b77f9f4a7eae9e097474c2/e406f4500_RacketRescueLogoFinal_Horizontal.png'],
+    card: "summary_large_image",
+    title: "Racket Rescue - We Save Your Game!",
+    description: "Professional racquet stringing with pickup & delivery. Free for members!",
+    images: [
+      "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68b77f9f4a7eae9e097474c2/e406f4500_RacketRescueLogoFinal_Horizontal.png",
+    ],
   },
   robots: {
     index: true,
@@ -81,9 +85,9 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },,
   // verification: {
@@ -131,7 +135,7 @@ export default function RootLayout({
           <ServiceWorkerRegistration />
           <StickyMobileCTA />
         </Providers>
-        
+
         {/* Google Analytics 4 */}
         {process.env.NEXT_PUBLIC_GA_ID && (
           <>
@@ -203,48 +207,47 @@ export default function RootLayout({
         {/* Structured Data for SEO - LocalBusiness */}
         <Script id="structured-data" type="application/ld+json">
           {JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'LocalBusiness',
-            name: 'Racket Rescue',
-            image: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68b77f9f4a7eae9e097474c2/e406f4500_RacketRescueLogoFinal_Horizontal.png',
-            '@id': 'https://racketrescue.com',
-            url: 'https://racketrescue.com',
-            telephone: '+1-949-464-6645',
-            priceRange: '$55-$150',
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            name: "Racket Rescue",
+            image:
+              "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68b77f9f4a7eae9e097474c2/e406f4500_RacketRescueLogoFinal_Horizontal.png",
+            "@id": "https://racketrescue.com",
+            url: "https://racketrescue.com",
+            telephone: "+1-949-464-6645",
+            priceRange: "$55-$150",
             address: {
-              '@type': 'PostalAddress',
-              streetAddress: '1098 Balboa Ave',
-              addressLocality: 'Laguna Beach',
-              addressRegion: 'CA',
-              postalCode: '92651',
-              addressCountry: 'US',
+              "@type": "PostalAddress",
+              streetAddress: "1098 Balboa Ave",
+              addressLocality: "Laguna Beach",
+              addressRegion: "CA",
+              postalCode: "92651",
+              addressCountry: "US",
             },
             geo: {
-              '@type': 'GeoCoordinates',
+              "@type": "GeoCoordinates",
               latitude: 33.5427,
               longitude: -117.7854,
             },
             openingHoursSpecification: [
               {
-                '@type': 'OpeningHoursSpecification',
-                dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-                opens: '09:00',
-                closes: '18:00',
+                "@type": "OpeningHoursSpecification",
+                dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                opens: "09:00",
+                closes: "18:00",
               },
               {
-                '@type': 'OpeningHoursSpecification',
-                dayOfWeek: 'Saturday',
-                opens: '10:00',
-                closes: '16:00',
+                "@type": "OpeningHoursSpecification",
+                dayOfWeek: "Saturday",
+                opens: "10:00",
+                closes: "16:00",
               },
             ],
-            sameAs: [
-              'https://lagunabeachtennisacademy.com',
-            ],
+            sameAs: ["https://lagunabeachtennisacademy.com"],
             aggregateRating: {
-              '@type': 'AggregateRating',
-              ratingValue: '4.9',
-              reviewCount: '312',
+              "@type": "AggregateRating",
+              ratingValue: "4.9",
+              reviewCount: "312",
             },
           })}
         </Script>
@@ -252,48 +255,48 @@ export default function RootLayout({
         {/* Service Schema for Rich Snippets */}
         <Script id="service-schema" type="application/ld+json">
           {JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'Service',
-            name: 'Tennis Racquet Stringing Service',
-            serviceType: 'Tennis Racquet Stringing',
+            "@context": "https://schema.org",
+            "@type": "Service",
+            name: "Tennis Racquet Stringing Service",
+            serviceType: "Tennis Racquet Stringing",
             provider: {
-              '@type': 'LocalBusiness',
-              name: 'Racket Rescue',
-              url: 'https://racketrescue.com',
+              "@type": "LocalBusiness",
+              name: "Racket Rescue",
+              url: "https://racketrescue.com",
             },
             areaServed: {
-              '@type': 'GeoCircle',
+              "@type": "GeoCircle",
               geoMidpoint: {
-                '@type': 'GeoCoordinates',
+                "@type": "GeoCoordinates",
                 latitude: 33.5427,
                 longitude: -117.7854,
               },
-              geoRadius: '30 mi',
+              geoRadius: "30 mi",
             },
             hasOfferCatalog: {
-              '@type': 'OfferCatalog',
-              name: 'Stringing Services',
+              "@type": "OfferCatalog",
+              name: "Stringing Services",
               itemListElement: [
                 {
-                  '@type': 'Offer',
-                  name: 'Standard 24-Hour Stringing',
-                  price: '55',
-                  priceCurrency: 'USD',
-                  description: 'Professional stringing with free pickup & delivery, 24-hour turnaround',
+                  "@type": "Offer",
+                  name: "Standard 24-Hour Stringing",
+                  price: "55",
+                  priceCurrency: "USD",
+                  description: "Professional stringing with free pickup & delivery, 24-hour turnaround",
                 },
                 {
-                  '@type': 'Offer',
-                  name: 'Same-Day Rush Stringing',
-                  price: '65',
-                  priceCurrency: 'USD',
-                  description: 'Priority same-day turnaround with premium string options',
+                  "@type": "Offer",
+                  name: "Same-Day Rush Stringing",
+                  price: "65",
+                  priceCurrency: "USD",
+                  description: "Priority same-day turnaround with premium string options",
                 },
                 {
-                  '@type': 'Offer',
-                  name: '3-Racket Saver Pack',
-                  price: '150',
-                  priceCurrency: 'USD',
-                  description: 'Bundle deal for 3 rackets with free grip replacement',
+                  "@type": "Offer",
+                  name: "3-Racket Saver Pack",
+                  price: "150",
+                  priceCurrency: "USD",
+                  description: "Bundle deal for 3 rackets with free grip replacement",
                 },
               ],
             },
@@ -303,47 +306,47 @@ export default function RootLayout({
         {/* FAQ Schema for Rich Snippets */}
         <Script id="faq-schema" type="application/ld+json">
           {JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'FAQPage',
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
             mainEntity: [
               {
-                '@type': 'Question',
-                name: 'How does Racket Rescue pickup and delivery work?',
+                "@type": "Question",
+                name: "How does Racket Rescue pickup and delivery work?",
                 acceptedAnswer: {
-                  '@type': 'Answer',
-                  text: 'Simply book online in 60 seconds. We pick up your racket from your home or office, string it with precision at our facility, and deliver it back within 24-48 hours. Free pickup & delivery for members.',
+                  "@type": "Answer",
+                  text: "Simply book online in 60 seconds. We pick up your racket from your home or office, string it with precision at our facility, and deliver it back within 24-48 hours. Free pickup & delivery for members.",
                 },
               },
               {
-                '@type': 'Question',
-                name: 'How long does racquet stringing take?',
+                "@type": "Question",
+                name: "How long does racquet stringing take?",
                 acceptedAnswer: {
-                  '@type': 'Answer',
-                  text: 'Standard service is 24-48 hours from pickup to delivery. Same-day rush service is available for $65 if you need your racket back the same day.',
+                  "@type": "Answer",
+                  text: "Standard service is 24-48 hours from pickup to delivery. Same-day rush service is available for $65 if you need your racket back the same day.",
                 },
               },
               {
-                '@type': 'Question',
-                name: 'What areas do you serve in Orange County?',
+                "@type": "Question",
+                name: "What areas do you serve in Orange County?",
                 acceptedAnswer: {
-                  '@type': 'Answer',
-                  text: 'We serve all of Orange County including Laguna Beach, Newport Beach, Irvine, Dana Point, San Clemente, Mission Viejo, Aliso Viejo, Laguna Niguel, and surrounding areas.',
+                  "@type": "Answer",
+                  text: "We serve all of Orange County including Laguna Beach, Newport Beach, Irvine, Dana Point, San Clemente, Mission Viejo, Aliso Viejo, Laguna Niguel, and surrounding areas.",
                 },
               },
               {
-                '@type': 'Question',
-                name: 'How much does racquet stringing cost?',
+                "@type": "Question",
+                name: "How much does racquet stringing cost?",
                 acceptedAnswer: {
-                  '@type': 'Answer',
-                  text: 'Standard stringing starts at $55 including free pickup & delivery for members. Same-day rush service is $65. We also offer a 3-racket bundle for $150.',
+                  "@type": "Answer",
+                  text: "Standard stringing starts at $55 including free pickup & delivery for members. Same-day rush service is $65. We also offer a 3-racket bundle for $150.",
                 },
               },
               {
-                '@type': 'Question',
-                name: 'Are your stringers certified?',
+                "@type": "Question",
+                name: "Are your stringers certified?",
                 acceptedAnswer: {
-                  '@type': 'Answer',
-                  text: 'Yes! All our stringers are USRSA (United States Racquet Stringers Association) certified with 25+ years of combined experience stringing for USTA tournaments and college teams.',
+                  "@type": "Answer",
+                  text: "Yes! All our stringers are USRSA (United States Racquet Stringers Association) certified with 25+ years of combined experience stringing for USTA tournaments and college teams.",
                 },
               },
             ],
