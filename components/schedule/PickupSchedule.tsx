@@ -175,4 +175,3 @@ export default function PickupSchedule({ orderData, setOrderData, onNext, onPrev
     </div>
   )
 }
-

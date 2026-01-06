@@ -7,11 +7,11 @@
 ## 🚨 DO THIS FIRST (Critical - 5 minutes)
 
 ### 1. Backup the Keystore NOW
-```bash
+\`\`\`bash
 mkdir -p ~/RacketRescue-Keystore-Backup
 cp /Users/andrew-mac-studio/RacketRescue/app-builds/android/android.keystore ~/RacketRescue-Keystore-Backup/
 cp /Users/andrew-mac-studio/RacketRescue/app-builds/android/KEYSTORE-INFO.txt ~/RacketRescue-Keystore-Backup/
-```
+\`\`\`
 
 **Then manually copy to:**
 - ☐ Dropbox
@@ -22,23 +22,23 @@ cp /Users/andrew-mac-studio/RacketRescue/app-builds/android/KEYSTORE-INFO.txt ~/
 ⚠️ **Without this file, you cannot update the Android app!**
 
 ### 2. Deploy Android Verification File
-```bash
+\`\`\`bash
 cd /Users/andrew-mac-studio/RacketRescue
 git add public/.well-known/assetlinks.json
 git commit -m "Add Android Digital Asset Links"
 git push
-```
+\`\`\`
 
 Wait 3 minutes, then verify:
-```bash
+\`\`\`bash
 curl https://racketrescue.com/.well-known/assetlinks.json
-```
+\`\`\`
 
 ### 3. Organize Files
-```bash
+\`\`\`bash
 cd /Users/andrew-mac-studio/RacketRescue
 ./scripts/organize-mobile-apps.sh
-```
+\`\`\`
 
 ---
 
@@ -104,7 +104,7 @@ Use browser automation and file tools to streamline the process.
 
 ## 🛠️ Useful Commands
 
-```bash
+\`\`\`bash
 # Check status
 ./scripts/check-mobile-status.sh
 
@@ -120,7 +120,7 @@ curl https://racketrescue.com/manifest.json
 
 # Check Downloads for duplicates
 ls -la ~/Downloads/ | grep -i racket
-```
+\`\`\`
 
 ---
 
@@ -164,4 +164,3 @@ A: No! PWA wrapper loads website content automatically.
 ---
 
 **Need help?** Check the full guides or ask! 🚀
-

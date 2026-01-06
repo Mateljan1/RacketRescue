@@ -122,4 +122,3 @@ export default function PaymentOption({ total, onPaymentChoice, selectedMethod }
     </div>
   )
 }
-

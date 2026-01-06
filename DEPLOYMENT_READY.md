@@ -34,27 +34,27 @@ I've successfully migrated to the newer Android build. Here's what was done:
 ## 🔐 CRITICAL INFORMATION
 
 ### New Package Configuration:
-```
+\`\`\`
 Package ID: com.racketrescue.www.twa
 App Name: Racket Rescue
 Version: 1.0.0 (Build 1)
 Website: https://racketrescue.com
 Theme Color: #ec1f27
-```
+\`\`\`
 
 ### Keystore Details:
-```
+\`\`\`
 File: android.keystore
 Password: gpfUdI4cVD1L
 Key Alias: my-key-alias
 Organization: Racket Rescue
 Country: US
-```
+\`\`\`
 
 ### SHA256 Fingerprint:
-```
+\`\`\`
 E4:E4:C7:6C:C4:E5:44:DF:3C:2C:F7:09:F8:DC:14:C1:FE:1F:49:AD:B8:EA:35:F5:00:D2:38:57:7C:EA:EF:45
-```
+\`\`\`
 
 ---
 
@@ -62,7 +62,7 @@ E4:E4:C7:6C:C4:E5:44:DF:3C:2C:F7:09:F8:DC:14:C1:FE:1F:49:AD:B8:EA:35:F5:00:D2:38
 
 ### Step 1: Deploy Website Changes (5 minutes)
 
-```bash
+\`\`\`bash
 cd /Users/andrew-mac-studio/RacketRescue
 
 # Check what's changed
@@ -82,28 +82,28 @@ git commit -m "Update to newer Android build (Jan 1, 2026) - Ready for deploymen
 
 # Push to deploy
 git push origin main
-```
+\`\`\`
 
 ### Step 2: Verify Deployment (3 minutes)
 
 Wait 3-5 minutes for Vercel to deploy, then verify:
 
-```bash
+\`\`\`bash
 # Should return the new JSON with com.racketrescue.www.twa
 curl https://racketrescue.com/.well-known/assetlinks.json
 
 # Should show the new SHA256 fingerprint
 curl https://racketrescue.com/.well-known/assetlinks.json | grep "E4:E4:C7"
-```
+\`\`\`
 
 ### Step 3: Test Android APK (10 minutes)
 
-```bash
+\`\`\`bash
 # Install on Android device
 adb install app-builds/android/app-release-signed.apk
 
 # Or transfer to device and install manually
-```
+\`\`\`
 
 **Test checklist:**
 - [ ] App installs successfully
@@ -125,9 +125,9 @@ adb install app-builds/android/app-release-signed.apk
 ### Submission Steps:
 
 #### 1. Go to Google Play Console
-```
+\`\`\`
 URL: https://play.google.com/console
-```
+\`\`\`
 
 #### 2. Create New App
 - **App name:** Racket Rescue
@@ -160,12 +160,12 @@ URL: https://play.google.com/console
 #### 4. Store Listing
 
 **Short Description (80 chars):**
-```
+\`\`\`
 Professional tennis racket restringing - schedule pickup & track orders
-```
+\`\`\`
 
 **Full Description:**
-```
+\`\`\`
 Racket Rescue is Orange County's premier mobile tennis racket restringing service.
 
 FEATURES:
@@ -179,7 +179,7 @@ FEATURES:
 Whether you're a casual weekend player or competitive athlete, Racket Rescue ensures your rackets perform at their best.
 
 Download now and never play with dead strings again!
-```
+\`\`\`
 
 **Graphics Needed:**
 - App icon: 512x512 PNG
@@ -197,13 +197,13 @@ Download now and never play with dead strings again!
 3. Upload: `app-builds/android/app-release-bundle.aab`
 4. Release name: **1.0.0**
 5. Release notes:
-```
+\`\`\`
 Initial release of Racket Rescue!
 - Schedule racket pickup and delivery
 - Track your orders in real-time
 - Browse premium string options
 - Fast turnaround times
-```
+\`\`\`
 6. **Review and rollout to production**
 
 #### 6. Wait for Review
@@ -292,44 +292,44 @@ Initial release of Racket Rescue!
 - [ ] Secure cloud storage
 
 **Command to create encrypted backup:**
-```bash
+\`\`\`bash
 cd ~/RacketRescue-Keystore-Backup
 zip -e racket-rescue-keystore-backup-$(date +%Y%m%d).zip *.keystore *.txt
 # Enter a strong password when prompted
 # Store this zip file in multiple secure locations
-```
+\`\`\`
 
 ---
 
 ## 📊 FILE INVENTORY
 
 ### Android Build Files (app-builds/android/):
-```
+\`\`\`
 ✅ app-release-bundle.aab     1.6MB   Upload to Google Play
 ✅ app-release-signed.apk     1.5MB   Test on Android device
 ✅ android.keystore           2.7KB   CRITICAL - signing key
 ✅ KEYSTORE-INFO.txt          424B    Keystore credentials
 ✅ assetlinks.json            326B    Package verification
-```
+\`\`\`
 
 ### Website Files (public/):
-```
+\`\`\`
 ✅ manifest.json              2.9KB   PWA configuration
 ✅ .well-known/assetlinks.json 326B   Android verification (UPDATED)
 ✅ icons/                     ~200KB  All app icons
 ✅ sw.js                      6.7KB   Service worker
-```
+\`\`\`
 
 ### Old Build Backup (app-builds/android-old-backup/):
-```
+\`\`\`
 ✅ Old .aab, .apk, keystore files safely backed up
-```
+\`\`\`
 
 ---
 
 ## ⚡ QUICK COMMANDS
 
-```bash
+\`\`\`bash
 # Check git status
 cd /Users/andrew-mac-studio/RacketRescue && git status
 
@@ -346,7 +346,7 @@ adb install app-builds/android/app-release-signed.apk
 
 # Check mobile app status
 ./scripts/check-mobile-status.sh
-```
+\`\`\`
 
 ---
 
@@ -455,4 +455,3 @@ Everything is set up and ready to deploy. Just need to:
 **Ready to deploy?** Run the commands in "Step 1: Deploy Website Changes" above! 🚀
 
 Let's get RacketRescue in the app stores! 🎾📱
-

@@ -18,20 +18,20 @@
 - Modify: `package.json`
 
 **Step 1: Install packages**
-```bash
+\`\`\`bash
 pnpm add next-auth@beta @auth/supabase-adapter
-```
+\`\`\`
 
 **Step 2: Verify installation**
-```bash
+\`\`\`bash
 pnpm list next-auth
-```
+\`\`\`
 Expected: `next-auth@5.x.x`
 
 **Step 3: Commit**
-```bash
+\`\`\`bash
 git add package.json pnpm-lock.yaml && git commit -m "chore: add next-auth dependencies"
-```
+\`\`\`
 
 ---
 
@@ -42,7 +42,7 @@ git add package.json pnpm-lock.yaml && git commit -m "chore: add next-auth depen
 - Create: `app/api/auth/[...nextauth]/route.ts`
 
 **Step 1: Create auth.ts in project root**
-```typescript
+\`\`\`typescript
 import NextAuth from 'next-auth'
 import Google from 'next-auth/providers/google'
 import Resend from 'next-auth/providers/resend'
@@ -83,18 +83,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
   },
 })
-```
+\`\`\`
 
 **Step 2: Create API route**
 Create `app/api/auth/[...nextauth]/route.ts`:
-```typescript
+\`\`\`typescript
 import { handlers } from '@/auth'
 
 export const { GET, POST } = handlers
-```
+\`\`\`
 
 **Step 3: Add environment variables to .env.local**
-```
+\`\`\`
 # NextAuth
 AUTH_SECRET=generate-with-openssl-rand-base64-32
 AUTH_URL=http://localhost:3000
@@ -108,12 +108,12 @@ RESEND_API_KEY=
 
 # Supabase Service Role (for adapter)
 SUPABASE_SERVICE_ROLE_KEY=
-```
+\`\`\`
 
 **Step 4: Commit**
-```bash
+\`\`\`bash
 git add auth.ts app/api/auth && git commit -m "feat: add NextAuth configuration with Google and magic link"
-```
+\`\`\`
 
 ---
 
@@ -125,7 +125,7 @@ git add auth.ts app/api/auth && git commit -m "feat: add NextAuth configuration 
 
 **Step 1: Create login page**
 Create `app/login/page.tsx`:
-```typescript
+\`\`\`typescript
 'use client'
 
 import { useState } from 'react'
@@ -251,11 +251,11 @@ export default function LoginPage() {
     </main>
   )
 }
-```
+\`\`\`
 
 **Step 2: Create verify page**
 Create `app/login/verify/page.tsx`:
-```typescript
+\`\`\`typescript
 import { Mail, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 
@@ -285,11 +285,11 @@ export default function VerifyPage() {
     </main>
   )
 }
-```
+\`\`\`
 
 **Step 3: Create login layout with noindex**
 Create `app/login/layout.tsx`:
-```typescript
+\`\`\`typescript
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -304,12 +304,12 @@ export const metadata: Metadata = {
 export default function LoginLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>
 }
-```
+\`\`\`
 
 **Step 4: Commit**
-```bash
+\`\`\`bash
 git add app/login && git commit -m "feat: add login and verify pages"
-```
+\`\`\`
 
 ---
 
@@ -321,7 +321,7 @@ git add app/login && git commit -m "feat: add login and verify pages"
 
 **Step 1: Create providers component**
 Create `components/Providers.tsx`:
-```typescript
+\`\`\`typescript
 'use client'
 
 import { SessionProvider } from 'next-auth/react'
@@ -329,11 +329,11 @@ import { SessionProvider } from 'next-auth/react'
 export default function Providers({ children }: { children: React.ReactNode }) {
   return <SessionProvider>{children}</SessionProvider>
 }
-```
+\`\`\`
 
 **Step 2: Wrap app with providers**
 In `app/layout.tsx`, add import and wrap body content:
-```typescript
+\`\`\`typescript
 import Providers from '@/components/Providers'
 
 // In the body, wrap children:
@@ -342,12 +342,12 @@ import Providers from '@/components/Providers'
     {/* existing content */}
   </Providers>
 </body>
-```
+\`\`\`
 
 **Step 3: Commit**
-```bash
+\`\`\`bash
 git add components/Providers.tsx app/layout.tsx && git commit -m "feat: add session provider to app"
-```
+\`\`\`
 
 ---
 
@@ -358,7 +358,7 @@ git add components/Providers.tsx app/layout.tsx && git commit -m "feat: add sess
 
 **Step 1: Update Header with auth state**
 Add to `components/Header.tsx`:
-```typescript
+\`\`\`typescript
 import { useSession, signOut } from 'next-auth/react'
 import { User, LogOut } from 'lucide-react'
 
@@ -394,12 +394,12 @@ const { data: session } = useSession()
     <span className="hidden md:inline">Sign In</span>
   </Link>
 )}
-```
+\`\`\`
 
 **Step 2: Commit**
-```bash
+\`\`\`bash
 git add components/Header.tsx && git commit -m "feat: add auth state to header"
-```
+\`\`\`
 
 ---
 
@@ -411,7 +411,7 @@ git add components/Header.tsx && git commit -m "feat: add auth state to header"
 - Create: `supabase/migrations/001_auth_tables.sql`
 
 **Step 1: Create migration file**
-```sql
+\`\`\`sql
 -- NextAuth required tables
 create table if not exists users (
   id uuid primary key default gen_random_uuid(),
@@ -520,17 +520,17 @@ create policy "Users can view own order history" on order_status_history
   for select using (
     order_id in (select id from orders where user_id::text = auth.uid()::text)
   );
-```
+\`\`\`
 
 **Step 2: Run migration**
-```bash
+\`\`\`bash
 npx supabase db push
-```
+\`\`\`
 
 **Step 3: Commit**
-```bash
+\`\`\`bash
 git add supabase && git commit -m "feat: add auth and orders tables to Supabase"
-```
+\`\`\`
 
 ---
 
@@ -541,7 +541,7 @@ git add supabase && git commit -m "feat: add auth and orders tables to Supabase"
 
 **Step 1: Add order sync to webhook**
 After successful checkout, add to the webhook handler:
-```typescript
+\`\`\`typescript
 import { createClient } from '@supabase/supabase-js'
 
 const supabaseAdmin = createClient(
@@ -598,12 +598,12 @@ if (session.customer_details?.email) {
       .eq('stripe_checkout_session_id', session.id)
   }
 }
-```
+\`\`\`
 
 **Step 2: Commit**
-```bash
+\`\`\`bash
 git add app/api/webhook/stripe/route.ts && git commit -m "feat: sync orders to Supabase from webhook"
-```
+\`\`\`
 
 ---
 
@@ -615,7 +615,7 @@ git add app/api/webhook/stripe/route.ts && git commit -m "feat: sync orders to S
 
 **Step 1: Create user orders API**
 Create `app/api/user/orders/route.ts`:
-```typescript
+\`\`\`typescript
 import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { createClient } from '@supabase/supabase-js'
@@ -663,11 +663,11 @@ export async function GET() {
     }
   })
 }
-```
+\`\`\`
 
 **Step 2: Update dashboard to fetch real data**
 Update `app/dashboard/page.tsx` to use real API:
-```typescript
+\`\`\`typescript
 'use client'
 
 import { useEffect, useState } from 'react'
@@ -716,12 +716,12 @@ export default function DashboardPage() {
 
   // ... rest of component using data.orders, data.membership, data.user
 }
-```
+\`\`\`
 
 **Step 3: Commit**
-```bash
+\`\`\`bash
 git add app/dashboard/page.tsx app/api/user/orders/route.ts && git commit -m "feat: connect dashboard to real order data"
-```
+\`\`\`
 
 ---
 
@@ -741,9 +741,9 @@ git add app/dashboard/page.tsx app/api/user/orders/route.ts && git commit -m "fe
 | `SUPABASE_SERVICE_ROLE_KEY` | From Supabase settings |
 
 **Step 1: Generate AUTH_SECRET**
-```bash
+\`\`\`bash
 openssl rand -base64 32
-```
+\`\`\`
 
 **Step 2: Add to Vercel via CLI or dashboard**
 

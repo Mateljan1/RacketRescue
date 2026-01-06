@@ -192,4 +192,3 @@ echo "  Test Android:    adb install mobile-apps/android/app-release-signed.apk"
 echo "  Generate iOS:    open https://www.pwabuilder.com"
 
 echo ""
-

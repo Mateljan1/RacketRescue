@@ -19,9 +19,9 @@ I need your help submitting our RacketRescue app to both Google Play Store and A
 - ✅ All icons and branding complete
 
 ## 🔗 GitHub Repository:
-```
+\`\`\`
 https://github.com/Mateljan1/RacketRescue
-```
+\`\`\`
 
 I'll grant you Write access - please share your GitHub username.
 
@@ -70,4 +70,3 @@ Best,
 **P.S.** The Android build is 100% ready. iOS requires a Mac with Xcode. If you don't have a Mac, we can do Android first, then find someone for iOS separately.
 
 ---
-

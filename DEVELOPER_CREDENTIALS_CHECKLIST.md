@@ -15,11 +15,11 @@
 ---
 
 ### 2. **Android Keystore Credentials**
-```
+\`\`\`
 Keystore Password: gpfUdI4cVD1L
 Key Alias: my-key-alias
 Key Password: gpfUdI4cVD1L
-```
+\`\`\`
 ✅ **Note:** Keystore file is already in GitHub at `app-builds/android/android.keystore`
 
 - [ ] Password shared securely (1Password/LastPass/Encrypted)
@@ -53,22 +53,22 @@ Key Password: gpfUdI4cVD1L
 ### 5. **Contact Information for Store Listings**
 
 **Support Email:**
-```
+\`\`\`
 Email: _______________
-```
+\`\`\`
 - [ ] Provided to developer
 
 **Support Phone (Optional):**
-```
+\`\`\`
 Phone: _______________
-```
+\`\`\`
 - [ ] Provided to developer (or marked as "Not using")
 
 **Company Information:**
-```
+\`\`\`
 Company Name: Racket Rescue
 Address: Laguna Beach, CA (or your full address)
-```
+\`\`\`
 - [ ] Provided to developer
 
 ---
@@ -283,7 +283,7 @@ Before you tell developer to start:
 
 Once everything is set up, send this:
 
-```
+\`\`\`
 Subject: RacketRescue - All Access Granted, Ready to Start!
 
 Hi [Developer Name],
@@ -314,7 +314,7 @@ Let me know when you start! 🚀
 
 Best,
 [Your Name]
-```
+\`\`\`
 
 ---
 
@@ -327,4 +327,3 @@ If you've checked all the boxes above, the developer has everything they need to
 ---
 
 **Good luck!** 🎾📱
-

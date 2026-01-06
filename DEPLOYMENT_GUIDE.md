@@ -44,7 +44,7 @@ A complete, production-ready standalone website for Racket Rescue with:
 
 ### Step 1: Create GitHub Repository
 
-```bash
+\`\`\`bash
 cd /Users/andrew-mac-studio/LBTA\ Build\ 12:16/LBTA/racket-rescue-site
 
 # Option A: Using GitHub CLI (if authenticated)
@@ -60,7 +60,7 @@ gh repo create RacketRescue --public --source=. --remote=origin --push
 git remote add origin https://github.com/Mateljan1/RacketRescue.git
 git branch -M main
 git push -u origin main
-```
+\`\`\`
 
 ### Step 2: Connect to Vercel Project
 
@@ -86,10 +86,10 @@ After connecting:
 
 Vercel will automatically deploy! Or trigger manually:
 
-```bash
+\`\`\`bash
 cd /Users/andrew-mac-studio/LBTA\ Build\ 12:16/LBTA/racket-rescue-site
 vercel --prod
-```
+\`\`\`
 
 Or in Vercel dashboard:
 - Go to project
@@ -115,7 +115,7 @@ DNS is configured at Bluehost:
 
 ## 📄 Project Structure
 
-```
+\`\`\`
 racket-rescue-site/
 ├── app/
 │   ├── layout.tsx              # Root layout with Header/Footer
@@ -136,7 +136,7 @@ racket-rescue-site/
 ├── tailwind.config.ts          # Tailwind config with brand colors
 ├── tsconfig.json               # TypeScript config
 └── next.config.js              # Next.js config
-```
+\`\`\`
 
 ---
 
@@ -234,4 +234,3 @@ After deployment:
 
 **Status:** ✅ Code complete, ready for deployment
 **Created:** December 24, 2025
-

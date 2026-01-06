@@ -21,21 +21,21 @@
 ## 📱 YOUR NEW ANDROID BUILD
 
 ### Build Information:
-```
+\`\`\`
 Package ID: com.racketrescue.www.twa
 App Name: Racket Rescue
 Version: 1.0.0 (Build 1)
 Build Date: January 1, 2026
 AAB Size: 1.6MB (+33% larger than old build)
 APK Size: 1.5MB (+36% larger than old build)
-```
+\`\`\`
 
 ### Keystore Credentials:
-```
+\`\`\`
 Password: gpfUdI4cVD1L
 Alias: my-key-alias
 Organization: Racket Rescue
-```
+\`\`\`
 
 ### Files Ready:
 - ✅ `app-release-bundle.aab` → Upload to Google Play Store
@@ -72,9 +72,9 @@ Plus **1 project standard**:
 ### Immediate (Next 10 minutes):
 1. **Wait for Vercel deployment** (5-10 minutes)
 2. **Verify deployment:**
-   ```bash
+   \`\`\`bash
    curl https://racketrescue.com/.well-known/assetlinks.json
-   ```
+   \`\`\`
    Should show: `com.racketrescue.www.twa`
 
 ### Today (Next 1-2 hours):
@@ -84,9 +84,9 @@ Plus **1 project standard**:
    - [ ] Password manager
 
 4. **Test APK** (optional but recommended)
-   ```bash
+   \`\`\`bash
    adb install app-builds/android/app-release-signed.apk
-   ```
+   \`\`\`
 
 5. **Prepare store assets:**
    - [ ] App icon (512x512)
@@ -116,7 +116,7 @@ You have **1 backup** at `~/RacketRescue-Keystore-Backup/`
 
 **You need at least 2 more backups:**
 
-```bash
+\`\`\`bash
 # Create encrypted backup
 cd ~/RacketRescue-Keystore-Backup
 zip -e racket-rescue-keystore-backup-$(date +%Y%m%d).zip *.keystore *.txt
@@ -126,7 +126,7 @@ zip -e racket-rescue-keystore-backup-$(date +%Y%m%d).zip *.keystore *.txt
 # 1. Dropbox/Google Drive
 # 2. External hard drive
 # 3. Password manager
-```
+\`\`\`
 
 **Why this matters:**
 - Without keystore, you CANNOT update the Android app
@@ -195,14 +195,14 @@ You are **fully prepared** to deploy RacketRescue to both app stores:
 ### To Submit to Google Play Store:
 
 1. **Open this guide:**
-   ```bash
+   \`\`\`bash
    open /Users/andrew-mac-studio/RacketRescue/DEPLOYMENT_CHECKLIST.md
-   ```
+   \`\`\`
 
 2. **Or read in terminal:**
-   ```bash
+   \`\`\`bash
    cat /Users/andrew-mac-studio/RacketRescue/DEPLOYMENT_CHECKLIST.md
-   ```
+   \`\`\`
 
 3. **Follow the step-by-step instructions**
 
@@ -213,23 +213,23 @@ You are **fully prepared** to deploy RacketRescue to both app stores:
 ## 📞 QUICK REFERENCE
 
 ### Key Files:
-```
+\`\`\`
 Build: app-builds/android/app-release-bundle.aab
 Test: app-builds/android/app-release-signed.apk
 Keystore: app-builds/android/android.keystore
 Password: gpfUdI4cVD1L
-```
+\`\`\`
 
 ### Key URLs:
-```
+\`\`\`
 Google Play Console: https://play.google.com/console
 PWABuilder (iOS): https://www.pwabuilder.com
 App Store Connect: https://appstoreconnect.apple.com
 Your Website: https://racketrescue.com
-```
+\`\`\`
 
 ### Key Commands:
-```bash
+\`\`\`bash
 # Verify deployment
 curl https://racketrescue.com/.well-known/assetlinks.json
 
@@ -242,7 +242,7 @@ adb install app-builds/android/app-release-signed.apk
 # Backup keystore
 cd ~/RacketRescue-Keystore-Backup
 zip -e backup.zip *.keystore *.txt
-```
+\`\`\`
 
 ---
 
@@ -317,4 +317,3 @@ From confused about multiple folders to having a complete, production-ready mobi
 **Ready to submit?** Open `DEPLOYMENT_CHECKLIST.md` and follow the steps!
 
 🎾📱 Let's get RacketRescue in the app stores! 🎾📱
-

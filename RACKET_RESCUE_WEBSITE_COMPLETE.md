@@ -98,7 +98,7 @@ I've built a complete, modern, standalone website for **Racket Rescue** from scr
 
 ### Step 1: Create GitHub Repository (5 minutes)
 
-```bash
+\`\`\`bash
 # Go to GitHub and create repo manually
 # 1. Visit: https://github.com/new
 # 2. Repository name: RacketRescue
@@ -110,7 +110,7 @@ I've built a complete, modern, standalone website for **Racket Rescue** from scr
 cd /Users/andrew-mac-studio/LBTA\ Build\ 12:16/LBTA/racket-rescue-site
 git remote set-url origin https://github.com/Mateljan1/RacketRescue.git
 git push -u origin main
-```
+\`\`\`
 
 ### Step 2: Connect to Vercel (5 minutes)
 
@@ -267,7 +267,7 @@ Features:
 ## 🎨 Design System
 
 ### Color Palette:
-```typescript
+\`\`\`typescript
 racket: {
   orange: '#FF6B35',      // Primary - CTA, links, accents
   navy: '#1A2F3A',        // Headings, text
@@ -279,7 +279,7 @@ racket: {
   white: '#FFFFFF',       // Pure white
   black: '#0D1B2A',       // Rich black
 }
-```
+\`\`\`
 
 ### Typography Scale:
 - Display: clamp(3rem, 8vw, 6rem) - Hero headlines
@@ -300,7 +300,7 @@ racket: {
 
 ## 🧪 Testing Commands
 
-```bash
+\`\`\`bash
 # Test development server
 cd /Users/andrew-mac-studio/LBTA\ Build\ 12:16/LBTA/racket-rescue-site
 npm run dev
@@ -314,7 +314,7 @@ npm start
 
 # Lint code
 npm run lint
-```
+\`\`\`
 
 ---
 
@@ -414,10 +414,10 @@ npm run lint
    - Create
 
 2. **Push Code** (2 min)
-   ```bash
+   \`\`\`bash
    cd /Users/andrew-mac-studio/LBTA\ Build\ 12:16/LBTA/racket-rescue-site
    git push -u origin main
-   ```
+   \`\`\`
 
 3. **Connect to Vercel** (5 min)
    - Dashboard: https://vercel.com/andrew-mateljans-projects/racquet-rescue
@@ -468,4 +468,3 @@ Just follow the 3 steps above and you'll have a beautiful standalone website liv
 **Project:** Racket Rescue Standalone Website
 
 **🎾 LET'S LAUNCH! 🎾**
-

@@ -85,10 +85,11 @@ export const metadata: Metadata = {
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
-  },
+  },,
   // verification: {
   //   google: 'ADD_YOUR_GOOGLE_VERIFICATION_CODE_HERE',
   // },
+    generator: 'v0.app'
 }
 
 export default function RootLayout({

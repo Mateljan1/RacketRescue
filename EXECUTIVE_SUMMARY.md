@@ -56,11 +56,11 @@ You have **everything needed** to deploy RacketRescue to both Google Play Store 
 - Package name has `.www.twa` suffix
 
 **Keystore Info:**
-```
+\`\`\`
 Password: gpfUdI4cVD1L
 Alias: my-key-alias
 Organization: Racket Rescue
-```
+\`\`\`
 
 ---
 
@@ -82,7 +82,7 @@ Organization: Racket Rescue
 
 Run these commands to switch to the newer build:
 
-```bash
+\`\`\`bash
 # 1. Backup everything first
 mkdir -p ~/RacketRescue-Keystore-Backup
 cp /tmp/racket-rescue-new/signing.keystore ~/RacketRescue-Keystore-Backup/
@@ -103,7 +103,7 @@ cp /tmp/racket-rescue-new/assetlinks.json public/.well-known/assetlinks.json
 git add -A
 git commit -m "Update to latest Android build (Jan 1, 2026)"
 git push
-```
+\`\`\`
 
 **Then I'll update all documentation** to reflect the new package ID and keystore info.
 
@@ -113,7 +113,7 @@ git push
 
 Run these commands to proceed with current setup:
 
-```bash
+\`\`\`bash
 # 1. Backup keystore
 mkdir -p ~/RacketRescue-Keystore-Backup
 cp app-builds/android/android.keystore ~/RacketRescue-Keystore-Backup/
@@ -127,7 +127,7 @@ git push
 # 3. Archive newer build for future reference
 mkdir -p ~/RacketRescue-Backups/newer-build-jan1
 cp -r /tmp/racket-rescue-new/* ~/RacketRescue-Backups/newer-build-jan1/
-```
+\`\`\`
 
 **Then proceed with existing documentation.**
 
@@ -171,21 +171,21 @@ cp -r /tmp/racket-rescue-new/* ~/RacketRescue-Backups/newer-build-jan1/
 ## 🔐 KEYSTORE INFORMATION
 
 ### Older Build Keystore:
-```
+\`\`\`
 File: android.keystore
 Alias: android
 Password: (see KEYSTORE-INFO.txt in app-builds)
 SHA256: DC:1C:AB:15:8B:29:38:75:D1:74:85:E5:5F:F8:F3:7F:7D:DF:EF:94:A7:20:9B:E1:65:F1:C7:A7:55:37:DF:5F
-```
+\`\`\`
 
 ### Newer Build Keystore: ⭐
-```
+\`\`\`
 File: signing.keystore
 Alias: my-key-alias
 Password: gpfUdI4cVD1L
 SHA256: E4:E4:C7:6C:C4:E5:44:DF:3C:2C:F7:09:F8:DC:14:C1:FE:1F:49:AD:B8:EA:35:F5:00:D2:38:57:7C:EA:EF:45
 Organization: Racket Rescue
-```
+\`\`\`
 
 ---
 
@@ -202,7 +202,7 @@ Organization: Racket Rescue
 
 ## 🛠️ TOOLS & SCRIPTS AVAILABLE
 
-```bash
+\`\`\`bash
 # Check current status
 ./scripts/check-mobile-status.sh
 
@@ -211,7 +211,7 @@ Organization: Racket Rescue
 
 # Test Android app
 adb install app-builds/android/app-release-signed.apk
-```
+\`\`\`
 
 ---
 
@@ -288,4 +288,3 @@ I will:
 **Let's get RacketRescue in the app stores!** 🎾📱
 
 Which build do you want to use?
-

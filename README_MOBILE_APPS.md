@@ -74,13 +74,13 @@
 ## 🛠️ SCRIPTS & TOOLS
 
 ### Available Scripts:
-```bash
+\`\`\`bash
 # Check current status of all files
 ./scripts/check-mobile-status.sh
 
 # Organize and migrate files
 ./scripts/organize-mobile-apps.sh
-```
+\`\`\`
 
 ### What they do:
 - **check-mobile-status.sh** - Shows what files exist, what's missing, deployment status
@@ -115,34 +115,34 @@
 ## 🗂️ FILE LOCATIONS
 
 ### Android Files:
-```
+\`\`\`
 /Users/andrew-mac-studio/RacketRescue/app-builds/android/
 ├── app-release-bundle.aab     # Upload to Google Play
 ├── app-release-signed.apk     # Test on Android device
 ├── android.keystore           # CRITICAL - signing key
 ├── KEYSTORE-INFO.txt          # Keystore password
 └── twa-manifest.json          # Build configuration
-```
+\`\`\`
 
 ### Alternative (Newer) Build:
-```
+\`\`\`
 ~/Downloads/Racket Rescue - Google Play package.zip
 ├── Racket Rescue.aab          # Newer version (1.6MB)
 ├── Racket Rescue.apk          # Newer version (1.5MB)
 ├── signing.keystore           # Newer keystore
 ├── signing-key-info.txt       # Password: gpfUdI4cVD1L
 └── assetlinks.json            # Different package ID
-```
+\`\`\`
 
 ### Website PWA Files:
-```
+\`\`\`
 /Users/andrew-mac-studio/RacketRescue/public/
 ├── manifest.json              # PWA configuration
 ├── .well-known/
 │   └── assetlinks.json        # Android verification
 ├── icons/                     # All app icons
 └── sw.js                      # Service worker
-```
+\`\`\`
 
 ---
 
@@ -225,7 +225,7 @@
 
 ## 🚀 QUICK DECISION TREE
 
-```
+\`\`\`
 START: Do you want to deploy mobile apps?
 │
 ├─ YES → Read EXECUTIVE_SUMMARY.md
@@ -238,7 +238,7 @@ START: Do you want to deploy mobile apps?
 │
 └─ NOT SURE → Read SITUATION_ANALYSIS.md first
               Then come back to EXECUTIVE_SUMMARY.md
-```
+\`\`\`
 
 ---
 
@@ -304,4 +304,3 @@ START: Do you want to deploy mobile apps?
 **Ready to get started?** 🚀
 
 Open **EXECUTIVE_SUMMARY.md** and let's deploy! 🎾📱
-

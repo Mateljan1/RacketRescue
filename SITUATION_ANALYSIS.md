@@ -94,7 +94,7 @@ We have **TWO DIFFERENT Android builds** with different configurations:
 ## 📋 ACTION PLAN (If Using Newer Build)
 
 ### Step 1: Backup Everything (5 minutes)
-```bash
+\`\`\`bash
 # Backup old build
 mkdir -p ~/RacketRescue-Backups/old-build
 cp -r /Users/andrew-mac-studio/RacketRescue/app-builds/ ~/RacketRescue-Backups/old-build/
@@ -103,10 +103,10 @@ cp -r /Users/andrew-mac-studio/RacketRescue/app-builds/ ~/RacketRescue-Backups/o
 mkdir -p ~/RacketRescue-Keystore-Backup
 cp /tmp/racket-rescue-new/signing.keystore ~/RacketRescue-Keystore-Backup/
 cp /tmp/racket-rescue-new/signing-key-info.txt ~/RacketRescue-Keystore-Backup/
-```
+\`\`\`
 
 ### Step 2: Replace with Newer Build (3 minutes)
-```bash
+\`\`\`bash
 cd /Users/andrew-mac-studio/RacketRescue
 
 # Remove old build
@@ -118,16 +118,16 @@ cp "/tmp/racket-rescue-new/Racket Rescue.apk" app-builds/android/app-release-sig
 cp /tmp/racket-rescue-new/signing.keystore app-builds/android/android.keystore
 cp /tmp/racket-rescue-new/signing-key-info.txt app-builds/android/KEYSTORE-INFO.txt
 cp /tmp/racket-rescue-new/assetlinks.json app-builds/android/
-```
+\`\`\`
 
 ### Step 3: Update assetlinks.json (2 minutes)
-```bash
+\`\`\`bash
 # Replace with correct version
 cp /tmp/racket-rescue-new/assetlinks.json public/.well-known/assetlinks.json
 
 # Verify
 cat public/.well-known/assetlinks.json
-```
+\`\`\`
 
 ### Step 4: Update Documentation (5 minutes)
 Update all docs to reflect:
@@ -135,31 +135,31 @@ Update all docs to reflect:
 - New SHA256: `E4:E4:C7:6C:C4:E5:44:DF:3C:2C:F7:09:F8:DC:14:C1:FE:1F:49:AD:B8:EA:35:F5:00:D2:38:57:7C:EA:EF:45`
 
 ### Step 5: Deploy (5 minutes)
-```bash
+\`\`\`bash
 git add public/.well-known/assetlinks.json
 git add app-builds/android/
 git commit -m "Update to latest Android build (Jan 1, 2026)"
 git push
-```
+\`\`\`
 
 ---
 
 ## 📋 ACTION PLAN (If Using Older Build)
 
 ### Step 1: Verify Old Build Still Works (10 minutes)
-```bash
+\`\`\`bash
 # Test APK on device
 adb install app-builds/android/app-release-signed.apk
 
 # Check if it loads website correctly
 # Check if all features work
-```
+\`\`\`
 
 ### Step 2: Archive Newer Build (2 minutes)
-```bash
+\`\`\`bash
 mkdir -p ~/RacketRescue-Backups/newer-build-jan1
 cp -r /tmp/racket-rescue-new/* ~/RacketRescue-Backups/newer-build-jan1/
-```
+\`\`\`
 
 ### Step 3: Proceed with Current Plan
 - Follow existing documentation
@@ -207,23 +207,23 @@ cp -r /tmp/racket-rescue-new/* ~/RacketRescue-Backups/newer-build-jan1/
 Both keystores are **2.7KB** in size, suggesting similar generation method.
 
 ### Old Keystore Info:
-```
+\`\`\`
 File: android.keystore
 Alias: android
 SHA256: DC:1C:AB:15:8B:29:38:75:D1:74:85:E5:5F:F8:F3:7F:7D:DF:EF:94:A7:20:9B:E1:65:F1:C7:A7:55:37:DF:5F
-```
+\`\`\`
 
 ### New Keystore Info:
-```
+\`\`\`
 File: signing.keystore
 Alias: (check signing-key-info.txt)
 SHA256: E4:E4:C7:6C:C4:E5:44:DF:3C:2C:F7:09:F8:DC:14:C1:FE:1F:49:AD:B8:EA:35:F5:00:D2:38:57:7C:EA:EF:45
-```
+\`\`\`
 
 Let me check the new keystore info:
-```bash
+\`\`\`bash
 cat /tmp/racket-rescue-new/signing-key-info.txt
-```
+\`\`\`
 
 ---
 
@@ -239,7 +239,7 @@ cat /tmp/racket-rescue-new/signing-key-info.txt
 **The `.www.twa` suffix is a minor cosmetic issue** compared to having an outdated build.
 
 ### Immediate Actions:
-```bash
+\`\`\`bash
 # 1. Check new keystore password
 cat /tmp/racket-rescue-new/signing-key-info.txt
 
@@ -253,7 +253,7 @@ adb install "/tmp/racket-rescue-new/Racket Rescue.apk"
 
 # 4. If it works well, replace old build
 # (See Step 2 in Action Plan above)
-```
+\`\`\`
 
 ---
 
@@ -311,4 +311,3 @@ I can help you:
 ---
 
 **Ready to proceed?** Let me know which build you want to use and I'll help you get it deployed! 🎾📱
-

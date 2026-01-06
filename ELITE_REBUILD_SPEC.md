@@ -9,7 +9,7 @@
 ## 🔥 CORRECT BRAND SPECIFICATIONS (from Base44 App)
 
 ### **Brand Colors:**
-```css
+\`\`\`css
 Primary Red: #ec1f27      /* Main brand - buttons, CTAs, accents */
 Deep Black: #030707       /* Headlines, primary text */
 Charcoal: #1a1a1a         /* Dark backgrounds */
@@ -19,12 +19,12 @@ Pure White: #ffffff       /* Clean whites */
 Success Green: #10b981    /* Member benefits, success states */
 Warning Orange: #f97316   /* Alerts, wizard features */
 Info Blue: #3b82f6        /* Information, tooltips */
-```
+\`\`\`
 
 ### **Logo:**
-```
+\`\`\`
 Horizontal: https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68b77f9f4a7eae9e097474c2/e406f4500_RacketRescueLogoFinal_Horizontal.png
-```
+\`\`\`
 
 ### **Tagline:**
 "We Save Your Game!"
@@ -133,7 +133,7 @@ PICKUP & DELIVERY - Not drop-off service!
 ## 🏗️ ARCHITECTURE: NEXT.JS 15 APP ROUTER
 
 ### **Route Structure:**
-```
+\`\`\`
 app/
 ├── (marketing)/
 │   ├── page.tsx                    # Homepage (cinematic hero)
@@ -158,7 +158,7 @@ app/
 │   └── wizard/route.ts             # AI string recommendations
 │
 └── layout.tsx                      # Root layout
-```
+\`\`\`
 
 ### **Key Technologies:**
 - **Next.js 15** - App Router with Server Components
@@ -323,4 +323,3 @@ I'm about to create:
 ---
 
 **Ready to start building?** Say "GO" and I'll create magic! 🚀
-

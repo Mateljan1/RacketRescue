@@ -84,4 +84,3 @@ export default function PriceCalculator({ orderData }: Props) {
     </motion.div>
   )
 }
-

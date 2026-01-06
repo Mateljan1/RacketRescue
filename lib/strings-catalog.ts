@@ -302,4 +302,3 @@ export const RACKET_PRESETS: Record<string, { models: string[], typical_tension:
     typical_tension: 55,
   },
 }
-

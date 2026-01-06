@@ -6,7 +6,7 @@ Hi Vikram! This folder contains everything you need to get Racket Rescue into bo
 
 ## FOLDER CONTENTS
 
-```
+\`\`\`
 RacketRescue-AppStores/
 ├── README-VIKRAM.md              # You're reading this!
 ├── android/
@@ -21,7 +21,7 @@ RacketRescue-AppStores/
 │       └── assetlinks.json       # Copy to website's public folder
 └── assets/
     └── (store listing images go here)
-```
+\`\`\`
 
 ---
 
@@ -30,18 +30,18 @@ RacketRescue-AppStores/
 Before submitting to stores, add the Digital Asset Links file to the website.
 
 ### 1.1 Copy the file
-```bash
+\`\`\`bash
 # From the Racket Rescue Next.js project
 cp -r /Users/andrew-mac-studio/RacketRescue-AppStores/website-update/.well-known /Users/andrew-mac-studio/RacketRescue/public/
-```
+\`\`\`
 
 ### 1.2 Deploy
-```bash
+\`\`\`bash
 cd /Users/andrew-mac-studio/RacketRescue
 git add public/.well-known/assetlinks.json
 git commit -m "Add Android app digital asset links"
 git push
-```
+\`\`\`
 
 ### 1.3 Verify (after Vercel deploys)
 Open: https://www.racketrescue.com/.well-known/assetlinks.json
@@ -109,11 +109,11 @@ Complete these sections (checkmarks will appear):
 **App details:**
 - **App name:** Racket Rescue
 - **Short description (max 80 chars):**
-  ```
+  \`\`\`
   Professional tennis racket restringing - schedule pickup & track orders
-  ```
+  \`\`\`
 - **Full description:**
-  ```
+  \`\`\`
   Racket Rescue is Orange County's premier mobile tennis racket restringing service.
 
   FEATURES:
@@ -127,7 +127,7 @@ Complete these sections (checkmarks will appear):
   Whether you're a casual weekend player or competitive athlete, Racket Rescue ensures your rackets perform at their best.
 
   Download now and never play with dead strings again!
-  ```
+  \`\`\`
 
 **Graphics:**
 - **App icon:** 512x512 PNG (use from website or create)
@@ -149,12 +149,12 @@ Complete these sections (checkmarks will appear):
 4. **Upload:** `android/app-release-bundle.aab`
 5. **Release name:** 1.0.0
 6. **Release notes:**
-   ```
+   \`\`\`
    Initial release of Racket Rescue!
    - Schedule racket pickup and delivery
    - Track your orders in real-time
    - Browse string options
-   ```
+   \`\`\`
 7. Click **"Save"** then **"Review release"**
 8. Click **"Start rollout to Production"**
 
@@ -300,14 +300,14 @@ Complete these sections (checkmarks will appear):
 
 The Android keystore is required for ALL future app updates. If lost, you cannot update the app and must create a new listing.
 
-```
+\`\`\`
 File: android/android.keystore
 Key Alias: android
 
 ⚠️ PASSWORD NOT STORED IN GIT (security)
 See: /Users/andrew-mac-studio/RacketRescue-AppStores/android/KEYSTORE-INFO.txt
 Or contact: andrew@tennisbeast.com
-```
+\`\`\`
 
 **BACKUP THIS FILE** to secure cloud storage (Google Drive, iCloud, etc.)
 
@@ -316,7 +316,7 @@ Or contact: andrew@tennisbeast.com
 ## FUTURE APP UPDATES
 
 ### Android Update:
-```bash
+\`\`\`bash
 cd /Users/andrew-mac-studio/RacketRescue-Android
 
 # Edit twa-manifest.json - change these values:
@@ -327,7 +327,7 @@ cd /Users/andrew-mac-studio/RacketRescue-Android
 ./build.exp
 
 # Upload new .aab to Play Console
-```
+\`\`\`
 
 ### iOS Update:
 1. Regenerate from PWABuilder (or just increment version in Xcode)

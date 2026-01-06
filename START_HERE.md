@@ -43,11 +43,11 @@ I've built a complete, professional standalone website for **Racket Rescue**!
 
 ### Step 2: Push Your Code (2 min)
 
-```bash
+\`\`\`bash
 cd /Users/andrew-mac-studio/LBTA\ Build\ 12:16/LBTA/racket-rescue-site
 git remote set-url origin https://github.com/Mateljan1/RacketRescue.git
 git push -u origin main
-```
+\`\`\`
 
 ### Step 3: Connect to Vercel (5 min)
 
@@ -112,7 +112,7 @@ After deployment (total 15-75 minutes):
 
 Location: `/Users/andrew-mac-studio/LBTA Build 12:16/LBTA/racket-rescue-site/`
 
-```
+\`\`\`
 racket-rescue-site/
 ├── app/
 │   ├── page.tsx           # Homepage ✅
@@ -129,7 +129,7 @@ racket-rescue-site/
 ├── tailwind.config.ts     # Tailwind ✅
 ├── tsconfig.json          # TypeScript ✅
 └── README.md              # Documentation ✅
-```
+\`\`\`
 
 **Total:** 17 files, ~2000 lines of code, production-ready!
 
@@ -137,7 +137,7 @@ racket-rescue-site/
 
 ## 🧪 TEST AFTER DEPLOYMENT
 
-```bash
+\`\`\`bash
 # Test homepage
 open http://racketrescue.com
 
@@ -152,7 +152,7 @@ open http://racketrescue.com/about
 
 # Test booking form
 # Fill out and submit - success message should appear
-```
+\`\`\`
 
 ---
 
@@ -203,7 +203,7 @@ A complete, professional website with:
 
 ## 🎯 QUICK START
 
-```bash
+\`\`\`bash
 # Navigate to project
 cd /Users/andrew-mac-studio/LBTA\ Build\ 12:16/LBTA/racket-rescue-site
 
@@ -219,7 +219,7 @@ git push -u origin main
 
 # Visit your site
 open http://racketrescue.com
-```
+\`\`\`
 
 ---
 
@@ -237,4 +237,3 @@ Both are beautiful, both are professional, both drive bookings!
 **🎾 YOUR RACKET RESCUE WEBSITE IS READY TO LAUNCH! 🎾**
 
 **Next:** Create GitHub repo → Push code → Connect Vercel → Launch! 🚀
-

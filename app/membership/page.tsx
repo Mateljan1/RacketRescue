@@ -441,4 +441,3 @@ export default function MembershipPage() {
     </main>
   )
 }
-

@@ -7,29 +7,29 @@
 ## 📋 WHAT YOU NEED TO GIVE THE DEVELOPER
 
 ### 1. GitHub Access
-```
+\`\`\`
 ✅ Invite them to: https://github.com/Mateljan1/RacketRescue
 ✅ Grant "Write" access
-```
+\`\`\`
 
 ### 2. Google Play Console Access
-```
+\`\`\`
 ✅ Invite to: https://play.google.com/console
 ✅ Grant: "Manage production releases" permission
-```
+\`\`\`
 
 ### 3. Apple Developer Access (for iOS)
-```
+\`\`\`
 ✅ Invite to: https://appstoreconnect.apple.com
 ✅ Grant: "App Manager" or "Developer" role
-```
+\`\`\`
 
 ### 4. Credentials (Share Securely)
-```
+\`\`\`
 Keystore Password: gpfUdI4cVD1L
 Support Email: [YOUR EMAIL]
 Support Phone: [YOUR PHONE] (optional)
-```
+\`\`\`
 
 ---
 
@@ -88,4 +88,3 @@ You'll know it's done when:
 ---
 
 **Everything is ready! Just grant access and let them follow the guide!** 🎉
-

@@ -69,7 +69,7 @@
 
 ## 🧪 TEST YOUR SITE NOW!
 
-```bash
+\`\`\`bash
 # Test the live site
 open https://www.racketrescue.com
 
@@ -81,7 +81,7 @@ open https://www.racketrescue.com/services
 open https://www.racketrescue.com/pricing
 open https://www.racketrescue.com/contact
 open https://www.racketrescue.com/about
-```
+\`\`\`
 
 ---
 
@@ -270,9 +270,9 @@ All pages work perfectly on all devices!
 - ✅ Production-ready code
 
 **TEST IT NOW:**
-```bash
+\`\`\`bash
 open https://www.racketrescue.com
-```
+\`\`\`
 
 ---
 
@@ -307,4 +307,3 @@ open https://www.racketrescue.com
 **Status:** ✅ LIVE AND READY!
 
 **🎊 MISSION ACCOMPLISHED! 🎊**
-

@@ -41,14 +41,14 @@ Get from [Supabase Dashboard](https://supabase.com/dashboard) → Project Settin
 
 After configuring Supabase, run the migration to create auth tables:
 
-```sql
+\`\`\`sql
 -- Run this in Supabase SQL Editor (supabase/migrations/001_auth_tables.sql)
-```
+\`\`\`
 
 ## Testing Locally
 
 Add to `.env.local`:
-```bash
+\`\`\`bash
 AUTH_SECRET=your-local-secret
 AUTH_URL=http://localhost:3000
 GOOGLE_CLIENT_ID=your-google-client-id
@@ -56,7 +56,7 @@ GOOGLE_CLIENT_SECRET=your-google-client-secret
 RESEND_API_KEY=your-resend-api-key
 NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
 SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-key
-```
+\`\`\`
 
 ## Auth Flow
 

@@ -1,18 +1,19 @@
-import NextAuth from 'next-auth'
-import Google from 'next-auth/providers/google'
-import Resend from 'next-auth/providers/resend'
-import { SupabaseAdapter } from '@auth/supabase-adapter'
+import NextAuth from "next-auth"
+import Google from "next-auth/providers/google"
+import Resend from "next-auth/providers/resend"
+import { SupabaseAdapter } from "@auth/supabase-adapter"
 
 // Only configure adapter if Supabase is configured
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 
-const adapter = supabaseUrl && supabaseServiceKey
-  ? SupabaseAdapter({
-      url: supabaseUrl,
-      secret: supabaseServiceKey,
-    })
-  : undefined
+const adapter =
+  supabaseUrl && supabaseServiceKey
+    ? SupabaseAdapter({
+        url: supabaseUrl,
+        secret: supabaseServiceKey,
+      })
+    : undefined
 
 // Build providers array - only include configured providers
 const providers = []
@@ -23,7 +24,7 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    })
+    }),
   )
 }
 
@@ -32,18 +33,21 @@ if (process.env.RESEND_API_KEY) {
   providers.push(
     Resend({
       apiKey: process.env.RESEND_API_KEY,
-      from: 'Racket Rescue <noreply@send.racketrescue.com>',
-    })
+      from: "Racket Rescue <noreply@send.racketrescue.com>",
+    }),
   )
 }
 
+const authSecret = process.env.AUTH_SECRET || "dev-secret-do-not-use-in-production-please-set-auth-secret"
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  secret: authSecret,
   adapter,
   providers,
   pages: {
-    signIn: '/login',
-    error: '/login',
-    verifyRequest: '/login/verify',
+    signIn: "/login",
+    error: "/login",
+    verifyRequest: "/login/verify",
   },
   callbacks: {
     session: async ({ session, user }) => {
@@ -55,6 +59,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   // Use JWT session strategy when no adapter is configured
   session: {
-    strategy: adapter ? 'database' : 'jwt',
+    strategy: adapter ? "database" : "jwt",
   },
 })

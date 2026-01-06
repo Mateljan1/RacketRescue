@@ -45,26 +45,26 @@
 ## 🔐 CRITICAL INFORMATION
 
 ### New Build Configuration:
-```
+\`\`\`
 Package ID: com.racketrescue.www.twa
 App Name: Racket Rescue
 Version: 1.0.0 (Build 1)
 Date: January 1, 2026
-```
+\`\`\`
 
 ### Keystore Credentials:
-```
+\`\`\`
 File: android.keystore
 Password: gpfUdI4cVD1L
 Alias: my-key-alias
 Organization: Racket Rescue
 Country: US
-```
+\`\`\`
 
 ### SHA256 Fingerprint:
-```
+\`\`\`
 E4:E4:C7:6C:C4:E5:44:DF:3C:2C:F7:09:F8:DC:14:C1:FE:1F:49:AD:B8:EA:35:F5:00:D2:38:57:7C:EA:EF:45
-```
+\`\`\`
 
 ---
 
@@ -76,14 +76,14 @@ E4:E4:C7:6C:C4:E5:44:DF:3C:2C:F7:09:F8:DC:14:C1:FE:1F:49:AD:B8:EA:35:F5:00:D2:38
 - ⏳ CDN cache clearing (may take 5-10 minutes)
 
 ### Verify Deployment (in 5-10 minutes):
-```bash
+\`\`\`bash
 # Check if new assetlinks.json is live
 curl https://racketrescue.com/.well-known/assetlinks.json
 
 # Should show:
 # - Package: com.racketrescue.www.twa
 # - SHA256: E4:E4:C7:6C:C4:E5:44:DF:3C:2C:F7:09:F8:DC:14:C1:FE:1F:49:AD:B8:EA:35:F5:00:D2:38:57:7C:EA:EF:45
-```
+\`\`\`
 
 ---
 
@@ -92,10 +92,10 @@ curl https://racketrescue.com/.well-known/assetlinks.json
 ### Pre-Submission Checklist:
 
 #### 1. Test APK (Recommended - 10 minutes)
-```bash
+\`\`\`bash
 # Install on Android device
 adb install /Users/andrew-mac-studio/RacketRescue/app-builds/android/app-release-signed.apk
-```
+\`\`\`
 
 **Test:**
 - [ ] App installs successfully
@@ -133,21 +133,21 @@ adb install /Users/andrew-mac-studio/RacketRescue/app-builds/android/app-release
 - [ ] Encrypted cloud storage
 
 **Create encrypted backup:**
-```bash
+\`\`\`bash
 cd ~/RacketRescue-Keystore-Backup
 zip -e racket-rescue-keystore-$(date +%Y%m%d).zip *.keystore *.txt
 # Enter strong password when prompted
 # Upload this zip to multiple secure locations
-```
+\`\`\`
 
 ---
 
 ## 🚀 GOOGLE PLAY STORE SUBMISSION GUIDE
 
 ### Step 1: Go to Google Play Console
-```
+\`\`\`
 URL: https://play.google.com/console
-```
+\`\`\`
 
 ### Step 2: Create New App
 1. Click **"Create app"**
@@ -199,12 +199,12 @@ URL: https://play.google.com/console
 **App Details:**
 - **App name:** Racket Rescue
 - **Short description (80 chars):**
-```
+\`\`\`
 Professional tennis racket restringing - schedule pickup & track orders
-```
+\`\`\`
 
 - **Full description:**
-```
+\`\`\`
 Racket Rescue is Orange County's premier mobile tennis racket restringing service.
 
 FEATURES:
@@ -218,7 +218,7 @@ FEATURES:
 Whether you're a casual weekend player or competitive athlete, Racket Rescue ensures your rackets perform at their best.
 
 Download now and never play with dead strings again!
-```
+\`\`\`
 
 **Graphics:**
 - Upload app icon (512x512)
@@ -239,13 +239,13 @@ Download now and never play with dead strings again!
 5. Select: `/Users/andrew-mac-studio/RacketRescue/app-builds/android/app-release-bundle.aab`
 6. **Release name:** 1.0.0
 7. **Release notes:**
-```
+\`\`\`
 Initial release of Racket Rescue!
 - Schedule racket pickup and delivery
 - Track your orders in real-time
 - Browse premium string options
 - Fast turnaround times
-```
+\`\`\`
 8. Click **"Save"**
 9. Click **"Review release"**
 10. Click **"Start rollout to Production"**
@@ -348,7 +348,7 @@ Initial release of Racket Rescue!
 ## 📋 QUICK REFERENCE
 
 ### File Locations:
-```
+\`\`\`
 Android Build: /Users/andrew-mac-studio/RacketRescue/app-builds/android/
   - app-release-bundle.aab (1.6MB) → Upload to Play Store
   - app-release-signed.apk (1.5MB) → Test on device
@@ -362,10 +362,10 @@ Documentation: /Users/andrew-mac-studio/RacketRescue/
   - DEPLOYMENT_READY.md → Complete deployment guide
   - EXECUTIVE_SUMMARY.md → Quick overview
   - QUICK_START.md → Essential commands
-```
+\`\`\`
 
 ### Key Commands:
-```bash
+\`\`\`bash
 # Verify deployment
 curl https://racketrescue.com/.well-known/assetlinks.json
 
@@ -378,7 +378,7 @@ adb install app-builds/android/app-release-signed.apk
 # Create encrypted backup
 cd ~/RacketRescue-Keystore-Backup
 zip -e backup-$(date +%Y%m%d).zip *.keystore *.txt
-```
+\`\`\`
 
 ### Important URLs:
 - Google Play Console: https://play.google.com/console
@@ -452,4 +452,3 @@ All migrations complete. All files ready. Documentation comprehensive. You're fu
 - `QUICK_START.md` - Essential commands
 
 **Let's get RacketRescue in the app stores!** 🎾📱
-

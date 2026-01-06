@@ -40,11 +40,11 @@
 ### Phase 1: Cleanup & Organization (15 minutes)
 
 #### Step 1.1: Verify Downloads Folders
-```bash
+\`\`\`bash
 # Check what's in the Downloads folders
 ls -la ~/Downloads/RacketRescue-Android/
 ls -la ~/Downloads/RacketRescue-AppStores/
-```
+\`\`\`
 
 **Decision Tree:**
 - If they contain the same files as `app-builds/` → Delete duplicates
@@ -52,7 +52,7 @@ ls -la ~/Downloads/RacketRescue-AppStores/
 - If empty or outdated → Delete
 
 #### Step 1.2: Consolidate Everything
-```bash
+\`\`\`bash
 # Move to main project
 cd /Users/andrew-mac-studio/RacketRescue/
 
@@ -65,14 +65,14 @@ mv app-builds/README-VIKRAM.md mobile-apps/docs/
 
 # Clean up old folder
 rm -rf app-builds/
-```
+\`\`\`
 
 ### Phase 2: Website Preparation (10 minutes)
 
 #### Step 2.1: Add Android Asset Links
 Create the required Digital Asset Links file for Android TWA:
 
-```bash
+\`\`\`bash
 # Create directory
 mkdir -p /Users/andrew-mac-studio/RacketRescue/public/.well-known/
 
@@ -89,10 +89,10 @@ cat > /Users/andrew-mac-studio/RacketRescue/public/.well-known/assetlinks.json <
   }
 }]
 EOF
-```
+\`\`\`
 
 #### Step 2.2: Deploy Website Update
-```bash
+\`\`\`bash
 cd /Users/andrew-mac-studio/RacketRescue/
 
 # Add the new file
@@ -103,14 +103,14 @@ git commit -m "Add Android Digital Asset Links for TWA app"
 
 # Push to deploy
 git push origin main
-```
+\`\`\`
 
 #### Step 2.3: Verify Deployment
 Wait 2-3 minutes for Vercel to deploy, then check:
-```bash
+\`\`\`bash
 # Should return JSON (not 404)
 curl https://racketrescue.com/.well-known/assetlinks.json
-```
+\`\`\`
 
 ### Phase 3: Android Deployment (30 minutes)
 
@@ -135,7 +135,7 @@ We can use available MCP tools to streamline this:
 ### Phase 4: iOS Deployment (45 minutes)
 
 #### Step 4.1: Generate iOS Package
-```bash
+\`\`\`bash
 # Option 1: Use PWABuilder website
 # 1. Go to https://www.pwabuilder.com
 # 2. Enter: https://racketrescue.com
@@ -147,13 +147,13 @@ npx @pwabuilder/cli package \
   --platform ios \
   --url https://racketrescue.com \
   --output mobile-apps/ios/
-```
+\`\`\`
 
 #### Step 4.2: Configure in Xcode
-```bash
+\`\`\`bash
 # Open the generated project
 open mobile-apps/ios/*.xcodeproj
-```
+\`\`\`
 
 Then in Xcode:
 1. Set Bundle ID: `com.racketrescue.app`
@@ -165,7 +165,7 @@ Then in Xcode:
 
 ## 🗂️ FINAL FOLDER STRUCTURE
 
-```
+\`\`\`
 /Users/andrew-mac-studio/RacketRescue/
 ├── mobile-apps/
 │   ├── android/
@@ -186,7 +186,7 @@ Then in Xcode:
 │   ├── manifest.json                    # PWA manifest
 │   └── icons/                           # App icons
 └── (rest of Next.js project)
-```
+\`\`\`
 
 ---
 
@@ -198,7 +198,7 @@ Then in Xcode:
 **SHA256:** `DC:1C:AB:15:8B:29:38:75:D1:74:85:E5:5F:F8:F3:7F:7D:DF:EF:94:A7:20:9B:E1:65:F1:C7:A7:55:37:DF:5F`
 
 ⚠️ **BACKUP THIS FILE IMMEDIATELY:**
-```bash
+\`\`\`bash
 # Backup to multiple locations
 cp mobile-apps/android/android.keystore ~/Dropbox/RacketRescue-Backup/
 cp mobile-apps/android/android.keystore ~/Google\ Drive/RacketRescue-Backup/
@@ -206,7 +206,7 @@ cp mobile-apps/android/android.keystore ~/Google\ Drive/RacketRescue-Backup/
 # Create encrypted backup
 zip -e racket-rescue-keystore-backup.zip mobile-apps/android/android.keystore
 # (Use strong password and store separately)
-```
+\`\`\`
 
 **Why this matters:**
 - Without this keystore, you CANNOT update the Android app
@@ -227,12 +227,12 @@ zip -e racket-rescue-keystore-backup.zip mobile-apps/android/android.keystore
 ### Store Listings
 
 #### Short Description (80 chars max)
-```
+\`\`\`
 Professional tennis racket restringing - schedule pickup & track orders
-```
+\`\`\`
 
 #### Full Description
-```
+\`\`\`
 Racket Rescue is Orange County's premier mobile tennis racket restringing service.
 
 FEATURES:
@@ -246,12 +246,12 @@ FEATURES:
 Whether you're a casual weekend player or competitive athlete, Racket Rescue ensures your rackets perform at their best.
 
 Download now and never play with dead strings again!
-```
+\`\`\`
 
 #### Keywords (for iOS)
-```
+\`\`\`
 tennis, racket, restringing, tennis strings, racquet service, sports, laguna beach, orange county
-```
+\`\`\`
 
 ---
 
@@ -310,7 +310,7 @@ tennis, racket, restringing, tennis strings, racquet service, sports, laguna bea
    - Generate documentation
 
 ### Automated Deployment Script (Conceptual)
-```bash
+\`\`\`bash
 #!/bin/bash
 # deploy-android.sh
 
@@ -347,14 +347,14 @@ echo "1. Create new app in Play Console"
 echo "2. Upload: mobile-apps/android/app-release-bundle.aab"
 echo "3. Complete store listing"
 echo "4. Submit for review"
-```
+\`\`\`
 
 ---
 
 ## 🔄 FUTURE UPDATES
 
 ### Updating the Android App
-```bash
+\`\`\`bash
 # 1. Edit version in twa-manifest.json
 cd mobile-apps/android/
 # Change: "appVersionCode": 2
@@ -364,14 +364,14 @@ cd mobile-apps/android/
 # Or regenerate from PWABuilder with new version
 
 # 3. Upload new .aab to Play Console
-```
+\`\`\`
 
 ### Updating the iOS App
-```bash
+\`\`\`bash
 # 1. Regenerate from PWABuilder with new version
 # 2. Open in Xcode and increment version
 # 3. Archive and upload to App Store Connect
-```
+\`\`\`
 
 ### Website Updates (No App Update Needed!)
 Since these are PWA wrappers, any website changes automatically appear in the apps after users refresh. No app store update required for:
@@ -386,14 +386,14 @@ Since these are PWA wrappers, any website changes automatically appear in the ap
 ## ❓ TROUBLESHOOTING
 
 ### "I can't find the Downloads folders"
-```bash
+\`\`\`bash
 # Search for them
 find ~ -name "RacketRescue-Android" -type d
 find ~ -name "RacketRescue-AppStores" -type d
-```
+\`\`\`
 
 ### "Asset links not working"
-```bash
+\`\`\`bash
 # Verify file exists
 curl -I https://racketrescue.com/.well-known/assetlinks.json
 
@@ -401,16 +401,16 @@ curl -I https://racketrescue.com/.well-known/assetlinks.json
 curl https://racketrescue.com/.well-known/assetlinks.json | jq .
 
 # May take 24 hours to propagate
-```
+\`\`\`
 
 ### "Keystore password not working"
-```bash
+\`\`\`bash
 # Verify keystore
 keytool -list -v -keystore mobile-apps/android/android.keystore
 
 # Check KEYSTORE-INFO.txt for correct password
 cat mobile-apps/android/KEYSTORE-INFO.txt
-```
+\`\`\`
 
 ### "App shows in browser instead of fullscreen"
 - Verify assetlinks.json is deployed and accessible
@@ -423,7 +423,7 @@ cat mobile-apps/android/KEYSTORE-INFO.txt
 ## 📞 NEXT STEPS - WHAT TO DO RIGHT NOW
 
 ### Immediate Actions (Do This First):
-```bash
+\`\`\`bash
 # 1. Clean up Downloads folder
 cd ~/Downloads
 ls -la | grep -i racket
@@ -440,7 +440,7 @@ git push
 
 # 4. Wait 3 minutes, then verify
 curl https://racketrescue.com/.well-known/assetlinks.json
-```
+\`\`\`
 
 ### Then Choose Your Path:
 
@@ -475,4 +475,3 @@ curl https://racketrescue.com/.well-known/assetlinks.json
 - ✅ Create backup procedures
 
 Just let me know which path you want to take! 🚀
-

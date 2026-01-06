@@ -54,7 +54,7 @@
 ## 🎯 IMMEDIATE ACTION PLAN (Do These Now)
 
 ### Priority 1: Secure the Keystore (5 minutes)
-```bash
+\`\`\`bash
 # Create local backup
 mkdir -p ~/RacketRescue-Keystore-Backup
 cp app-builds/android/android.keystore ~/RacketRescue-Keystore-Backup/
@@ -64,7 +64,7 @@ cp app-builds/android/KEYSTORE-INFO.txt ~/RacketRescue-Keystore-Backup/
 # - Dropbox/Google Drive
 # - External hard drive
 # - Password manager (1Password, LastPass, etc.)
-```
+\`\`\`
 
 **Why this matters:**
 - Without this file, you CANNOT update the Android app
@@ -72,7 +72,7 @@ cp app-builds/android/KEYSTORE-INFO.txt ~/RacketRescue-Keystore-Backup/
 - Valid for 27 years - keep it safe!
 
 ### Priority 2: Deploy assetlinks.json (5 minutes)
-```bash
+\`\`\`bash
 cd /Users/andrew-mac-studio/RacketRescue
 
 # Verify file exists
@@ -85,13 +85,13 @@ git push origin main
 
 # Wait 3 minutes, then verify
 curl https://racketrescue.com/.well-known/assetlinks.json
-```
+\`\`\`
 
 ### Priority 3: Organize Folder Structure (2 minutes)
-```bash
+\`\`\`bash
 cd /Users/andrew-mac-studio/RacketRescue
 ./scripts/organize-mobile-apps.sh
-```
+\`\`\`
 
 This will:
 - Create `mobile-apps/` structure
@@ -100,7 +100,7 @@ This will:
 - Verify all files present
 
 ### Priority 4: Check Downloads Folder (2 minutes)
-```bash
+\`\`\`bash
 # Check what's there
 ls -la ~/Downloads/ | grep -i racket
 
@@ -110,7 +110,7 @@ diff -r ~/Downloads/RacketRescue-Android/ /Users/andrew-mac-studio/RacketRescue/
 # If identical, remove duplicates
 # rm -rf ~/Downloads/RacketRescue-Android/
 # rm -rf ~/Downloads/RacketRescue-AppStores/
-```
+\`\`\`
 
 ---
 
@@ -153,13 +153,13 @@ diff -r ~/Downloads/RacketRescue-Android/ /Users/andrew-mac-studio/RacketRescue/
 ## 🛠️ TOOLS & RESOURCES
 
 ### Scripts Available
-```bash
+\`\`\`bash
 # Check current status
 ./scripts/check-mobile-status.sh
 
 # Organize files
 ./scripts/organize-mobile-apps.sh
-```
+\`\`\`
 
 ### Documentation
 - `MOBILE_APP_DEPLOYMENT_PLAN.md` - Complete deployment guide
@@ -229,30 +229,30 @@ Use automation for repetitive tasks (file organization, screenshots) but manual 
 ## 📊 FILE INVENTORY
 
 ### Android Files (app-builds/android/)
-```
+\`\`\`
 ✅ app-release-bundle.aab     1.2MB   Upload to Google Play
 ✅ app-release-signed.apk     1.1MB   Test on Android device
 ✅ android.keystore           2.7KB   CRITICAL - signing key
 ✅ KEYSTORE-INFO.txt          ~1KB    Keystore credentials
 ✅ twa-manifest.json          1.8KB   Build configuration
 ✅ store_icon.png             ~50KB   Store listing icon
-```
+\`\`\`
 
 ### Website PWA Files (public/)
-```
+\`\`\`
 ✅ manifest.json              2.9KB   PWA configuration
 ✅ .well-known/assetlinks.json 306B   Android verification
 ✅ icons/icon-512.png         39KB    App icon
 ✅ sw.js                      6.7KB   Service worker
-```
+\`\`\`
 
 ### Documentation
-```
+\`\`\`
 ✅ MOBILE_APP_DEPLOYMENT_PLAN.md  13KB   Complete guide
 ✅ MOBILE_APP_STATUS.md           ~8KB   This file
 ✅ app-builds/README-VIKRAM.md    9.9KB  Manual steps
 ✅ .cursorrules                   ~50KB  Project standards
-```
+\`\`\`
 
 ---
 
@@ -287,7 +287,7 @@ Use automation for repetitive tasks (file organization, screenshots) but manual 
 ## 🚀 READY TO START?
 
 ### Quick Start Commands
-```bash
+\`\`\`bash
 # 1. Check status
 cd /Users/andrew-mac-studio/RacketRescue
 ./scripts/check-mobile-status.sh
@@ -306,7 +306,7 @@ git push
 
 # 5. Test Android APK
 adb install app-builds/android/app-release-signed.apk
-```
+\`\`\`
 
 ### Next Steps
 1. Complete Priority 1-4 actions above
@@ -342,4 +342,3 @@ Based on the current state, I recommend:
 - Automate repetitive tasks
 
 Let's get RacketRescue in the app stores! 🎾📱
-

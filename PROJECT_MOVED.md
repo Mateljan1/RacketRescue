@@ -26,7 +26,7 @@ Racket Rescue is a **separate business** from LBTA:
 
 ## 📂 NEW STRUCTURE
 
-```
+\`\`\`
 /Users/andrew-mac-studio/
 ├── LBTA Build 12:16/LBTA/    ← Tennis Academy
 └── RacketRescue/              ← Stringing Service
@@ -35,7 +35,7 @@ Racket Rescue is a **separate business** from LBTA:
     ├── lib/                   ← Utilities
     ├── public/                ← Static assets
     └── ...config files
-```
+\`\`\`
 
 ---
 
@@ -55,22 +55,22 @@ Racket Rescue is a **separate business** from LBTA:
 ## 🚀 WORKING DIRECTORY
 
 **From now on, work from:**
-```bash
+\`\`\`bash
 cd /Users/andrew-mac-studio/RacketRescue
-```
+\`\`\`
 
 **All git commands:**
-```bash
+\`\`\`bash
 git add .
 git commit -m "message"
 git push origin main
-```
+\`\`\`
 
 **Development:**
-```bash
+\`\`\`bash
 npm run dev    # Start dev server
 npm run build  # Build for production
-```
+\`\`\`
 
 ---
 
@@ -90,4 +90,3 @@ npm run build  # Build for production
 **Ready:** For independent development
 
 **🎾 CLEAN, ORGANIZED, PROFESSIONAL! 🎾**
-

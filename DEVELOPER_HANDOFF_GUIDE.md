@@ -15,10 +15,10 @@ This guide will help a developer submit RacketRescue to both Google Play Store a
 ## 🔑 WHAT THE DEVELOPER NEEDS FROM YOU
 
 ### 1. GitHub Access
-```
+\`\`\`
 Repository: https://github.com/Mateljan1/RacketRescue
 Access Level: Write access (to push changes)
-```
+\`\`\`
 
 **How to grant access:**
 1. Go to: https://github.com/Mateljan1/RacketRescue/settings/access
@@ -28,10 +28,10 @@ Access Level: Write access (to push changes)
 5. Send invitation
 
 ### 2. Google Play Console Access
-```
+\`\`\`
 URL: https://play.google.com/console
 Account: Your Google account email
-```
+\`\`\`
 
 **How to grant access:**
 1. Go to: https://play.google.com/console
@@ -46,10 +46,10 @@ Account: Your Google account email
 6. Send invitation
 
 ### 3. Apple Developer Account Access
-```
+\`\`\`
 URL: https://developer.apple.com
 Account: Your Apple ID
-```
+\`\`\`
 
 **How to grant access:**
 1. Go to: https://appstoreconnect.apple.com
@@ -64,7 +64,7 @@ Account: Your Apple ID
 
 **Share these securely (via 1Password, LastPass, or encrypted email):**
 
-```
+\`\`\`
 === Android Keystore ===
 Password: gpfUdI4cVD1L
 Alias: my-key-alias
@@ -79,7 +79,7 @@ Website: https://www.racketrescue.com
 Support Email: [YOUR EMAIL]
 Support Phone: [YOUR PHONE] (optional)
 Company Name: Racket Rescue
-```
+\`\`\`
 
 ---
 
@@ -87,7 +87,7 @@ Company Name: Racket Rescue
 
 ### STEP 1: Clone Repository (5 minutes)
 
-```bash
+\`\`\`bash
 # Clone the repo
 git clone git@github.com:Mateljan1/RacketRescue.git
 cd RacketRescue
@@ -98,13 +98,13 @@ ls -la app-builds/android/
 
 # Read the documentation
 cat DEPLOYMENT_CHECKLIST.md
-```
+\`\`\`
 
 ---
 
 ### STEP 2: Verify Deployment (5 minutes)
 
-```bash
+\`\`\`bash
 # Check website is live with correct assetlinks.json
 curl https://www.racketrescue.com/.well-known/assetlinks.json
 
@@ -114,7 +114,7 @@ curl https://www.racketrescue.com/.well-known/assetlinks.json
 
 # Check manifest
 curl https://www.racketrescue.com/manifest.json
-```
+\`\`\`
 
 **✅ If both URLs return valid JSON, proceed to Step 3**
 
@@ -122,7 +122,7 @@ curl https://www.racketrescue.com/manifest.json
 
 ### STEP 3: Test Android APK (Optional but Recommended - 10 minutes)
 
-```bash
+\`\`\`bash
 # Install APK on Android device
 adb install app-builds/android/app-release-signed.apk
 
@@ -133,17 +133,17 @@ adb install app-builds/android/app-release-signed.apk
 # - [ ] Booking flow functional
 # - [ ] No browser UI visible (fullscreen)
 # - [ ] App icon displays correctly
-```
+\`\`\`
 
 ---
 
 ### STEP 4: Submit to Google Play Store (45 minutes)
 
 #### 4.1 Login to Google Play Console
-```
+\`\`\`
 URL: https://play.google.com/console
 Use credentials provided by client
-```
+\`\`\`
 
 #### 4.2 Create New App
 1. Click **"Create app"**
@@ -195,7 +195,7 @@ Navigate to **"Dashboard → Set up your app"** and complete:
 Navigate to **"Store presence → Main store listing"**
 
 **App Details:**
-```
+\`\`\`
 App name: Racket Rescue
 
 Short description (80 chars max):
@@ -215,7 +215,7 @@ FEATURES:
 Whether you're a casual weekend player or competitive athlete, Racket Rescue ensures your rackets perform at their best.
 
 Download now and never play with dead strings again!
-```
+\`\`\`
 
 **Graphics Required:**
 
@@ -228,7 +228,7 @@ You'll need to create/provide:
   - Screenshot 3: Order tracking (optional)
 
 **To get screenshots:**
-```bash
+\`\`\`bash
 # Option 1: Install APK on Android device and take screenshots
 adb install app-builds/android/app-release-signed.apk
 # Then take screenshots of key screens
@@ -236,14 +236,14 @@ adb install app-builds/android/app-release-signed.apk
 # Option 2: Use Android emulator
 # Open Android Studio → Device Manager → Create Virtual Device
 # Install APK and take screenshots
-```
+\`\`\`
 
 **Contact Details:**
-```
+\`\`\`
 Email: [CLIENT'S SUPPORT EMAIL]
 Website: https://www.racketrescue.com
 Phone: [OPTIONAL]
-```
+\`\`\`
 
 #### 4.5 Upload Build
 
@@ -254,13 +254,13 @@ Phone: [OPTIONAL]
 5. Select file: `app-builds/android/app-release-bundle.aab`
 6. **Release name:** `1.0.0`
 7. **Release notes:**
-```
+\`\`\`
 Initial release of Racket Rescue!
 - Schedule racket pickup and delivery
 - Track your orders in real-time
 - Browse premium string options
 - Fast turnaround times
-```
+\`\`\`
 8. Click **"Save"**
 9. Click **"Review release"**
 10. Review all information
@@ -276,9 +276,9 @@ Initial release of Racket Rescue!
 ### STEP 5: Generate iOS Build (30 minutes)
 
 #### 5.1 Use PWABuilder
-```
+\`\`\`
 URL: https://www.pwabuilder.com
-```
+\`\`\`
 
 1. Enter: `https://www.racketrescue.com`
 2. Click **"Start"**
@@ -334,10 +334,10 @@ URL: https://www.pwabuilder.com
 ### STEP 6: Submit to App Store (30 minutes)
 
 #### 6.1 Login to App Store Connect
-```
+\`\`\`
 URL: https://appstoreconnect.apple.com
 Use credentials provided by client
-```
+\`\`\`
 
 #### 6.2 Create New App
 
@@ -375,7 +375,7 @@ Navigate to **"App Store → iOS App"**
 
 **Version Information:**
 
-```
+\`\`\`
 Version: 1.0.0
 
 Screenshots:
@@ -393,7 +393,7 @@ tennis, racket, restringing, tennis strings, racquet service, sports, laguna bea
 
 Support URL: https://www.racketrescue.com
 Marketing URL: (optional)
-```
+\`\`\`
 
 **Build:**
 1. Click **"+"** next to Build
@@ -401,14 +401,14 @@ Marketing URL: (optional)
 3. If build doesn't appear, wait 10-15 minutes for processing
 
 **App Review Information:**
-```
+\`\`\`
 Contact Name: [CLIENT'S NAME]
 Contact Phone: [CLIENT'S PHONE]
 Contact Email: [CLIENT'S EMAIL]
 
 Notes: (optional)
 "This is a PWA (Progressive Web App) wrapper for our tennis racket restringing service. The app loads our website content and provides a native app experience for our customers."
-```
+\`\`\`
 
 **Version Release:**
 - Select: **"Automatically release this version"**
@@ -426,7 +426,7 @@ Notes: (optional)
 
 Once both apps are submitted, update the repository:
 
-```bash
+\`\`\`bash
 cd RacketRescue
 
 # Create a submission record
@@ -458,7 +458,7 @@ EOF
 git add SUBMISSION_RECORD.md
 git commit -m "Add app store submission record"
 git push origin main
-```
+\`\`\`
 
 ---
 
@@ -517,16 +517,16 @@ git push origin main
 - `SUCCESS_SUMMARY.md` - What's been completed
 
 ### Key Files Locations:
-```
+\`\`\`
 Android Build: app-builds/android/app-release-bundle.aab
 Android APK: app-builds/android/app-release-signed.apk
 Keystore: app-builds/android/android.keystore
 Icons: public/icons/
 Logo: public/logo.png
-```
+\`\`\`
 
 ### Useful Commands:
-```bash
+\`\`\`bash
 # Check status
 ./scripts/check-mobile-status.sh
 
@@ -535,7 +535,7 @@ curl https://www.racketrescue.com/.well-known/assetlinks.json
 
 # Test APK
 adb install app-builds/android/app-release-signed.apk
-```
+\`\`\`
 
 ---
 
@@ -636,4 +636,3 @@ Everything is prepared and ready. The developer just needs to:
 ---
 
 **Good luck!** 🎾📱
-
