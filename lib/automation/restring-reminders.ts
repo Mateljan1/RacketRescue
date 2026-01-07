@@ -160,4 +160,3 @@ Sent: ${new Date().toLocaleString()}
     return false
   }
 }
-

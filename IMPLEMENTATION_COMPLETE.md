@@ -113,16 +113,16 @@
 
 ### Step 1: Install Dependencies (5 minutes)
 
-```bash
+\`\`\`bash
 pnpm add @google-analytics/data @vercel/edge-config
-```
+\`\`\`
 
 Or run the automated setup:
 
-```bash
+\`\`\`bash
 chmod +x scripts/setup-analytics.sh
 ./scripts/setup-analytics.sh
-```
+\`\`\`
 
 ### Step 2: Configure Environment Variables (30 minutes)
 
@@ -153,9 +153,9 @@ Follow `ENV_SETUP.md` to set up:
 
 ### Step 3: Test Locally (1 hour)
 
-```bash
+\`\`\`bash
 npm run dev
-```
+\`\`\`
 
 Visit `http://localhost:3000?debug_mode=true` and:
 
@@ -169,14 +169,14 @@ Visit `http://localhost:3000?debug_mode=true` and:
 
 ### Step 4: Deploy to Production (30 minutes)
 
-```bash
+\`\`\`bash
 # Add environment variables to Vercel dashboard first
 # Then deploy:
 
 git add .
 git commit -m "Add enterprise analytics and experimentation system"
 git push
-```
+\`\`\`
 
 ### Step 5: Verify in Production (30 minutes)
 
@@ -446,4 +446,3 @@ Follow the deployment instructions in `PRODUCTION_READINESS_CHECKLIST.md` to go 
 **Date:** January 6, 2026  
 **Version:** 1.0.0  
 **Status:** Production Ready ✅
-

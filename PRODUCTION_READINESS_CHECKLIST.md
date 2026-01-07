@@ -135,14 +135,14 @@
 ### 3. NPM Dependencies
 
 - [ ] Install `@google-analytics/data` package:
-  ```bash
+  \`\`\`bash
   pnpm add @google-analytics/data
-  ```
+  \`\`\`
 
 - [ ] Install `@vercel/edge-config` package (if not already installed):
-  ```bash
+  \`\`\`bash
   pnpm add @vercel/edge-config
-  ```
+  \`\`\`
 
 ### 4. Testing
 
@@ -321,4 +321,3 @@
 **System Status:** ✅ READY FOR PRODUCTION
 
 All components implemented and tested. Follow pre-deployment checklist to go live.
-

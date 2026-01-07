@@ -100,4 +100,3 @@ export async function autoAssignTimeSlot(orderId: string): Promise<string | null
     return null
   }
 }
-

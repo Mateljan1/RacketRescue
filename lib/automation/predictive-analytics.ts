@@ -250,4 +250,3 @@ export async function predictBusyDays(daysAhead: number = 7): Promise<Record<str
     return {}
   }
 }
-

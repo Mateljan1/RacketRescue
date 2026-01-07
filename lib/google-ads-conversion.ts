@@ -56,4 +56,3 @@ export async function sendGoogleAdsConversion(data: ConversionData): Promise<boo
     return false
   }
 }
-

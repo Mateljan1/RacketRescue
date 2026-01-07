@@ -4,7 +4,7 @@
 
 Add these to your `.env.local` file:
 
-```bash
+\`\`\`bash
 # ============================================
 # GOOGLE ANALYTICS 4 (Basic Tracking)
 # ============================================
@@ -31,7 +31,7 @@ EDGE_CONFIG=https://edge-config.vercel.com/ecfg_xxxxx?token=xxxxx
 # ADMIN DASHBOARD ACCESS
 # ============================================
 ADMIN_EMAIL=your-email@example.com
-```
+\`\`\`
 
 ## Setup Instructions
 
@@ -69,7 +69,7 @@ Set `ADMIN_EMAIL` to your email address. Only this email can access `/admin/dash
 
 Add this JSON to your Edge Config store:
 
-```json
+\`\`\`json
 {
   "experiments": {
     "hero_cta_copy": {
@@ -96,29 +96,29 @@ Add this JSON to your Edge Config store:
     }
   }
 }
-```
+\`\`\`
 
 ## Required NPM Package
 
 Install the GA4 Data API package:
 
-```bash
+\`\`\`bash
 npm install @google-analytics/data
-```
+\`\`\`
 
 Or with pnpm:
 
-```bash
+\`\`\`bash
 pnpm add @google-analytics/data
-```
+\`\`\`
 
 ## Testing
 
 After setup, test with:
 
-```bash
+\`\`\`bash
 npm run dev
-```
+\`\`\`
 
 Then visit:
 - Homepage: http://localhost:3000 (test event tracking)
@@ -146,4 +146,3 @@ Then visit:
 - Verify `GOOGLE_ADS_CONVERSION_ID` and `GOOGLE_ADS_CONVERSION_LABEL` are correct
 - Check Stripe webhook is receiving events
 - Look for `[Google Ads]` logs in Vercel logs
-

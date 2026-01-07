@@ -194,4 +194,3 @@ export default function OrderCard({ order, onStatusUpdate, onViewDetails, updati
     </motion.div>
   )
 }
-

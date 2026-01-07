@@ -99,4 +99,3 @@ console.log('✓ add_to_cart - fires when product added to cart')
 console.log('✓ experiment_viewed - fires when A/B test variant assigned')
 
 console.log('\n✅ All tests completed. Check browser console or GA4 DebugView.')
-

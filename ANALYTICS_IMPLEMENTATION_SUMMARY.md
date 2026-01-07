@@ -228,7 +228,7 @@ All include proper item arrays with:
 
 ### Primary Funnel: Booking → Purchase
 
-```
+\`\`\`
 Homepage View
     ↓
 booking_drawer_open (source, package_id)
@@ -246,7 +246,7 @@ checkout_initiated (value, items)
 begin_checkout (Enhanced Ecommerce)
     ↓
 purchase (transaction_id, value, items)
-```
+\`\`\`
 
 **Measurable Drop-Off Points:**
 - Drawer open → Package selection
@@ -305,7 +305,7 @@ purchase (transaction_id, value, items)
 
 ### Flow
 
-```
+\`\`\`
 User clicks Google Ad (gclid in URL)
     ↓
 Schedule page captures gclid
@@ -321,7 +321,7 @@ sendGoogleAdsConversion() called
 Conversion sent to Google Ads API
     ↓
 Conversion appears in Google Ads dashboard
-```
+\`\`\`
 
 ### Attribution
 
@@ -376,15 +376,15 @@ Each step shows:
 
 ### 1. Install NPM Dependencies
 
-```bash
+\`\`\`bash
 pnpm add @google-analytics/data @vercel/edge-config
-```
+\`\`\`
 
 ### 2. Configure Environment Variables
 
 Copy from `ENV_SETUP.md` and add to `.env.local`:
 
-```bash
+\`\`\`bash
 # Required
 NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 GA4_PROPERTY_ID=123456789
@@ -393,7 +393,7 @@ GOOGLE_ADS_CONVERSION_ID=AW-XXXXXXXXXX
 GOOGLE_ADS_CONVERSION_LABEL=XXXXXXXXXXX
 EDGE_CONFIG=https://edge-config.vercel.com/ecfg_xxxxx?token=xxxxx
 ADMIN_EMAIL=your-email@example.com
-```
+\`\`\`
 
 ### 3. Set Up External Services
 
@@ -422,7 +422,7 @@ ADMIN_EMAIL=your-email@example.com
 
 ### 4. Testing
 
-```bash
+\`\`\`bash
 # Start dev server
 npm run dev
 
@@ -436,11 +436,11 @@ http://localhost:3000?debug_mode=true
 # 2. Membership page → Calculator
 # 3. Shop → Add to cart
 # 4. Exit intent popup
-```
+\`\`\`
 
 ### 5. Deployment
 
-```bash
+\`\`\`bash
 # Add environment variables to Vercel dashboard
 # Push to main branch
 git add .
@@ -449,7 +449,7 @@ git push
 
 # Verify in production
 https://racketrescue.com?debug_mode=true
-```
+\`\`\`
 
 ---
 
@@ -540,7 +540,7 @@ https://racketrescue.com?debug_mode=true
 
 ## Architecture Diagram
 
-```
+\`\`\`
 ┌─────────────────────────────────────────────────────────────┐
 │                        USER JOURNEY                          │
 └─────────────────────────────────────────────────────────────┘
@@ -583,7 +583,7 @@ https://racketrescue.com?debug_mode=true
 │  - Real-time funnel visualization                            │
 │  - Admin-only access                                         │
 └─────────────────────────────────────────────────────────────┘
-```
+\`\`\`
 
 ---
 
@@ -621,25 +621,25 @@ https://racketrescue.com?debug_mode=true
 ### Immediate (Before Launch)
 
 1. **Install dependencies:**
-   ```bash
+   \`\`\`bash
    pnpm add @google-analytics/data @vercel/edge-config
-   ```
+   \`\`\`
 
 2. **Configure environment variables** (see ENV_SETUP.md)
 
 3. **Test in development:**
-   ```bash
+   \`\`\`bash
    npm run dev
    # Visit http://localhost:3000?debug_mode=true
    # Check GA4 DebugView
-   ```
+   \`\`\`
 
 4. **Deploy to production:**
-   ```bash
+   \`\`\`bash
    git add .
    git commit -m "Add enterprise analytics system"
    git push
-   ```
+   \`\`\`
 
 5. **Verify in production:**
    - Test complete booking flow
@@ -767,4 +767,3 @@ The enterprise analytics and experimentation system is **fully implemented and r
 ---
 
 **Questions? Review the documentation files or check Vercel logs for detailed error messages.**
-

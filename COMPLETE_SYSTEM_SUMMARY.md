@@ -298,7 +298,7 @@
 
 ## Environment Variables Summary
 
-```bash
+\`\`\`bash
 # ============================================
 # ANALYTICS SYSTEM
 # ============================================
@@ -318,13 +318,13 @@ ENABLE_AUTO_REMINDERS=true
 ENABLE_INVENTORY_ALERTS=true
 ENABLE_SMART_SCHEDULING=true
 CRON_SECRET=your_random_secret_key
-```
+\`\`\`
 
 ---
 
 ## Quick Start Commands
 
-```bash
+\`\`\`bash
 # Install all dependencies
 pnpm add @google-analytics/data @vercel/edge-config
 
@@ -350,7 +350,7 @@ http://localhost:3000/admin/stringer
 git add .
 git commit -m "Add analytics and operations systems"
 git push
-```
+\`\`\`
 
 ---
 
@@ -568,9 +568,9 @@ git push
 ### Immediate Actions
 
 1. **Install Dependencies**
-   ```bash
+   \`\`\`bash
    pnpm add @google-analytics/data @vercel/edge-config
-   ```
+   \`\`\`
 
 2. **Run Database Migration**
    - Execute `supabase/migrations/006_operations_system.sql` in Supabase SQL Editor
@@ -585,11 +585,11 @@ git push
    - Test stringer view
 
 5. **Deploy to Production**
-   ```bash
+   \`\`\`bash
    git add .
    git commit -m "Add enterprise systems"
    git push
-   ```
+   \`\`\`
 
 ### Week 1 Tasks
 
@@ -652,7 +652,7 @@ git push
 
 ## System Architecture Overview
 
-```
+\`\`\`
 ┌─────────────────────────────────────────────────────────────┐
 │                      CUSTOMER JOURNEY                        │
 │  Homepage → Booking → Schedule → Checkout → Confirmation    │
@@ -680,7 +680,7 @@ git push
 │  • Business Dashboard (revenue, churn, upsells)             │
 │  • Player Profiles (LTV, preferences, predictions)          │
 └─────────────────────────────────────────────────────────────┘
-```
+\`\`\`
 
 ---
 
@@ -710,4 +710,3 @@ You now have a **complete, enterprise-grade analytics and operations system** th
 **Date:** January 6, 2026  
 **Total Value Delivered:** $125,000-250,000  
 **Status:** Production Ready ✅
-

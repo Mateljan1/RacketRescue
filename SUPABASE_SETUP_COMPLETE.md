@@ -144,7 +144,7 @@
 
 Run these queries to verify everything works:
 
-```sql
+\`\`\`sql
 -- Test 1: Check inventory
 SELECT * FROM inventory_items;
 -- Expected: 8 rows
@@ -160,7 +160,7 @@ SELECT calculate_player_ltv('test@example.com');
 -- Test 4: Check RLS policies
 SELECT tablename, policyname FROM pg_policies WHERE schemaname = 'public';
 -- Expected: 6 policies
-```
+\`\`\`
 
 ---
 
@@ -245,4 +245,3 @@ SELECT tablename, policyname FROM pg_policies WHERE schemaname = 'public';
 **Status:** 95% Complete (just need storage bucket)
 
 **Next:** Create storage bucket, then deploy!
-

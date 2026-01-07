@@ -92,4 +92,3 @@ export default function PhotoUpload({ orderId, photoType, existingPhotos = [], o
     </div>
   )
 }
-

@@ -1,8 +1,7 @@
 // Server-side A/B testing with Vercel Edge Config
 // Supports variant assignment, persistence, and analytics tracking
 
-import { get } from '@vercel/edge-config'
-import { analytics } from './analytics'
+import { analytics } from "./analytics"
 
 export interface Experiment {
   id: string
@@ -22,16 +21,14 @@ export interface ExperimentAssignment {
 
 // Client-side: Get assigned variant from cookie
 export function getVariant(experimentId: string): string | null {
-  if (typeof document === 'undefined') return null
-  
-  const cookies = document.cookie.split(';')
-  const experimentCookie = cookies.find(c => 
-    c.trim().startsWith(`exp_${experimentId}=`)
-  )
-  
+  if (typeof document === "undefined") return null
+
+  const cookies = document.cookie.split(";")
+  const experimentCookie = cookies.find((c) => c.trim().startsWith(`exp_${experimentId}=`))
+
   if (!experimentCookie) return null
-  
-  return experimentCookie.split('=')[1] || null
+
+  return experimentCookie.split("=")[1] || null
 }
 
 // Client-side: Track experiment exposure
@@ -43,14 +40,14 @@ export function trackExperimentView(experimentId: string, variantId: string): vo
 export function assignVariant(experiment: Experiment): string {
   const random = Math.random() * 100
   let cumulative = 0
-  
+
   for (const variant of experiment.variants) {
     cumulative += variant.weight
     if (random <= cumulative) {
       return variant.id
     }
   }
-  
+
   // Fallback to control
   return experiment.variants[0].id
 }
@@ -58,11 +55,18 @@ export function assignVariant(experiment: Experiment): string {
 // Server-side: Get experiment config from Edge Config
 export async function getExperiment(experimentId: string): Promise<Experiment | null> {
   try {
+    // Check if Edge Config is configured BEFORE importing the module
+    if (!process.env.EDGE_CONFIG) {
+      // Edge Config not configured - A/B testing disabled silently
+      return null
+    }
+
+    // Dynamic import only when EDGE_CONFIG is available
+    const { get } = await import("@vercel/edge-config")
     const experiment = await get<Experiment>(`experiments.${experimentId}`)
     return experiment || null
   } catch (error) {
-    console.error('[A/B Testing Error]', error)
+    // Silently fail if Edge Config is not available
     return null
   }
 }
-

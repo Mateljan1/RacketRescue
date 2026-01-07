@@ -8,9 +8,9 @@
 
 ## Step 1: Install Dependencies (5 minutes)
 
-```bash
+\`\`\`bash
 pnpm add @google-analytics/data @vercel/edge-config
-```
+\`\`\`
 
 ---
 
@@ -18,10 +18,10 @@ pnpm add @google-analytics/data @vercel/edge-config
 
 ### Option A: Supabase CLI
 
-```bash
+\`\`\`bash
 cd supabase
 supabase db push
-```
+\`\`\`
 
 ### Option B: Supabase Dashboard (Recommended)
 
@@ -45,7 +45,7 @@ supabase db push
 
 ### Add to `.env.local`:
 
-```bash
+\`\`\`bash
 # ============================================
 # ANALYTICS SYSTEM (Required)
 # ============================================
@@ -65,7 +65,7 @@ ENABLE_AUTO_REMINDERS=true
 ENABLE_INVENTORY_ALERTS=true
 ENABLE_SMART_SCHEDULING=true
 CRON_SECRET=your_random_secret_key_here
-```
+\`\`\`
 
 ### Setup Instructions:
 
@@ -79,9 +79,9 @@ See `ENV_SETUP.md` for detailed instructions on:
 
 ## Step 4: Test Locally (1 hour)
 
-```bash
+\`\`\`bash
 npm run dev
-```
+\`\`\`
 
 ### Test Analytics System
 
@@ -118,11 +118,11 @@ npm run dev
 
 ### 5.2 Deploy Code
 
-```bash
+\`\`\`bash
 git add .
 git commit -m "Add enterprise analytics and operations systems"
 git push
-```
+\`\`\`
 
 ### 5.3 Verify Deployment
 
@@ -145,10 +145,10 @@ git push
    - `/api/inventory/check-stock` - Daily 8am
 
 3. Test each endpoint manually:
-   ```bash
+   \`\`\`bash
    curl -H "Authorization: Bearer YOUR_CRON_SECRET" \
      https://racketrescue.com/api/automation/restring-reminders
-   ```
+   \`\`\`
 
 ---
 
@@ -311,4 +311,3 @@ git push
 **Code:** ~4,500 lines  
 **Value:** $125K-250K  
 **Status:** ✅ PRODUCTION READY
-

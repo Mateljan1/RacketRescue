@@ -115,4 +115,3 @@ async function updatePlayerProfileStats(customerEmail: string): Promise<void> {
     console.error('Error updating player stats:', error)
   }
 }
-

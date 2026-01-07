@@ -122,4 +122,3 @@ export async function getFunnelData(): Promise<FunnelStep[]> {
   
   return steps
 }
-

@@ -93,4 +93,3 @@ export async function lookupRacketByBarcode(barcode: string): Promise<RacketBarc
 export async function manualBarcodeEntry(barcode: string): Promise<RacketBarcodeData | null> {
   return lookupRacketByBarcode(barcode)
 }
-

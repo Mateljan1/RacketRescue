@@ -257,7 +257,7 @@
 
 ### Data Flow
 
-```
+\`\`\`
 Order Placed
     ↓
 Status Update (Admin/Stringer)
@@ -270,7 +270,7 @@ Status Update (Admin/Stringer)
 └─────────────────────────────────────┘
     ↓
 Customer Receives Update
-```
+\`\`\`
 
 ### Automation Triggers
 
@@ -396,7 +396,7 @@ Customer Receives Update
 
 ### Step 1: Run Database Migration (10 minutes)
 
-```bash
+\`\`\`bash
 # Connect to Supabase
 cd supabase
 
@@ -406,13 +406,13 @@ supabase db push
 # Or manually in Supabase SQL Editor:
 # Copy contents of supabase/migrations/006_operations_system.sql
 # Execute in SQL Editor
-```
+\`\`\`
 
 ### Step 2: Add Environment Variables (5 minutes)
 
 Add to `.env.local` and Vercel:
 
-```bash
+\`\`\`bash
 # Admin Roles
 ADMIN_EMAIL=owner@racketrescue.com
 STRINGER_EMAILS=stringer@racketrescue.com
@@ -424,11 +424,11 @@ ENABLE_SMART_SCHEDULING=true
 
 # Cron Security
 CRON_SECRET=your_random_secret_key_here
-```
+\`\`\`
 
 ### Step 3: Test Locally (30 minutes)
 
-```bash
+\`\`\`bash
 npm run dev
 
 # Test as Owner:
@@ -439,15 +439,15 @@ npm run dev
 
 # Test as Stringer:
 # Visit: http://localhost:3000/admin/stringer
-```
+\`\`\`
 
 ### Step 4: Deploy (15 minutes)
 
-```bash
+\`\`\`bash
 git add .
 git commit -m "Add admin operations and automation system"
 git push
-```
+\`\`\`
 
 ### Step 5: Verify Cron Jobs (5 minutes)
 
@@ -712,4 +712,3 @@ All 40 todos completed. The system is ready for:
 **Implemented by:** AI Assistant  
 **Date:** January 6, 2026  
 **Status:** Production Ready ✅
-

@@ -203,4 +203,3 @@ export default function StringerPage() {
     </main>
   )
 }
-

@@ -157,13 +157,13 @@
 - ✅ **Organized Storage** - Photos stored by order ID
 
 **Storage Structure:**
-```
+\`\`\`
 order-photos/
   orders/
     {orderId}/
       {orderId}_before_timestamp.jpg
       {orderId}_after_timestamp.jpg
-```
+\`\`\`
 
 **Usage:**
 - Add to OrderDetailsModal for quality documentation
@@ -284,13 +284,13 @@ order-photos/
 
 Create `order-photos` bucket in Supabase:
 
-```sql
+\`\`\`sql
 -- In Supabase Dashboard → Storage → New Bucket
 -- Name: order-photos
 -- Public: true
 -- File size limit: 5MB
 -- Allowed MIME types: image/jpeg, image/png, image/webp
-```
+\`\`\`
 
 ### 2. Firebase Cloud Messaging (Optional - for push notifications)
 
@@ -306,9 +306,9 @@ For production push notifications:
 
 For production barcode scanning:
 
-```bash
+\`\`\`bash
 pnpm add @capacitor-community/barcode-scanner
-```
+\`\`\`
 
 Then update `lib/utils/barcode-scanner.ts` to use the library instead of Camera API.
 
@@ -490,9 +490,9 @@ Then update `lib/utils/barcode-scanner.ts` to use the library instead of Camera 
 
 ### Step 1: Install Dependencies (5 min)
 
-```bash
+\`\`\`bash
 pnpm add @google-analytics/data @vercel/edge-config
-```
+\`\`\`
 
 ### Step 2: Create Supabase Storage Bucket (5 min)
 
@@ -515,7 +515,7 @@ Add all variables from `ENV_SETUP.md` including:
 
 ### Step 5: Test Locally (1-2 hours)
 
-```bash
+\`\`\`bash
 npm run dev
 
 # Test all features:
@@ -526,15 +526,15 @@ npm run dev
 # - Export functionality
 # - Photo upload (if Supabase Storage configured)
 # - Barcode scanner (mobile app only)
-```
+\`\`\`
 
 ### Step 6: Deploy (30 min)
 
-```bash
+\`\`\`bash
 git add .
 git commit -m "Add enterprise systems with all enhancements"
 git push
-```
+\`\`\`
 
 **Total Time: 3-4 hours**
 
@@ -639,4 +639,3 @@ These aren't implemented but could be added later:
 **Questions?** Review the documentation or check logs.
 
 **Let's launch! 🎾**
-

@@ -230,4 +230,3 @@ function generateRecommendations(player: PlayerProfile, orders: any[]): string[]
 
   return recommendations
 }
-

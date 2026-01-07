@@ -8,16 +8,16 @@
 
 ## Step 1: Install Dependencies (5 minutes)
 
-```bash
+\`\`\`bash
 pnpm add @google-analytics/data @vercel/edge-config
-```
+\`\`\`
 
 Or use the automated setup script:
 
-```bash
+\`\`\`bash
 chmod +x scripts/setup-analytics.sh
 ./scripts/setup-analytics.sh
-```
+\`\`\`
 
 ---
 
@@ -27,7 +27,7 @@ chmod +x scripts/setup-analytics.sh
 
 Add these to your `.env.local` file:
 
-```bash
+\`\`\`bash
 # Google Analytics 4 (Basic Tracking)
 NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 
@@ -44,7 +44,7 @@ EDGE_CONFIG=https://edge-config.vercel.com/ecfg_xxxxx?token=xxxxx
 
 # Admin Dashboard Access
 ADMIN_EMAIL=your-email@example.com
-```
+\`\`\`
 
 ### Setup Instructions
 
@@ -58,13 +58,13 @@ See `ENV_SETUP.md` for detailed instructions on:
 
 ## Step 3: Test Locally (1 hour)
 
-```bash
+\`\`\`bash
 # Start dev server
 npm run dev
 
 # Visit with debug mode
 http://localhost:3000?debug_mode=true
-```
+\`\`\`
 
 ### Testing Checklist
 
@@ -103,11 +103,11 @@ http://localhost:3000?debug_mode=true
 
 ### 4.2 Deploy Code
 
-```bash
+\`\`\`bash
 git add .
 git commit -m "Add enterprise analytics and experimentation system"
 git push
-```
+\`\`\`
 
 ### 4.3 Verify in Production
 
@@ -216,4 +216,3 @@ All code is implemented, tested, and documented. Follow the 4 steps above to dep
 **Time to production: 2-4 hours**
 
 **Let's go live! 🚀**
-

@@ -328,4 +328,3 @@ export default function OrderDetailsModal({ order, isOpen, onClose }: OrderDetai
     </AnimatePresence>
   )
 }
-

@@ -20,15 +20,15 @@ This is a **production-ready, enterprise-grade analytics and experimentation sys
 
 ### 1. Install Dependencies
 
-```bash
+\`\`\`bash
 pnpm add @google-analytics/data @vercel/edge-config
-```
+\`\`\`
 
 ### 2. Configure Environment Variables
 
 Copy from `ENV_SETUP.md` and add to `.env.local`:
 
-```bash
+\`\`\`bash
 NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 GA4_PROPERTY_ID=123456789
 GA4_SERVICE_ACCOUNT_KEY='{"type":"service_account",...}'
@@ -36,23 +36,23 @@ GOOGLE_ADS_CONVERSION_ID=AW-XXXXXXXXXX
 GOOGLE_ADS_CONVERSION_LABEL=XXXXXXXXXXX
 EDGE_CONFIG=https://edge-config.vercel.com/ecfg_xxxxx?token=xxxxx
 ADMIN_EMAIL=your-email@example.com
-```
+\`\`\`
 
 ### 3. Test Locally
 
-```bash
+\`\`\`bash
 npm run dev
 # Visit: http://localhost:3000?debug_mode=true
 # Open GA4 DebugView in Google Analytics
-```
+\`\`\`
 
 ### 4. Deploy
 
-```bash
+\`\`\`bash
 git add .
 git commit -m "Add enterprise analytics system"
 git push
-```
+\`\`\`
 
 ---
 
@@ -60,9 +60,9 @@ git push
 
 ### Client-Side Tracking
 
-```
+\`\`\`
 User Interaction → analytics.ts → window.gtag() → GA4
-```
+\`\`\`
 
 **Files:**
 - `lib/analytics.ts` - Core tracking utility
@@ -70,9 +70,9 @@ User Interaction → analytics.ts → window.gtag() → GA4
 
 ### Server-Side A/B Testing
 
-```
+\`\`\`
 Request → middleware.ts → Edge Config → Cookie → Component
-```
+\`\`\`
 
 **Files:**
 - `middleware.ts` - Variant assignment
@@ -81,9 +81,9 @@ Request → middleware.ts → Edge Config → Cookie → Component
 
 ### Conversion Attribution
 
-```
+\`\`\`
 URL (gclid) → Schedule → Stripe → Webhook → Google Ads API
-```
+\`\`\`
 
 **Files:**
 - `app/schedule/page.tsx` - GCLID capture
@@ -92,9 +92,9 @@ URL (gclid) → Schedule → Stripe → Webhook → Google Ads API
 
 ### Custom Dashboard
 
-```
+\`\`\`
 Dashboard → API Route → GA4 Data API → Metrics + Funnel
-```
+\`\`\`
 
 **Files:**
 - `app/admin/dashboard/page.tsx` - Dashboard page
@@ -452,4 +452,3 @@ See `ANALYTICS_QUICK_REFERENCE.md` for step-by-step guide.
 **Estimated value:** $50,000-100,000 (enterprise analytics system)  
 
 🚀 **Let's go live!**
-

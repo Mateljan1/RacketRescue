@@ -149,4 +149,3 @@ export function shouldTriggerAlert(
 
   return { shouldAlert: false, alertType: null }
 }
-

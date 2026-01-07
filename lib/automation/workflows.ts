@@ -159,4 +159,3 @@ export async function executeQualityCheckWorkflow(
   // For now, this is a manual process
   // Future: Integrate with smart stringing machine API
 }
-

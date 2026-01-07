@@ -44,7 +44,7 @@ A modern, professional website for Racket Rescue - expert racquet stringing and 
 
 ## Development
 
-```bash
+\`\`\`bash
 # Install dependencies
 npm install
 
@@ -56,7 +56,7 @@ npm run build
 
 # Start production server
 npm start
-```
+\`\`\`
 
 ## Deployment
 
@@ -83,4 +83,3 @@ Laguna Beach, CA 92651
 
 **Part of Laguna Beach Tennis Academy**
 Founded by Andrew Mateljan | 25+ Years Experience
-

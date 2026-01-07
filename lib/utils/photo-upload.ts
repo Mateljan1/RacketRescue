@@ -167,4 +167,3 @@ export async function compressImage(file: File, maxWidth: number = 1200): Promis
     reader.readAsDataURL(file)
   })
 }
-

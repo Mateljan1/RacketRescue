@@ -391,4 +391,3 @@ COMMENT ON TABLE player_profiles IS 'Extended customer profiles with analytics a
 COMMENT ON TABLE player_rackets IS 'Customer racket specifications and stringing history';
 COMMENT ON TABLE restring_reminders IS 'Automated restring reminder schedule and tracking';
 COMMENT ON TABLE business_metrics IS 'Daily business metrics cache for fast dashboard loading';
-

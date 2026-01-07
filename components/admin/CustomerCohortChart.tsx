@@ -65,4 +65,3 @@ export default function CustomerCohortChart({ data, title = 'Customer Cohort Ana
     </div>
   )
 }
-

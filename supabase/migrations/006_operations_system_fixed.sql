@@ -359,4 +359,3 @@ INSERT INTO inventory_items (type, brand, name, sku, quantity_in_stock, reorder_
   ('grip', 'WILSON', 'Pro Perforated 3-Pack', 'WIL-PPP-3', 15, 5, 5.00, 7.00, 'Tennis Warehouse'),
   ('accessory', 'YONEX', 'Vibration Stopper 2-Pack', 'YNX-VS-2', 20, 5, 3.00, 5.00, 'Tennis Warehouse')
 ON CONFLICT (sku) DO NOTHING;
-

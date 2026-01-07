@@ -175,4 +175,3 @@ export default function RestockModal({ item, isOpen, onClose, onRestock }: Resto
     </AnimatePresence>
   )
 }
-

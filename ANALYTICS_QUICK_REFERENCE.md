@@ -4,22 +4,22 @@
 
 ### 1. Import the analytics utility
 
-```typescript
+\`\`\`typescript
 import { analytics } from '@/lib/analytics'
-```
+\`\`\`
 
 ### 2. Call the appropriate method
 
-```typescript
+\`\`\`typescript
 // Example: Track button click
 <button onClick={() => analytics.bookingDrawerOpen('header', 'standard')}>
   Book Now
 </button>
-```
+\`\`\`
 
 ### 3. Available Methods
 
-```typescript
+\`\`\`typescript
 // Booking & Conversion
 analytics.bookingDrawerOpen(source, packageId?)
 analytics.packageSelected(packageId, price, racketCount)
@@ -40,7 +40,7 @@ analytics.exitIntentEmailCaptured(email)
 
 // A/B Testing
 analytics.experimentViewed(experimentId, variantId)
-```
+\`\`\`
 
 ---
 
@@ -48,7 +48,7 @@ analytics.experimentViewed(experimentId, variantId)
 
 ### 1. Add experiment to Edge Config (Vercel Dashboard)
 
-```json
+\`\`\`json
 {
   "experiments": {
     "your_experiment_id": {
@@ -62,11 +62,11 @@ analytics.experimentViewed(experimentId, variantId)
     }
   }
 }
-```
+\`\`\`
 
 ### 2. Update middleware.ts
 
-```typescript
+\`\`\`typescript
 // Add new experiment check
 const yourExperiment = await getExperiment('your_experiment_id')
 
@@ -85,11 +85,11 @@ if (yourExperiment && yourExperiment.enabled) {
     response.headers.set('x-experiment-your-test', existingVariant.value)
   }
 }
-```
+\`\`\`
 
 ### 3. Use variant in component
 
-```typescript
+\`\`\`typescript
 import { getVariant, trackExperimentView } from '@/lib/ab-testing'
 
 export default function YourComponent() {
@@ -111,7 +111,7 @@ export default function YourComponent() {
     </div>
   )
 }
-```
+\`\`\`
 
 ---
 
@@ -157,7 +157,7 @@ export default function YourComponent() {
 
 ### Track Form Submission
 
-```typescript
+\`\`\`typescript
 const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault()
   
@@ -170,22 +170,22 @@ const handleSubmit = async (e: React.FormEvent) => {
   // Submit form
   await submitForm()
 }
-```
+\`\`\`
 
 ### Track Link Click
 
-```typescript
+\`\`\`typescript
 <Link
   href="/membership"
   onClick={() => analytics.membershipViewed('nav')}
 >
   Membership
 </Link>
-```
+\`\`\`
 
 ### Track Button Click with Data
 
-```typescript
+\`\`\`typescript
 <button
   onClick={() => {
     analytics.packageSelected(pkg.id, pkg.price, racketCount)
@@ -194,19 +194,19 @@ const handleSubmit = async (e: React.FormEvent) => {
 >
   Select Package
 </button>
-```
+\`\`\`
 
 ### Track Page View (useEffect)
 
-```typescript
+\`\`\`typescript
 useEffect(() => {
   analytics.membershipViewed('direct_navigation')
 }, [])
-```
+\`\`\`
 
 ### Track with Debounce (Sliders, Inputs)
 
-```typescript
+\`\`\`typescript
 const handleSliderChange = (value: number) => {
   setValue(value)
   
@@ -215,7 +215,7 @@ const handleSliderChange = (value: number) => {
     analytics.membershipCalculatorUsed(value, plan, savings)
   }, 1000)
 }
-```
+\`\`\`
 
 ---
 
@@ -223,39 +223,39 @@ const handleSliderChange = (value: number) => {
 
 ### Check if Analytics is Working
 
-```typescript
+\`\`\`typescript
 // In browser console
 window.gtag
 // Should return: function gtag() { ... }
 
 window.dataLayer
 // Should return: Array with events
-```
+\`\`\`
 
 ### View All Events Fired
 
-```typescript
+\`\`\`typescript
 // In browser console
 window.dataLayer
 // Returns array of all events sent to GA4
-```
+\`\`\`
 
 ### Test Event Manually
 
-```typescript
+\`\`\`typescript
 // In browser console
 import { analytics } from '@/lib/analytics'
 analytics.bookingDrawerOpen('test', 'standard')
 // Check GA4 DebugView for event
-```
+\`\`\`
 
 ### Check Environment Variables
 
-```typescript
+\`\`\`typescript
 // In browser console
 process.env.NEXT_PUBLIC_GA_ID
 // Should return: "G-XXXXXXXXXX"
-```
+\`\`\`
 
 ---
 
@@ -265,7 +265,7 @@ process.env.NEXT_PUBLIC_GA_ID
 
 Track when user **intends** to do something, not just when it succeeds:
 
-```typescript
+\`\`\`typescript
 // ✅ Good: Track before API call
 analytics.checkoutInitiated(total, items)
 const response = await fetch('/api/checkout', ...)
@@ -273,21 +273,21 @@ const response = await fetch('/api/checkout', ...)
 // ❌ Bad: Track after API call (might not fire if error)
 const response = await fetch('/api/checkout', ...)
 analytics.checkoutInitiated(total, items)
-```
+\`\`\`
 
 ### 2. Include Relevant Context
 
-```typescript
+\`\`\`typescript
 // ✅ Good: Include package and price
 analytics.packageSelected('standard', 55, 1)
 
 // ❌ Bad: No context
 analytics.packageSelected('standard')
-```
+\`\`\`
 
 ### 3. Use Consistent Naming
 
-```typescript
+\`\`\`typescript
 // ✅ Good: Consistent IDs
 package_id: 'standard'
 package_id: 'rush'
@@ -295,11 +295,11 @@ package_id: 'rush'
 // ❌ Bad: Inconsistent
 package_id: 'standard'
 package_id: 'same-day-rush'
-```
+\`\`\`
 
 ### 4. Debounce High-Frequency Events
 
-```typescript
+\`\`\`typescript
 // ✅ Good: Debounce slider events
 const handleSliderChange = (value) => {
   clearTimeout(timeout)
@@ -312,11 +312,11 @@ const handleSliderChange = (value) => {
 const handleSliderChange = (value) => {
   analytics.membershipCalculatorUsed(value, plan, savings)
 }
-```
+\`\`\`
 
 ### 5. Don't Block User Experience
 
-```typescript
+\`\`\`typescript
 // ✅ Good: Fire and forget
 analytics.purchase(id, value, items)
 redirect('/confirmation')
@@ -324,7 +324,7 @@ redirect('/confirmation')
 // ❌ Bad: Wait for analytics
 await analytics.purchase(id, value, items)
 redirect('/confirmation')
-```
+\`\`\`
 
 ---
 
@@ -363,7 +363,7 @@ redirect('/confirmation')
 
 ## Quick Commands
 
-```bash
+\`\`\`bash
 # Install dependencies
 pnpm add @google-analytics/data @vercel/edge-config
 
@@ -380,7 +380,7 @@ npm run build
 
 # Deploy to Vercel
 git push
-```
+\`\`\`
 
 ---
 
@@ -407,4 +407,3 @@ git push
 - `ENV_SETUP.md` - Environment configuration
 - `PRODUCTION_READINESS_CHECKLIST.md` - Deployment checklist
 - `scripts/test-analytics.ts` - Testing guide
-

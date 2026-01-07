@@ -132,4 +132,3 @@ export default function AdminNav({ role, userEmail, userName }: AdminNavProps) {
     </>
   )
 }
-

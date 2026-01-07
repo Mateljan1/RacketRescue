@@ -14,9 +14,9 @@
 ### Dependencies
 
 - [ ] Install analytics packages:
-  ```bash
+  \`\`\`bash
   pnpm add @google-analytics/data @vercel/edge-config
-  ```
+  \`\`\`
 
 - [ ] Verify recharts is installed (already in package.json ✅)
 
@@ -39,29 +39,29 @@
 ### Environment Variables
 
 - [ ] **Analytics Variables** (Required)
-  ```bash
+  \`\`\`bash
   NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
   GA4_PROPERTY_ID=123456789
   GA4_SERVICE_ACCOUNT_KEY='{"type":"service_account",...}'
   GOOGLE_ADS_CONVERSION_ID=AW-XXXXXXXXXX
   GOOGLE_ADS_CONVERSION_LABEL=XXXXXXXXXXX
   EDGE_CONFIG=https://edge-config.vercel.com/...
-  ```
+  \`\`\`
 
 - [ ] **Operations Variables** (Required)
-  ```bash
+  \`\`\`bash
   ADMIN_EMAIL=owner@racketrescue.com
   STRINGER_EMAILS=stringer@racketrescue.com
   ENABLE_AUTO_REMINDERS=true
   ENABLE_INVENTORY_ALERTS=true
   ENABLE_SMART_SCHEDULING=true
   CRON_SECRET=your_random_secret_key
-  ```
+  \`\`\`
 
 - [ ] **Optional Variables** (For full features)
-  ```bash
+  \`\`\`bash
   FCM_SERVER_KEY=your_firebase_key  # For push notifications
-  ```
+  \`\`\`
 
 ### External Services Setup
 
@@ -172,11 +172,11 @@
 ### Deploy Code
 
 - [ ] Commit all changes:
-  ```bash
+  \`\`\`bash
   git add .
   git commit -m "Add complete enterprise analytics and operations system"
   git push
-  ```
+  \`\`\`
 
 - [ ] Wait for build to complete
 - [ ] Check build logs for errors
@@ -512,7 +512,7 @@ Legend:
 
 ## Deployment Command
 
-```bash
+\`\`\`bash
 # 1. Install dependencies
 pnpm add @google-analytics/data @vercel/edge-config
 
@@ -537,7 +537,7 @@ git push
 # - Test admin dashboards
 # - Verify cron jobs
 # - Check automations
-```
+\`\`\`
 
 **Total Time: 3-4 hours**
 
@@ -634,4 +634,3 @@ git push
 **Expected ROI:** 100-150% revenue growth in 90 days  
 
 **Let's transform RacketRescue! 📈**
-

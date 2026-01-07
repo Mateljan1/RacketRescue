@@ -51,4 +51,3 @@ export default function RevenueChart({ data, title = 'Revenue Trend' }: RevenueC
     </div>
   )
 }
-

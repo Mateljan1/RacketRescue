@@ -165,4 +165,3 @@ function FunnelStep({ name, users, dropOffRate, isFirst }: any) {
     </div>
   )
 }
-

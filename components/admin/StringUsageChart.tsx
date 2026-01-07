@@ -76,4 +76,3 @@ export default function StringUsageChart({ data, title = 'String Usage', chartTy
     </div>
   )
 }
-

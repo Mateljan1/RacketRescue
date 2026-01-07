@@ -64,4 +64,3 @@ export default function InventoryUsageChart({ data, title = 'Inventory Usage Ove
     </div>
   )
 }
-

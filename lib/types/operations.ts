@@ -250,4 +250,3 @@ export interface UpsellOpportunity {
   estimated_value: number
   reason: string
 }
-
